@@ -46,7 +46,7 @@ const UNIT_THEMES = {
     ch14: { theme: 'thermo', title: 'Gravitational Field' },
     ch15: { theme: 'thermo', title: 'Temperature' },
     ch16: { theme: 'thermo', title: 'Ideal Gases' },
-    ch24: { theme: 'thermo', title: 'Thermodynamics' },
+    ch24: { theme: 'modern', title: 'Medical Physics' },
     
     // ========== Modern Physics (现代物理) ==========
     ch22: { theme: 'modern', title: 'D.C. Circuits' },
