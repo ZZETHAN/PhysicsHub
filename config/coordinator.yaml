@@ -1,0 +1,83 @@
+# PhysicsHub 协调器配置
+# 主助手 + 4个工人机器人
+
+coordinator:
+  name: PhysicsHub助手
+  emoji: 🎯
+  role: coordinator
+  description: 协调指挥4个工人机器人，分配任务，汇总结果
+  
+workers:
+  - name: 文档工程师
+    emoji: 📚
+    id: doc_engineer
+    app_id: cli_a9339a75b4fadcb5
+    app_secret: bq66ylTi9SVnQ9FzX4sQzd8sU2JLsiTg
+    capabilities:
+      - 知识点整理
+      - 文档撰写
+      - 公式汇总
+      - 例题编写
+    
+  - name: 项目助理
+    emoji: 📊
+    id: project_manager
+    app_id: cli_a9339b17f3f81cba
+    app_secret: EMCmB2QwIt6fMgJCoug8Pc638PLz8Wo0
+    capabilities:
+      - 进度跟踪
+      - 任务分配
+      - 统计分析
+      - 提醒通知
+    
+  - name: UI工程师
+    emoji: 🎨
+    id: ui_designer
+    app_id: cli_a9339b7a57f81ceb
+    app_secret: 59ZgMXDTgGVUk4Drp5KIpe644zvqqbhE
+    capabilities:
+      - 界面设计
+      - CSS样式
+      - 配色方案
+      - 组件设计
+    
+  - name: 前端工程师
+    emoji: 💻
+    id: frontend_dev
+    app_id: cli_a9339ba0fcf89cca
+    app_secret: QzslJLJrpOgIccXuBgoIAeW7azoG406k
+    capabilities:
+      - HTML开发
+      - JavaScript交互
+      - 组件实现
+      - 代码优化
+
+# 工作模式
+mode: parallel  # parallel并行 | sequential顺序
+
+# 共享记忆
+shared_memory:
+  enabled: true
+  path: /Volumes/大硬盘/OpenViking-Agent-Memory/PhysicsHub/
+  
+# 任务分发规则
+task_rules:
+  # 内容相关 -> 文档工程师
+  - keywords: ["整理", "知识点", "文档", "公式", "例题", "理论"]
+    assign_to: doc_engineer
+    
+  # 进度相关 -> 项目助理
+  - keywords: ["进度", "任务", "计划", "统计", "提醒", "截止"]
+    assign_to: project_manager
+    
+  # 设计相关 -> UI工程师
+  - keywords: ["设计", "样式", "配色", "组件", "UI", "布局"]
+    assign_to: ui_designer
+    
+  # 开发相关 -> 前端工程师
+  - keywords: ["开发", "代码", "交互", "功能", "实现", "修复"]
+    assign_to: frontend_dev
+    
+  # 综合任务 -> 全部
+  - keywords: ["完成", "创建", "制作", "生成"]
+    assign_to: all

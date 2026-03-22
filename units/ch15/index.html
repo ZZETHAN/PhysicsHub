@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 15: Ideal Gases | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+<style>
+        :root {
+            --thermo-primary: #dc2626;
+            --thermo-dark: #991b1b;
+            --thermo-light: #fee2e2;
+        }
+
+        * { box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        /* ==================== 页面结构 ==================== */
+        .unit-header {
+            background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+            color: white;
+            padding: 48px 0;
+            margin-bottom: 32px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .sidebar-nav {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 8px 0;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--thermo-light); border-radius: 4px; }
+
+        /* ==================== 侧边栏导航 ==================== */
+        .nav-section-title {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ca3af;
+            padding: 16px 16px 6px;
+        }
+        
+        .nav-section { padding: 0 8px; }
+        
+        .nav-section-header {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            padding: 8px 12px;
+            margin-top: 4px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        
+        .nav-section-header:hover {
+            background: var(--thermo-light);
+            color: var(--thermo-primary);
+        }
+        
+        .nav-section-header.active {
+            background: var(--thermo-light);
+            color: var(--thermo-dark);
+            font-weight: 600;
+        }
+        
+        .nav-list { list-style: none; padding: 0; margin: 0 0 8px 0; }
+        
+        .nav-link {
+            display: block;
+            padding: 6px 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover { 
+            background: var(--thermo-light); 
+            color: var(--thermo-primary);
+        }
+        
+        .nav-link.active { 
+            background: var(--thermo-light); 
+            color: var(--thermo-dark);
+            font-weight: 500;
+        }
+
+        .main-content { max-width: 100%; min-width: 0; }
+
+        /* ==================== 内容卡片 ==================== */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            scroll-margin-top: 140px;
+        }
+
+        /* ==================== 标题层级 ==================== */
+        .section-card h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #111827;
+            margin: 0 0 20px 0;
+            padding: 0 0 12px 0;
+            border: none;
+            border-bottom: 2px solid var(--thermo-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .section-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 32px 0 14px 0;
+        }
+
+        .section-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin: 20px 0 10px 0;
+        }
+
+        /* ==================== 段落 ==================== */
+        .section-card p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #374151;
+            margin: 0 0 14px 0;
+        }
+
+        /* ==================== 列表 ==================== */
+        .section-card ul, .section-card ol {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+
+        .section-card li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .section-card li::marker { color: var(--thermo-primary); }
+        .section-card li strong { color: #1f2937; font-weight: 600; }
+
+        /* ==================== 内联 ==================== */
+        .section-card strong { font-weight: 600; color: #1f2937; }
+        .section-card em { font-style: italic; }
+
+        /* ==================== 提问框 ==================== */
+        .intro-box {
+            background: var(--thermo-light);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+        
+        .intro-box::before {
+            content: 'Think About It';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--thermo-dark);
+            margin-bottom: 10px;
+        }
+        
+        .intro-box strong { color: var(--thermo-dark); }
+        .intro-box li { color: var(--thermo-dark); font-size: 14px; }
+
+        /* ==================== 概念框 ==================== */
+        .concept-box {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin: 20px 0;
+        }
+        
+        .concept-box::before {
+            content: 'Concept';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        .concept-box strong { color: #1f2937; }
+
+        /* ==================== 定义框 ==================== */
+        .definition-box {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+
+        .definition-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .definition-box p { color: #4b5563; font-size: 14px; margin: 0; }
+        .definition-box strong { color: #1f2937; }
+
+        /* ==================== 公式框 ==================== */
+        .formula-box {
+            background: var(--thermo-light);
+            border: 1px solid var(--thermo-primary);
+            border-radius: 8px;
+            padding: 24px 32px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .formula-box strong { color: var(--thermo-dark); font-size: 16px; }
+        .formula-box p { color: var(--thermo-dark); font-size: 14px; margin-top: 12px; }
+
+        /* ==================== 考试提示框 ==================== */
+        .exam-alert {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+        
+        .exam-alert::before {
+            content: 'Exam Tip';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b45309;
+            margin-bottom: 8px;
+        }
+        
+        .exam-alert strong { color: #b45309; }
+        .exam-alert p { color: #92400e; font-size: 14px; margin-top: 8px; }
+        .exam-alert li { color: #92400e; font-size: 14px; }
+
+        /* ==================== 清单框 ==================== */
+        .checklist-box {
+            background: var(--thermo-light);
+            border: 1px solid var(--thermo-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-box::before {
+            content: 'Checklist';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--thermo-primary);
+            margin-bottom: 12px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--thermo-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--thermo-dark); }
+
+        /* ==================== 图片占位符 ==================== */
+        .image-placeholder {
+            background: var(--thermo-light);
+            border: 2px dashed var(--thermo-primary);
+            border-radius: 8px;
+            padding: 40px 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .image-placeholder::before {
+            content: 'Figure';
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--thermo-primary);
+            margin-bottom: 8px;
+        }
+
+        .image-placeholder p { color: var(--thermo-dark); font-size: 13px; margin: 0; }
+
+        /* ==================== 表格 ==================== */
+        .case-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .case-table th, .case-table td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .case-table th {
+            background: var(--thermo-light);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--thermo-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .case-table td { color: #4b5563; }
+        .case-table td strong { color: #1f2937; }
+        .case-table tr:last-child td { border-bottom: none; }
+        .case-table tr:hover td { background: #f9fafb; }
+
+        /* ==================== 对比卡片 ==================== */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .comparison-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--thermo-dark);
+            margin: 0 0 10px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--thermo-light);
+        }
+
+        .comparison-card p { font-size: 13px; color: #6b7280; margin: 0; line-height: 1.5; }
+
+        /* ==================== 数学公式 ==================== */
+        mjx-container { font-size: 106% !important; }
+
+        /* ==================== 进度按钮 ==================== */
+        .progress-btn.active {
+            background: var(--thermo-primary) !important;
+            color: white !important;
+            border-color: var(--thermo-primary) !important;
+        }
+        
+        .progress-btn:hover:not(.active) { background: var(--thermo-light); }
+
+        /* ==================== 回到顶部按钮 ==================== */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--thermo-primary);
+            border: none;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 101;
+            text-decoration: none;
+        }
+        
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--thermo-dark); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+
+        /* ==================== 移动端导航 ==================== */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--thermo-primary);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+            z-index: 1003;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 260px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 1002;
+        }
+        
+        .mobile-nav.show { display: block; }
+
+        .login-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            background: var(--thermo-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .login-link:hover { background: var(--thermo-dark); }
+
+        /* ==================== 响应式 ==================== */
+        @media (max-width: 968px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .sidebar-nav { display: none; }
+            .section-card { padding: 24px; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+            .back-to-top { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .section-card { padding: 16px; }
+            .section-card h2 { font-size: 20px; }
+            .section-card h3 { font-size: 17px; margin-top: 24px; }
+            .section-card p, .section-card li { font-size: 14px; }
+            mjx-container { overflow-x: auto; max-width: 100%; }
+        }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: #f1f5f9; }
+.unit-nav-link.active { background: #dc262622; color: #dc2626; }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: #dc2626; }
+</style>
+
+</head>
+<body>
+
+        <header style="background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">←</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            
+            
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #dc262622 0%, white 100%); border: 1px solid #dc2626; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #dc2626; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1d4ed822'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+<a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+<a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##ea580c22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+<a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='transparent'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #16a34a;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span><span style="width: 8px; height: 8px; background: #16a34a; border-radius: 50%;"></span></a>
+<a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##dc262622'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+<a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+<a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1e40af22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+<a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+<a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0f766e22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##be185d22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    <div class="unit-header">
+        <div style="max-width: 1100px; margin: 0 auto; padding: 0 16px;">
+            <div style="font-size: 13px; opacity: 0.9; margin-bottom: 8px; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">A2 Level > Unit 15</div>
+            <h1 style="margin: 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">Ideal Gases</h1>
+            <p style="margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">From macroscopic laws to microscopic molecular motion</p>
+        </div>
+    </div>    
+    
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+    
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+    
+    
+    <div class="mobile-nav" id="mobileNav">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+            <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 4px;"><a href="#h2-intro" onclick="scrollTo('h2-intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">1. The Gas Laws</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-gas-1-1" onclick="scrollTo('h3-gas-1-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1 Boyle's Law</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-gas-1-2" onclick="scrollTo('h3-gas-1-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.2 Charles's Law</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-gas-1-3" onclick="scrollTo('h3-gas-1-3')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.3 Pressure Law</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">2. The Ideal Gas Equation</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-equation-2-1" onclick="scrollTo('h3-equation-2-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1 The Ideal Gas</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">3. Kinetic Theory</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-kinetic-3-1" onclick="scrollTo('h3-kinetic-3-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1 Pressure from Collisions</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-kinetic-3-2" onclick="scrollTo('h3-kinetic-3-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.2 Connecting to Ideal Gas</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">4. Molecular Kinetic Energy</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-molecular-4-1" onclick="scrollTo('h3-molecular-4-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.1 Derivation</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-molecular-4-2" onclick="scrollTo('h3-molecular-4-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.2 Total Internal Energy</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-molecular-4-3" onclick="scrollTo('h3-molecular-4-3')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.3 Temperature Meaning</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-molecular-4-4" onclick="scrollTo('h3-molecular-4-4')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.4 Degrees of Freedom</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">5. Root-Mean-Square Speed</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-rms-5-1" onclick="scrollTo('h3-rms-5-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">5.1 Key Relationships</a></li>
+            <li style="margin-bottom: 4px;"><a href="#h2-checklist" onclick="scrollTo('h2-checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">P4 Checklist</a></li>
+        </ul>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch15', 'not_started')" id="progress-btn-not_started-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch15', 'in_progress')" id="progress-btn-in_progress-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch15', 'completed')" id="progress-btn-completed-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="content-grid">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#h2-intro" class="nav-link" data-section="h2-intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-gas" class="nav-section-header" data-section="h2-gas">1. The Gas Laws</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-gas-1-1" class="nav-link" data-section="h3-gas-1-1">1.1 Boyle's Law</a></li>
+                    <li class="nav-item"><a href="#h3-gas-1-2" class="nav-link" data-section="h3-gas-1-2">1.2 Charles's Law</a></li>
+                    <li class="nav-item"><a href="#h3-gas-1-3" class="nav-link" data-section="h3-gas-1-3">1.3 Pressure Law</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-equation" class="nav-section-header" data-section="h2-equation">2. The Ideal Gas Equation</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-equation-2-1" class="nav-link" data-section="h3-equation-2-1">2.1 The Ideal Gas</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-kinetic" class="nav-section-header" data-section="h2-kinetic">3. Kinetic Theory of Gases</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-kinetic-3-1" class="nav-link" data-section="h3-kinetic-3-1">3.1 Pressure from Collisions</a></li>
+                    <li class="nav-item"><a href="#h3-kinetic-3-2" class="nav-link" data-section="h3-kinetic-3-2">3.2 Connecting to Ideal Gas</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-molecular" class="nav-section-header" data-section="h2-molecular">4. Molecular Kinetic Energy</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-molecular-4-1" class="nav-link" data-section="h3-molecular-4-1">4.1 Derivation</a></li>
+                    <li class="nav-item"><a href="#h3-molecular-4-2" class="nav-link" data-section="h3-molecular-4-2">4.2 Total Internal Energy</a></li>
+                    <li class="nav-item"><a href="#h3-molecular-4-3" class="nav-link" data-section="h3-molecular-4-3">4.3 Temperature Meaning</a></li>
+                    <li class="nav-item"><a href="#h3-molecular-4-4" class="nav-link" data-section="h3-molecular-4-4">4.4 Degrees of Freedom</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-rms" class="nav-section-header" data-section="h2-rms">5. Root-Mean-Square Speed</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-rms-5-1" class="nav-link" data-section="h3-rms-5-1">5.1 Key Relationships</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-assumptions" class="nav-section-header" data-section="h2-assumptions">6. Assumptions</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-checklist" class="nav-link" data-section="h2-checklist" style="margin-top:8px;">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../../homework/ch15/" class="nav-link" style="color: #dc2626;">📚 Homework (Exercises)</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch15', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch15', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch15', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+        
+        <main class="main-content">
+
+            
+            <div id="intro" class="section-card">
+                <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: The Ideal Gas</h2>                
+                
+                <div class="intro-box">
+                    <strong>Think about these questions:</strong>
+                    <ul style="margin-top: 10px; margin-bottom: 0;">
+                        <li>Why does a balloon expand when heated?</li>
+                        <li>Why does a car tire pressure increase on a hot day?</li>
+                        <li>How can we predict the behavior of gases under different conditions?</li>
+                        <li>What is the relationship between temperature and molecular motion?</li>
+                    </ul>
+                </div>                
+                
+                <p>In this unit, we connect the <strong>macroscopic</strong> properties of gases (pressure, volume, temperature) to the <strong>microscopic</strong> motion of molecules. This connection is one of the triumphs of classical physics.</p>                
+                
+                <div class="concept-box">
+                    <strong>Connection to Unit 14:</strong> In Temperature, we learned about thermal equilibrium and energy transfer. In this unit, we discover that temperature is directly proportional to the average kinetic energy of molecules.
+                </div>                
+                
+                <div class="exam-alert">
+                    <strong>Paper 4 Examination Focus:</strong> Expect calculations using the ideal gas equation \(pV = nRT\) or \(pV = NkT\). Be able to derive and use the molecular kinetic energy equation. Understand the assumptions of the kinetic theory model.
+                </div>
+            </div>
+
+            
+            <div id="gas-laws" class="section-card">
+                <h2 id="h2-gas" style="scroll-margin-top: 120px;">1. The Gas Laws</h2>                
+                
+                <div class="concept-box">
+                    <strong>The Experimental Basis:</strong> Before developing a theoretical model, scientists discovered three empirical laws describing gas behavior at constant temperature, pressure, or volume.
+                </div>                
+                <h3 id="h3-gas-1-1" style="scroll-margin-top: 120px;">1.1 Boyle's Law (Constant Temperature)</h3>                
+                <div class="definition-box">
+                    <div class="definition-title">Boyle's Law</div>
+                    <p>For a fixed mass of gas at constant temperature, the pressure is inversely proportional to the volume.</p>                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[p \propto \frac{1}{V} \quad \text{or} \quad pV = \text{constant}\]
+                    </div>                    
+                    <p><strong>Alternative form:</strong> \(p_1V_1 = p_2V_2\)</p>
+                </div>                
+                <div class="image-placeholder">
+                    <p>[插图占位符 - Boyle's Law 示意图：p-V 图和 p-1/V 图]</p>
+                </div>                
+                <p><strong>Physical interpretation:</strong> When volume decreases, molecules collide with container walls more frequently, increasing pressure.</p>
+                
+                <h3 id="h3-gas-1-2" style="scroll-margin-top: 120px;">1.2 Charles's Law (Constant Pressure)</h3>                
+                <div class="definition-box">
+                    <div class="definition-title">Charles's Law</div>
+                    <p>For a fixed mass of gas at constant pressure, the volume is directly proportional to the absolute temperature.</p>                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[V \propto T \quad \text{or} \quad \frac{V}{T} = \text{constant}\]
+                    </div>                    
+                    <p><strong>Note:</strong> Temperature must be in Kelvin!</p>
+                </div>                
+                <h3 id="h3-gas-1-3" style="scroll-margin-top: 120px;">1.3 The Pressure Law (Constant Volume)</h3>                
+                <div class="definition-box">
+                    <div class="definition-title">The Pressure Law (Gay-Lussac's Law)</div>
+                    <p>For a fixed mass of gas at constant volume, the pressure is directly proportional to the absolute temperature.</p>                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[p \propto T \quad \text{or} \quad \frac{p}{T} = \text{constant}\]
+                    </div>
+                </div>                
+                <div class="exam-alert">
+                    <strong>Common Mistake:</strong> Always use absolute temperature (Kelvin) in gas law calculations. To convert: \(T(\text{K}) = T(°\text{C}) + 273\)
+                </div>
+            </div>
+
+            
+            <div id="equation-of-state" class="section-card">
+                <h2 id="h2-equation" style="scroll-margin-top: 120px;">2. The Ideal Gas Equation</h2>                
+                
+                <div class="concept-box">
+                    <strong>Combining the Laws:</strong> Boyle's, Charles's, and the Pressure Law can be combined into a single equation relating all three variables.
+                </div>                
+                <div class="definition-box">
+                    <div class="definition-title">The Ideal Gas Equation (Molar Form)</div>                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[pV = nRT\]
+                    </div>                    
+                    <p>where:</p>                    
+                    <ul>
+                        <li>\(p\) = pressure (Pa)</li>
+                        <li>\(V\) = volume (m³)</li>
+                        <li>\(n\) = number of moles (mol)</li>
+                        <li>\(R\) = molar gas constant = 8.31 J mol⁻¹ K⁻¹</li>
+                        <li>\(T\) = absolute temperature (K)</li>
+                    </ul>
+                </div>                
+                <div class="definition-box">
+                    <div class="definition-title">The Ideal Gas Equation (Molecular Form)</div>                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[pV = NkT\]
+                    </div>                    
+                    <p>where:</p>                    
+                    
+                    <ul>
+                        <li>\(N\) = number of molecules</li>
+                        <li>\(k\) = Boltzmann constant = 1.38 × 10⁻²³ J K⁻¹</li>
+                    </ul>                    
+                    <p><strong>Relationship:</strong> \(R = N_Ak\) where \(N_A\) is the Avogadro constant.</p>
+                </div>                
+                <h3 id="h3-equation-2-1" style="scroll-margin-top: 120px;">2.1 The Ideal Gas</h3>                
+                <p>An <strong>ideal gas</strong> is a theoretical model that obeys the ideal gas equation exactly. Real gases approximate ideal gas behavior at:</p>                
+                <ul>
+                    <li><strong>High temperatures</strong> - molecules move fast, intermolecular forces negligible</li>
+                    <li><strong>Low pressures</strong> - molecules far apart, volume of molecules negligible compared to container</li>
+                </ul>                
+                <div class="exam-alert">
+                    <strong>Key Constants to Remember:</strong>
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li>\(R = 8.31 \text{ J mol}^{-1} \text{ K}^{-1}\)</li>
+                        <li>\(k = 1.38 \times 10^{-23} \text{ J K}^{-1}\)</li>
+                        <li>\(N_A = 6.02 \times 10^{23} \text{ mol}^{-1}\)</li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div id="kinetic-theory" class="section-card">
+                <h2 id="h2-kinetic" style="scroll-margin-top: 120px;">3. Kinetic Theory of Gases</h2>                
+                
+                <div class="concept-box">
+                    <strong>The Microscopic View:</strong> Instead of treating gas as a continuous fluid, kinetic theory models it as a collection of molecules in random motion.
+                </div>                
+                <h3 id="h3-kinetic-3-1" style="scroll-margin-top: 120px;">3.1 Pressure from Molecular Collisions</h3>                
+                <p>Pressure arises from countless molecular collisions with container walls. Consider one molecule of mass \(m\) moving with speed \(c_x\) in the x-direction:</p>                
+                <div class="formula-box">
+                    \[\text{Change in momentum per collision} = 2mc_x\]
+                    \[\text{Time between collisions} = \frac{2L}{c_x}\]
+                    \[\text{Force from one molecule} = \frac{\Delta p}{\Delta t} = \frac{mc_x^2}{L}\]
+                </div>                
+                <p>For \(N\) molecules with random motion, averaging over all directions (\(c_x^2 = c^2/3\)):</p>                
+                <div class="formula-box">
+                    \[p = \frac{1}{3}\frac{Nm\langle c^2 \rangle}{V}\]
+                </div>                
+                <p>This is the <strong>fundamental equation of kinetic theory</strong>.</p>
+                
+                <h3 id="h3-kinetic-3-2" style="scroll-margin-top: 120px;">3.2 Connecting to Ideal Gas Law</h3>                
+                <p>Comparing \(pV = \frac{1}{3}Nm\langle c^2 \rangle\) with \(pV = NkT\):</p>                
+                <div class="formula-box">
+                    \[\frac{1}{3}Nm\langle c^2 \rangle = NkT\]
+                    \[\frac{1}{3}m\langle c^2 \rangle = kT\]
+                </div>                
+                <p>This leads to our next key result about molecular kinetic energy...</p>
+            </div>
+
+                        
+            <div id="molecular-kinetic" class="section-card">
+                <h2 id="h2-molecular" style="scroll-margin-top: 120px;">4. Molecular Kinetic Energy</h2>                
+                
+                <div class="concept-box">
+                    <strong>The Key Result:</strong> From kinetic theory, we derive one of the most important relationships in thermal physics: the direct proportionality between temperature and molecular kinetic energy.
+                </div>                
+                
+                <h3 id="h3-molecular-4-1" style="scroll-margin-top: 120px;">4.1 Derivation of the Key Equation</h3>                
+                
+                <p>From the kinetic theory (Section 3.2), we have:</p>                
+                <div class="formula-box">
+                    \[\frac{1}{3}m\langle c^2 \rangle = kT\]
+                </div>                
+                <p>Multiplying both sides by \(\frac{3}{2}\):</p>                
+                <div class="formula-box">
+                    \[\frac{1}{2}m\langle c^2 \rangle = \frac{3}{2}kT\]
+                </div>                
+                <p>The left side is exactly the <strong>average translational kinetic energy</strong> of a molecule:</p>                
+                <div class="formula-box">
+                    \[\langle E_k \rangle = \frac{1}{2}m\langle c^2 \rangle = \frac{3}{2}kT\]
+                </div>                
+                <div class="definition-box">
+                    <div class="definition-title">Average Translational Kinetic Energy</div>                    
+                    <p>The average translational kinetic energy of a molecule in an ideal gas depends only on temperature:</p>                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[\langle E_k \rangle = \frac{3}{2}kT = \frac{3}{2}\frac{RT}{N_A}\]
+                    </div>                    
+                    <p><strong>Key insight:</strong> At a given temperature, <em>all</em> ideal gas molecules have the same average kinetic energy, regardless of their mass!</p>
+                </div>                
+                
+                <h3 id="h3-molecular-4-2" style="scroll-margin-top: 120px;">4.2 Total Internal Energy</h3>                
+                
+                <p>For \(N\) molecules, the total internal energy is:</p>                
+                <div class="formula-box">
+                    \[U = N \times \frac{3}{2}kT = \frac{3}{2}NkT = \frac{3}{2}nRT\]
+                </div>                
+                <p>This shows that the internal energy of an ideal gas depends only on temperature, not on volume or pressure.</p>                
+                
+                <h3 id="h3-molecular-4-3" style="scroll-margin-top: 120px;">4.3 Temperature as a Measure of Kinetic Energy</h3>                
+                
+                <p>The equation \(\langle E_k \rangle = \frac{3}{2}kT\) reveals the <strong>microscopic meaning of temperature</strong>:</p>                
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="t1">
+                    <label for="t1"><strong>Temperature is proportional to average kinetic energy</strong> - Higher T means faster molecular motion</label>
+                </div>                    
+                <div class="checklist-item">
+                    <input type="checkbox" id="t2">
+                    <label for="t2"><strong>Absolute zero (0 K)</strong> - Theoretical point where molecular motion would cease</label>
+                </div>                    
+                <div class="checklist-item">
+                    <input type="checkbox" id="t3">
+                    <label for="t3"><strong>Same T, same KE</strong> - Hydrogen and oxygen at 300 K have the same average molecular kinetic energy</label>
+                </div>                
+                
+                <div class="image-placeholder">
+                    <p>[插图占位符 - Maxwell-Boltzmann distribution at different temperatures]</p>
+                </div>                
+                
+                <h3 id="h3-molecular-4-4" style="scroll-margin-top: 120px;">4.4 Degrees of Freedom</h3>                
+                
+                <p>The factor \(\frac{3}{2}\) in the kinetic energy formula comes from the <strong>equipartition of energy</strong>:</p>                
+                <ul>
+                    <li>Molecules have 3 independent directions of motion (x, y, z)</li>
+                    <li>Each direction is called a <strong>degree of freedom</strong></li>
+                    <li>Each degree of freedom contributes \(\frac{1}{2}kT\) to the average energy</li>
+                    <li>Total: \(3 \times \frac{1}{2}kT = \frac{3}{2}kT\)</li>
+                </ul>                
+                <div class="exam-alert">
+                    <strong>Degrees of Freedom for Different Molecules:</strong>
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li><strong>Monatomic gas</strong> (e.g., He, Ne): 3 translational → \(U = \frac{3}{2}nRT\)</li>
+                        <li><strong>Diatomic gas</strong> (e.g., N₂, O₂): 3 translational + 2 rotational + 1 vibrational → \(U \approx \frac{5}{2}nRT\) (at moderate T)</li>
+                    </ul>
+                </div>                
+                
+                <div class="exam-alert">
+                    <strong>Practical Example:</strong> At room temperature (300 K), nitrogen molecules (N₂) have average kinetic energy:
+                    \[\langle E_k \rangle = \frac{3}{2} \times 1.38 \times 10^{-23} \times 300 = 6.2 \times 10^{-21} \text{ J}\]
+                    This is tiny for one molecule, but enormous for a mole (about 3.7 kJ/mol).
+                </div>
+            </div>
+
+
+            <div id="rms-speed" class="section-card">
+                <h2 id="h2-rms" style="scroll-margin-top: 120px;">5. Root-Mean-Square Speed</h2>                
+                
+                <div class="concept-box">
+                    <strong>Why RMS?</strong> Molecules in a gas have a range of speeds. The average speed would be zero (equal numbers moving in opposite directions). We use root-mean-square to get a meaningful measure of typical molecular speed.
+                </div>                
+                <div class="definition-box">
+                    <div class="definition-title">Definition: Root-Mean-Square Speed</div>                    
+                    \[c_{rms} = \sqrt{\langle c^2 \rangle} = \sqrt{\frac{3kT}{m}} = \sqrt{\frac{3RT}{M}}\]
+                    
+                    <p>where \(M\) is the molar mass (kg mol⁻¹).</p>
+                </div>                
+                <h3 id="h3-rms-5-1" style="scroll-margin-top: 120px;">5.1 Key Relationships</h3>                
+                <p>From the equation \(c_{rms} = \sqrt{\frac{3kT}{m}}\):</p>                
+                
+                <ul>
+                    <li>\(c_{rms} \propto \sqrt{T}\) - higher temperature, faster molecules</li>
+                    <li>\(c_{rms} \propto \frac{1}{\sqrt{m}}\) - lighter molecules move faster at same temperature</li>
+                </ul>                
+                <div class="formula-box">
+                    \[\frac{c_{rms1}}{c_{rms2}} = \sqrt{\frac{T_1}{T_2}} = \sqrt{\frac{m_2}{m_1}}\]
+                </div>                
+                <div class="exam-alert">
+                    <strong>Example Calculation:</strong> At 300 K, nitrogen molecules (M = 0.028 kg/mol) have:
+                    \[c_{rms} = \sqrt{\frac{3 \times 8.31 \times 300}{0.028}} \approx 515 \text{ m/s}\]
+                    This is faster than the speed of sound in air!
+                </div>
+            </div>
+
+            
+            <div id="assumptions" class="section-card">
+                <h2 id="h2-assumptions" style="scroll-margin-top: 120px;">6. Assumptions of Kinetic Theory</h2>                
+                
+                <p>The kinetic theory model is based on several simplifying assumptions:</p>                
+                <div class="definition-title">The Basic Assumptions</div>                    
+                <div class="checklist-item">
+                    <input type="checkbox" id="a1">
+                    <label for="a1">Gas consists of a large number of molecules in random motion</label>
+                </div>                    
+                <div class="checklist-item">
+                    <input type="checkbox" id="a2">
+                    <label for="a2">Molecules obey Newton's laws of motion</label>
+                </div>                    
+                <div class="checklist-item">
+                    <input type="checkbox" id="a3">
+                    <label for="a3">Collisions between molecules are perfectly elastic (kinetic energy conserved)</label>
+                </div>                    
+                <div class="checklist-item">
+                    <input type="checkbox" id="a4">
+                    <label for="a4">Intermolecular forces are negligible except during collisions</label>
+                </div>                    
+                <div class="checklist-item">
+                    <input type="checkbox" id="a5">
+                    <label for="a5">Volume of molecules is negligible compared to container volume</label>
+                </div>                    
+                <div class="checklist-item">
+                    <input type="checkbox" id="a6">
+                    <label for="a6">Time of collisions is negligible compared to time between collisions</label>
+                </div>                
+                <div class="exam-alert">
+                    <strong>When do real gases deviate?</strong> Real gases deviate from ideal behavior at:
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li><strong>High pressure</strong> - molecular volume becomes significant</li>
+                        <li><strong>Low temperature</strong> - intermolecular forces become significant</li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div id="checklist" class="section-card">
+                <h2 id="h2-checklist" style="scroll-margin-top: 120px;">P4 Checklist: Key Definitions & Formulas</h2>
+
+                <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">Essential Definitions</div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d1">
+                        <label for="d1"><strong>Ideal gas:</strong> A gas that obeys \(pV = nRT\) exactly</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d2">
+                        <label for="d2"><strong>Boyle's Law:</strong> \(pV = \text{constant}\) at constant temperature</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d3">
+                        <label for="d3"><strong>Charles's Law:</strong> \(V/T = \text{constant}\) at constant pressure</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d4">
+                        <label for="d4"><strong>Pressure Law:</strong> \(p/T = \text{constant}\) at constant volume</label>
+                    </div>
+                </div>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e1">
+                        <label for="e1">Ideal gas (molar): \(pV = nRT\) where \(R = 8.31 \text{ J mol}^{-1} \text{ K}^{-1}\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e2">
+                        <label for="e2">Ideal gas (molecular): \(pV = NkT\) where \(k = 1.38 \times 10^{-23} \text{ J K}^{-1}\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e3">
+                        <label for="e3">Kinetic theory: \(pV = \frac{1}{3}Nm\langle c^2 \rangle\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e4">
+                        <label for="e4">Molecular KE: \(\langle E_k \rangle = \frac{3}{2}kT = \frac{1}{2}m\langle c^2 \rangle\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e5">
+                        <label for="e5">RMS speed: \(c_{rms} = \sqrt{\frac{3kT}{m}} = \sqrt{\frac{3RT}{M}}\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="n1">
+                        <label for="n1">\(R = 8.31 \text{ J mol}^{-1} \text{ K}^{-1}\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="n2">
+                        <label for="n2">\(k = 1.38 \times 10^{-23} \text{ J K}^{-1}\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="n3">
+                        <label for="n3">\(N_A = 6.02 \times 10^{23} \text{ mol}^{-1}\)</label>
+                    </div>
+                </div>
+
+                <div class="exam-alert">
+                    <strong>Common Structured Question Patterns:</strong>
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li><strong>Gas law calculations:</strong> Using \(pV = nRT\) with temperature in Kelvin</li>
+                        <li><strong>Kinetic energy calculations:</strong> Relating temperature to molecular speed</li>
+                        <li><strong>RMS speed comparison:</strong> Comparing speeds at different temperatures or for different gases</li>
+                        <li><strong>Derivations:</strong> Deriving \(pV = \frac{1}{3}Nm\langle c^2 \rangle\) from molecular collisions</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.05,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    
+    
+    <script>
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('[onclick="toggleUnitNav()"]');
+            const dropdown = document.getElementById('unitNavDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+                container.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+    <script>
+        function sidebarScrollTo(sectionId) {
+            var element = document.getElementById(sectionId);
+            if (element) {
+                var offset = 100;
+                var top = element.offsetTop - offset;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+        }
+        
+        function sidebarScrollToSection(sectionId) {
+            var element = document.getElementById(sectionId);
+            if (element) {
+                var offset = 100;
+                var top = element.offsetTop - offset;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+            closeMobileNav();
+        }
+        
+        var scrollTo = sidebarScrollTo;
+        var scrollToSection = sidebarScrollToSection;
+        
+        function updateActiveNav() {
+            const headings = document.querySelectorAll('h2[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            
+            if (headings.length === 0 || navLinks.length === 0) return;
+            
+            let activeId = null;
+            let bestTop = Infinity;
+            
+            headings.forEach(h => {
+                const rect = h.getBoundingClientRect();
+                if (rect.top >= 80 && rect.top < bestTop) {
+                    bestTop = rect.top;
+                    activeId = h.id;
+                }
+            });
+            
+            if (!activeId) return;
+            
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav [data-section="${activeId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+        
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('resize', updateActiveNav, { passive: true });
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
+        
+        function loadProgress(unitId) {
+            if (!Auth.isLoggedIn()) return;
+            fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.unit) {
+                    updateProgressButtons(data.unit.status);
+                }
+            })
+            .catch(err => console.error('Load progress error:', err));
+        }
+        
+        function updateProgress(unitId, status) {
+            if (!Auth.isLoggedIn()) {
+                AuthModal.open();
+                return;
+            }
+            fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Auth.getToken()}`
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    updateProgressButtons(status);
+                }
+            })
+            .catch(err => console.error('Update progress error:', err));
+        }
+        
+        function updateProgressButtons(status) {
+            ['not_started', 'in_progress', 'completed'].forEach(s => {
+                const btn = document.getElementById(`progress-btn-${s}`);
+                if (btn) btn.classList.toggle('active', s === status);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgress('ch15');
+        });
+
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('show');
+        }
+
+        function closeMobileNav() {
+            document.getElementById('mobileNav').classList.remove('show');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateReadingProgress() {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / docHeight) * 100;
+            document.getElementById('readingProgress').style.width = progress + '%';
+            
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        }
+
+        window.addEventListener('scroll', updateReadingProgress);
+    </script>
+
+
+<script src="../../auth/auth.js"></script>
+</body>
+</html>

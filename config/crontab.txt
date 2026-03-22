@@ -1,0 +1,11 @@
+# PhysicsHub 定时任务配置
+# 添加到 crontab: crontab -e
+
+# 每天早上9点发送进度报告
+0 9 * * * cd ~/Desktop/PhysicsHub && ./scripts/daily_report.sh >> ~/.openclaw/devops/logs/feishu_push.log 2>&1
+
+# 每周一早上9点发送周报
+0 9 * * 1 cd ~/Desktop/PhysicsHub && ./scripts/weekly_report.sh >> ~/.openclaw/devops/logs/feishu_push.log 2>&1
+
+# 每小时检查一次项目状态（可选）
+# 0 * * * * cd ~/Desktop/PhysicsHub && ./scripts/check_status.sh

@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 16: Thermodynamics | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    <style>
+        :root {
+            --thermo-primary: #dc2626;
+            --thermo-dark: #991b1b;
+            --thermo-light: #fee2e2;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        
+        .header {
+            background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0;
+            position: sticky; top: 0; z-index: 100;
+        }
+        
+        .unit-header {
+            background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+            color: white; padding: 48px 0;
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        
+        .content-grid {
+            display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+            max-width: 1100px; margin: 32px auto; padding: 0 16px;
+        }
+        
+        .sidebar-nav {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--thermo-light); border-radius: 4px; }
+        .sidebar-nav::-webkit-scrollbar-thumb:hover { background: var(--thermo-primary); }
+        
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #9ca3af;
+            padding: 16px 16px 8px;
+        }
+        
+        .nav-section {
+            padding: 0 8px;
+            margin-bottom: 4px;
+        }
+        
+        .nav-section-header {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            padding: 10px 12px;
+            margin-top: 8px;
+            margin-bottom: 2px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        
+        .nav-section-header:hover {
+            background: var(--thermo-light);
+            color: var(--thermo-primary);
+        }
+        
+        .nav-section-header.active {
+            background: var(--thermo-light);
+            color: var(--thermo-dark);
+        }
+        
+        .nav-list { list-style: none; padding: 0; margin: 0; }
+        .nav-item { margin-bottom: 1px; }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        a.nav-link {
+            display: block;
+        }
+        
+        .nav-link::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--thermo-light);
+            margin-right: 10px;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        
+        .nav-link:hover { 
+            background: var(--thermo-light); 
+            color: var(--thermo-primary);
+        }
+        
+        .nav-link:hover::before {
+            background: var(--thermo-primary);
+        }
+        
+        .nav-link.active { 
+            background: var(--thermo-light); 
+            color: var(--thermo-dark);
+            font-weight: 500;
+        }
+        
+        .nav-link.active::before {
+            background: var(--thermo-primary);
+        }
+        
+        .main-content { max-width: 100%; min-width: 0; }
+        
+        .section-card {
+            background: white; border-radius: 12px; padding: 24px;
+            margin-bottom: 20px; border: 1px solid #e2e8f0;
+            scroll-margin-top: 140px;
+        }
+        
+        .section-card h2 { margin-top: 0; color: #1e293b; font-size: 22px; font-weight: 700; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        .section-card h3 { color: #1e293b; font-size: 18px; font-weight: 600; margin-top: 24px; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        .section-card h4 { color: #334155; font-size: 16px; font-weight: 600; margin-top: 20px; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        
+        .concept-box { background: var(--thermo-light); border-left: 4px solid var(--thermo-primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .definition-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .formula-box { background: #f0fdf4; border: 1px solid #86efac; padding: 16px; margin: 16px 0; border-radius: 8px; text-align: center; }
+        .exam-alert { background: var(--thermo-light); border: 1px solid var(--thermo-primary); padding: 14px 18px; margin: 16px 0; border-radius: 8px; }
+        .exam-alert strong { color: #b91c1c; }
+        
+        .tip-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: #1d4ed8; }
+        
+        .key-points { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+        .key-points li { margin-bottom: 8px; }
+        
+        .checklist-box {
+            background: var(--thermo-light);
+            border: 1px solid var(--thermo-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--thermo-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--thermo-dark); }
+        
+        .pv-diagram { 
+            background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; 
+            padding: 20px; margin: 16px 0; text-align: center; 
+        }
+        .pv-diagram-placeholder {
+            border: 2px dashed #cbd5e1; border-radius: 8px;
+            padding: 40px; color: #64748b; margin: 16px 0;
+            background: #f8fafc;
+        }
+        
+        /* Mobile */
+        .reading-progress { position: fixed; top: 61px; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #dc2626, #f87171); z-index: 99; transition: width 0.1s ease; }
+        .back-to-top { display: none; position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; background: var(--thermo-primary); color: white; border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); z-index: 1000; transition: opacity 0.2s, transform 0.2s; opacity: 0; visibility: hidden; }
+        .back-to-top.show { display: inline-flex; align-items: center; justify-content: center; opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--thermo-dark); transform: translateY(-2px); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+        .mobile-menu-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--thermo-primary); color: white; border: none; font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .mobile-nav { display: none; position: fixed; bottom: 80px; right: 20px; width: 260px; max-height: 70vh; overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 999; }
+        .mobile-nav.show { display: block; }
+        
+        @media (max-width: 968px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .sidebar-nav { display: none; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+        }
+        
+        .progress-btn.active {
+            background: var(--thermo-primary) !important;
+            color: white;
+            border-color: var(--thermo-primary) !important;
+        }
+        
+        .progress-btn:hover:not(.active) {
+            background: #f1f5f9;
+        }
+        
+        mjx-container { font-size: 105% !important; }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: #f1f5f9; }
+.unit-nav-link.active { background: #dc262622; color: #dc2626; }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: #dc2626; }
+</style>
+
+</head>
+<body>
+
+    <header style="background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">←</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            
+            
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #dc262622 0%, white 100%); border: 1px solid #dc2626; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #dc2626; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1d4ed822'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+<a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+<a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##ea580c22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+<a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##16a34a22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+<a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='transparent'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #dc2626;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span><span style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%;"></span></a>
+<a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+<a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1e40af22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+<a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+<a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0f766e22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##be185d22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+<div class="unit-header" style="background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%); color: white; padding: 48px 0; margin-bottom: 32px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+        <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">A2 Level > Unit 16</div>
+        <h1 style="margin: 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">Thermodynamics</h1>
+        <p style="margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">Internal energy, first law, and energy conservation</p>
+    </div>
+</div>
+
+<div class="reading-progress" id="readingProgress"></div>
+<a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+<button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+
+<div class="mobile-nav" id="mobileNav">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+        <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+    </div>
+<ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="margin-bottom: 4px;"><a href="#h2-intro" onclick="scrollTo('h2-intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">1. Internal Energy</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-internal-1-1" onclick="scrollTo('h3-internal-1-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1 Internal Energy of Ideal Gas</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">2. Doing Work - Gas</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-work-2-1" onclick="scrollTo('h3-work-2-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1 Work Done BY Gas</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-work-2-2" onclick="scrollTo('h3-work-2-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.2 Work Done ON Gas - By Heating</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-work-2-3" onclick="scrollTo('h3-work-2-3')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.3 Work Done ON Gas - By Piston</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-work-2-4" onclick="scrollTo('h3-work-2-4')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.4 P-V Diagrams</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-work-2-5" onclick="scrollTo('h3-work-2-5')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.5 State Change Analysis</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-work-2-6" onclick="scrollTo('h3-work-2-6')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.6 Sign Convention</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">3. The First Law</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-first-law-3-1" onclick="scrollTo('h3-first-law-3-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1 Summary Table</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-first-law-3-2" onclick="scrollTo('h3-first-law-3-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.2 Example Calculation</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">4. P-V Graph Analysis</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-pv-4-1" onclick="scrollTo('h3-pv-4-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.1 Work from P-V Diagrams</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-pv-4-2" onclick="scrollTo('h3-pv-4-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.2 Direction Convention</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-pv-4-3" onclick="scrollTo('h3-pv-4-3')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.3 Cyclic Processes</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-pv-4-4" onclick="scrollTo('h3-pv-4-4')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.4 Detailed Example</a></li>
+        <li style="margin-bottom: 4px;"><a href="#h2-checklist" onclick="scrollTo('h2-checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">P4 Checklist</a></li>
+    </ul>
+    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+        <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+            <button onclick="updateProgress('ch16', 'not_started')" id="progress-btn-not_started-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+            <button onclick="updateProgress('ch16', 'in_progress')" id="progress-btn-in_progress-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+            <button onclick="updateProgress('ch16', 'completed')" id="progress-btn-completed-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+        </div>
+    </div>
+</div>
+
+<div class="content-grid">
+    <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#h2-intro" class="nav-link" data-section="h2-intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-internal" class="nav-section-header" data-section="h2-internal">1. Internal Energy</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-internal-1-1" class="nav-link" data-section="h3-internal-1-1">1.1 Internal Energy of Ideal Gas</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-work" class="nav-section-header" data-section="h2-work">2. Doing Work - Gas</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-work-2-1" class="nav-link" data-section="h3-work-2-1">2.1 Work Done BY Gas</a></li>
+                    <li class="nav-item"><a href="#h3-work-2-2" class="nav-link" data-section="h3-work-2-2">2.2 Work Done ON Gas - By Heating</a></li>
+                    <li class="nav-item"><a href="#h3-work-2-3" class="nav-link" data-section="h3-work-2-3">2.3 Work Done ON Gas - By Piston</a></li>
+                    <li class="nav-item"><a href="#h3-work-2-4" class="nav-link" data-section="h3-work-2-4">2.4 P-V Diagrams</a></li>
+                    <li class="nav-item"><a href="#h3-work-2-5" class="nav-link" data-section="h3-work-2-5">2.5 State Change Analysis</a></li>
+                    <li class="nav-item"><a href="#h3-work-2-6" class="nav-link" data-section="h3-work-2-6">2.6 Sign Convention</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-first-law" class="nav-section-header" data-section="h2-first-law">3. The First Law</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-first-law-3-1" class="nav-link" data-section="h3-first-law-3-1">3.1 Summary Table</a></li>
+                    <li class="nav-item"><a href="#h3-first-law-3-2" class="nav-link" data-section="h3-first-law-3-2">3.2 Example Calculation</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-pv" class="nav-section-header" data-section="h2-pv">4. P-V Graph Analysis</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-pv-4-1" class="nav-link" data-section="h3-pv-4-1">4.1 Work from P-V Diagrams</a></li>
+                    <li class="nav-item"><a href="#h3-pv-4-2" class="nav-link" data-section="h3-pv-4-2">4.2 Direction Convention</a></li>
+                    <li class="nav-item"><a href="#h3-pv-4-3" class="nav-link" data-section="h3-pv-4-3">4.3 Cyclic Processes</a></li>
+                    <li class="nav-item"><a href="#h3-pv-4-4" class="nav-link" data-section="h3-pv-4-4">4.4 Detailed Example</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-checklist" class="nav-link" data-section="h2-checklist" style="margin-top:8px;">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../../homework/ch16/" class="nav-link" style="color: #16a34a;">📚 Homework (Exercises)</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch16', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch16', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch16', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+
+    <main class="main-content">
+        
+        
+        <div id="intro" class="section-card">
+            <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: What is Thermodynamics?</h2>
+            
+            <div class="concept-box">
+                <strong>Think about these questions:</strong>
+                <ul style="margin-top: 10px; margin-bottom: 0;">
+                    <li>If we lift up a stone, it has gravitational potential energy. If we throw it, it has kinetic energy. But if we heat the stone, where does the energy go?</li>
+                    <li>The stone gets hotter, but it is not higher or faster. Where did the energy from the heater go?</li>
+                </ul>
+            </div>
+            
+            <p>The energy seems to have disappeared into the stone. In fact, the stone gets hotter, and that means the molecules that make up the stone have more energy — both kinetic and electrical potential energy. They vibrate more and faster, and they move a little further apart.</p>
+            
+            <div class="exam-alert">
+                <strong>Paper 4 Examination Focus:</strong> Expect questions combining the First Law of Thermodynamics with gas laws. Understand how to calculate work done by gases and changes in internal energy. Be able to analyze P-V diagrams and determine heat/work/internal energy changes.
+            </div>
+        </div>
+
+        
+        <div id="internal-energy" class="section-card">
+            <h2 id="h2-internal" style="scroll-margin-top: 120px;">1. Internal Energy of a System</h2>
+            
+            <div class="definition-box">
+                <strong>Definition: Internal Energy (U)</strong><br><br>
+                The internal energy of a system is the sum of the random distribution of kinetic and potential energies associated with the atoms/molecules that make up the system.
+            </div>
+            
+            <div class="concept-box">
+                <strong>Key Relationship:</strong><br>
+                A rise in temperature of an object leads to an increase in its internal energy.
+            </div>
+            
+            <h3 id="h3-internal-1-1" style="font-weight: 600;">Internal Energy of Ideal Gas</h3>
+            <p>For an ideal monatomic gas, the internal energy is purely kinetic (as there are no intermolecular forces). From Unit 15, we know:</p>
+            
+            <div class="formula-box">
+                <strong>Internal Energy of Monatomic Ideal Gas:</strong><br><br>
+                \[U = \frac{3}{2}nRT = \frac{3}{2}NkT\]<br><br>
+                or for total internal energy of N molecules:<br><br>
+                \[U = N \times \frac{3}{2}kT\]
+            </div>
+            
+            <div class="key-points">
+                <strong>Key Points about Internal Energy:</strong>
+                <ul>
+                    <li><strong>State Function:</strong> Internal energy depends only on the current state (P, V, T), not on the path taken to reach that state</li>
+                    <li><strong>Temperature Dependence:</strong> For ideal gases, \(U \propto T\) only</li>
+                    <li><strong>Random Distribution:</strong> The kinetic and potential energies are randomly distributed among all molecules</li>
+                </ul>
+            </div>
+        </div>
+
+                        
+        <div id="work-gas" class="section-card">
+            <h2 id="h2-work" style="scroll-margin-top: 120px;">2. Doing Work - Gas</h2>
+            
+            <h3 id="h3-work-2-1" style="font-weight: 600;">2.1 Work Done BY Gas (Expansion)</h3>
+            
+            <div class="concept-box">
+                <strong>Think about this:</strong> When you blow up a balloon, the expanding balloon pushes aside the atmosphere. How much work is done against the atmosphere in blowing up a balloon from a very small volume to a volume of 2 litres?
+            </div>
+            
+            <p>When a gas expands, it pushes against its surroundings and does work. Consider a gas in a cylinder with a movable piston:</p>
+            
+            
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center; margin: 20px 0;">
+                <img src="../../assets/images/ch16/fig_2_1_piston.jpg" alt="Cylinder-Piston Apparatus" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div style="color: #64748b; font-size: 13px; margin-top: 12px;">
+                    <strong>Fig 2.1</strong> Cylinder-Piston Apparatus<br>
+                    Gas expands and pushes piston, doing work on surroundings
+                </div>
+            </div>
+            
+            <h3 id="h3-work-2-2" style="font-weight: 600;">2.2 Work Done ON Gas - By Heating</h3>
+            
+            <p>The walls of the container become hot and so its molecules vibrate more vigorously. The molecules of the cool gas strike the walls and bounce off faster. They have gained kinetic energy, and we say the temperature has risen.</p>
+            
+            
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center; margin: 20px 0;">
+                <img src="../../assets/images/ch16/fig_2_2_molecular.jpg" alt="Molecular Collisions with Hot Wall" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <div style="color: #64748b; font-size: 13px; margin-top: 12px;">
+                    <strong>Fig 2.2</strong> Molecular Collisions with Hot Wall<br>
+                    Molecules gain kinetic energy after colliding with hot wall
+                </div>
+            </div>
+            
+            <h3 id="h3-work-2-3" style="font-weight: 600;">2.3 Work Done ON Gas - By Piston</h3>
+            
+            <p>In this case, a wall of the container is being pushed inwards. The molecules of the cool gas strike a moving wall and bounce off faster. They have gained kinetic energy and again the temperature has risen. This explains why a gas gets hotter when it is compressed (like in a bicycle pump).</p>
+            
+            <div class="tip-box">
+                <strong>Key Understanding:</strong> The moving piston does work on the gas molecules, increasing their kinetic energy. This is why a gas gets hotter when compressed (like a bicycle pump getting hot).
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">2.3.1 Work Done BY Gas (Expansion)</h4>
+            
+            <p>When a gas expands at <strong>constant pressure</strong>, it pushes against the external pressure and does work on the surroundings:</p>
+            
+            <div class="formula-box">
+                <strong>Work Done BY Gas (Constant Pressure):</strong><br><br>
+                \[W_{\text{by}} = P \Delta V = P(V_2 - V_1)\]<br><br>
+                Where:<br>
+                \(P\) = external pressure (Pa)<br>
+                \(\Delta V\) = change in volume (m³)<br>
+                \(W_{\text{by}}\) = work done BY the gas (J)
+            </div>
+            
+            <div class="concept-box">
+                <strong>Physical Meaning:</strong><br>
+                Work done by gas = Force × Distance = \((P \times A) \times (\Delta V/A) = P \times \Delta V\)<br><br>
+                The gas pushes the piston with force \(F = P \times A\) through distance \(d = \Delta V/A\), doing work \(W = F \times d = P\Delta V\).
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">2.3.2 Work Done ON Gas (Compression)</h4>
+            
+            <p>When a gas is compressed at <strong>constant pressure</strong>, work is done on the gas by the external force:</p>
+            
+            <div class="formula-box">
+                <strong>Work Done ON Gas (Constant Pressure):</strong><br><br>
+                \[W_{\text{on}} = -P \Delta V = P(V_1 - V_2)\]<br><br>
+                Where:<br>
+                \(W_{\text{on}}\) = work done ON the gas (J)<br>
+                Note: For compression, \(\Delta V = V_2 - V_1 < 0\), so \(W_{\text{by}} = P\Delta V < 0\), meaning work is done ON the gas.
+            </div>
+            
+            <div class="key-points">
+                <strong>Key Formulas Summary:</strong>
+                <ul>
+                    <li><strong>Expansion (V increases):</strong> \(W_{\text{by}} = P\Delta V > 0\) — gas does work on surroundings</li>
+                    <li><strong>Compression (V decreases):</strong> \(W_{\text{by}} = P\Delta V < 0\) — surroundings do work on gas</li>
+                    <li><strong>Relationship:</strong> \(W_{\text{on}} = -W_{\text{by}}\)</li>
+                </ul>
+            </div>
+            
+            <div class="exam-alert">
+                <strong>CIE Sign Convention:</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li>\(W_{\text{by}} > 0\): Gas expands, does work on surroundings (energy leaves system)</li>
+                    <li>\(W_{\text{by}} < 0\): Gas compressed, work done on gas (energy enters system)</li>
+                    <li>Alternatively using \(W_{\text{on}}\): positive when work is done ON the gas (compression)</li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-work-2-4" style="font-weight: 600;">2.4 P-V Diagrams and Work Calculation</h3>
+            
+            <p>The work done by a gas during expansion or compression can be visualized using a <strong>pressure-volume (P-V) diagram</strong>:</p>
+            
+            
+            <div style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; text-align: center; margin: 20px 0; color: #64748b;">
+                [Image: P-V diagram with axes P and V - to be inserted from past paper PDF]
+            </div>
+            
+            <div class="definition-box">
+                <strong>Key Concept:</strong> Work done by gas = Area under the P-V curve<br><br>
+                For an infinitesimal volume change:<br>
+                \\[\delta W = P \, dV\\]<br><br>
+                For a finite change:<br>
+                \\[W = \\int_{V_1}^{V_2} P \, dV\\]
+            </div>
+            
+            <h3 id="h3-work-2-5" style="font-weight: 600;">2.5 State Change Analysis</h3>
+            
+            <p><strong>Scenario:</strong> An ideal gas undergoes a change from state a to state b (as shown in the diagram below)</p>
+            
+            
+            <div style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; text-align: center; margin: 20px 0; color: #64748b;">
+                [Image: P-V diagram showing state A to state B transition - to be inserted from past paper PDF]
+            </div>
+            
+            <div class="concept-box">
+                <strong>Questions:</strong>
+                <ol style="margin-top: 10px; margin-bottom: 0;">
+                    <li>In this process, is the gas doing work on the surroundings, or are the surroundings doing work on the gas?</li>
+                    <li>Is the work done on the gas positive or negative?</li>
+                    <li>What is the magnitude of the work?</li>
+                </ol>
+            </div>
+            
+            <div class="key-points">
+                <strong>Answer:</strong>
+                <ul>
+                    <li>The gas volume increases, so <strong>work is done BY the gas</strong></li>
+                    <li>Work done ON the gas is <strong>negative</strong> (because work done BY the gas is positive)</li>
+                    <li>Magnitude of work = <strong>area under the P-V curve</strong></li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-work-2-6" style="font-weight: 600;">2.6 Sign Convention for Work</h3>
+            
+            
+            <div style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; text-align: center; margin: 20px 0; color: #64748b;">
+                [Image: P-V diagram showing compression vs expansion - to be inserted from past paper PDF]
+            </div>
+            
+            <div class="exam-alert">
+                <strong>Quick Reference:</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li>State moves left (volume decreases) → work done ON gas → W<sub>on</sub> &gt; 0</li>
+                    <li>State moves right (volume increases) → work done BY gas → W<sub>by</sub> &gt; 0</li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <div id="first-law" class="section-card">
+            <h2 id="h2-first-law" style="scroll-margin-top: 120px;">3. The First Law of Thermodynamics</h2>
+            
+            <div class="definition-box">
+                <strong>First Law of Thermodynamics:</strong><br><br>
+                Energy is conserved; that is, energy cannot simply disappear, or appear from nowhere. All the energy put into a gas by heating it and by doing work on it must end up in the gas; it increases the internal energy of the gas.
+            </div>
+            
+            <div class="formula-box">
+                <strong>First Law Equation:</strong><br><br>
+                \[\Delta U = Q + W_{\text{on}}\]<br><br>
+                or equivalently:<br><br>
+                \[\Delta U = Q - W_{\text{by}}\]<br><br>
+                Where:<br>
+                \(\Delta U\) = Change in internal energy (J) — positive means internal energy increases<br>
+                \(Q\) = Heat added to system (J) — positive when heat enters<br>
+                \(W_{\text{by}}\) = Work done BY system (J) — positive when gas expands<br>
+                \(W_{\text{on}}\) = Work done ON system (J) — positive when gas is compressed
+            </div>
+            
+            <div class="exam-alert">
+                <strong>Sign Convention (CIE Standard):</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li>\(Q > 0\): Heat added TO the system</li>
+                    <li>\(Q < 0\): Heat removed FROM the system</li>
+                    <li>\(W_{\text{by}} > 0\): Work done BY the system (expansion)</li>
+                    <li>\(W_{\text{by}} < 0\): Work done ON the system (compression)</li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-first-law-3-1" style="font-weight: 600;">First Law Summary Table</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                <tr style="background: #f1f5f9;">
+                    <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Condition</th>
+                    <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Internal Energy</th>
+                    <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Heat</th>
+                    <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Work</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Heated at constant volume</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Increases</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Added (Q > 0)</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Zero (W = 0)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Compressed rapidly</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Increases</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Zero (Q = 0)</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Negative (W < 0)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Expands isothermally</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Constant</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Added (Q > 0)</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Positive (W > 0)</td>
+                </tr>
+            </table>
+            
+            <h3 id="h3-first-law-3-2" style="font-weight: 600;">Example Calculation</h3>
+            <div class="concept-box">
+                <strong>Example 1:</strong> When you blow up a balloon, the expanding balloon pushes aside the atmosphere. How much work is done against the atmosphere in blowing up a balloon from a very small volume to a volume of 2 litres at atmospheric pressure (101 kPa)?<br><br>
+                <strong>Solution:</strong><br>
+                \(W = P\Delta V = 101 \times 10^3 \times 2 \times 10^{-3} = 202 \text{ J}\)
+            </div>
+            
+            <div class="concept-box">
+                <strong>Example 2:</strong> Use the first law to answer the following.<br><br>
+                <strong>a)</strong> A gas is heated by supplying it with 250 kJ of thermal energy; at the same time, it is compressed so that 500 kJ of work is done on the gas. Calculate the change in internal energy.<br><br>
+                \(\Delta U = Q + W_{\text{on}} = 250 + 500 = 750 \text{ kJ}\)<br><br>
+                
+                <strong>b)</strong> The same gas is heated as before with 250 kJ of energy. This time the gas is allowed to expand so that it does 200 kJ of work on its surroundings. Calculate the change in internal energy.<br><br>
+                \(\Delta U = Q - W_{\text{by}} = 250 - 200 = 50 \text{ kJ}\)
+            </div>
+        </div>
+
+        
+        <div id="pv-graph" class="section-card">
+            <h2 id="h2-pv" style="scroll-margin-top: 120px;">4. P-V Graph Analysis</h2>
+            
+            <div class="pv-diagram-placeholder">
+                [ P-V Diagram Placeholder ]<br>
+                An ideal gas undergoing a change from state A to state B<br>
+                (Image to be inserted here)
+            </div>
+            
+            <h3 id="h3-pv-4-1" style="font-weight: 600;">4.1 Work from P-V Diagrams</h3>
+            <p>An ideal gas undergoing a change from state a to state b:</p>
+            
+            <div class="concept-box">
+                <strong>Question 1:</strong> In the process of change, is the gas doing work on the outside or is the outside doing work on the gas?<br><br>
+                <strong>Answer:</strong> The volume of the gas increases, so work is done <strong>by the gas</strong> on the surroundings.
+            </div>
+            
+            <div class="concept-box">
+                <strong>Question 2:</strong> Is the work done on gas positive or negative? What is the magnitude of the work?<br><br>
+                <strong>Answer:</strong> The work done ON the gas is <strong>negative</strong> (since work is done BY the gas). The magnitude equals the area under the P-V curve between the two states.
+            </div>
+            
+            <div class="concept-box">
+                <strong>Question 3:</strong> Does the gas absorb heat or release heat? How does the internal energy change?<br><br>
+                <strong>Answer:</strong> In isobaric condition for ideal gas, as V increases, T also increases (from \(PV = nRT\)). Therefore, the gas is <strong>absorbing heat</strong> and the internal energy <strong>increases</strong>.
+            </div>
+            
+            <h3 id="h3-pv-4-2" style="font-weight: 600;">4.2 Direction Convention for P-V Diagrams</h3>
+            <div class="key-points">
+                <ul>
+                    <li><strong>State to the left:</strong> Work done ON gas is positive (compression)</li>
+                    <li><strong>State to the right:</strong> Work done BY gas is positive (expansion)</li>
+                    <li><strong>Work magnitude:</strong> Area under the P-V curve</li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-pv-4-3" style="font-weight: 600;">4.3 Cyclic Processes on P-V Diagrams</h3>
+            
+            <div class="pv-diagram-placeholder">
+                [ Cyclic Process P-V Diagram Placeholder ]<br>
+                A → B → C → A cycle<br>
+                (Image to be inserted here)
+            </div>
+            
+            <div class="concept-box">
+                <strong>Analysis of Cyclic Process:</strong><br><br>
+                Consider a cycle: State A → State B → State C → State A<br><br>
+                
+                <strong>Key insight:</strong> Since internal energy is a state function, \(\Delta U = 0\) for a complete cycle.<br><br>
+                
+                Therefore: \(Q_{\text{net}} = W_{\text{net}}\)<br><br>
+                
+                The net work done equals the area enclosed by the cycle on the P-V diagram.
+            </div>
+            
+            <h3 id="h3-pv-4-4" style="font-weight: 600;">4.4 Detailed Example: A → B → C Cycle</h3>
+            
+            <div class="formula-box">
+                <strong>Process Analysis:</strong><br><br>
+                
+                <strong>A → B:</strong> Isobaric expansion (constant pressure)<br>
+                - Volume increases at constant pressure<br>
+                - Work done BY gas = Area under AB<br>
+                - Temperature increases (\(V \propto T\) at constant P)<br>
+                - Heat is absorbed<br><br>
+                
+                <strong>B → C:</strong> Isochoric cooling (constant volume)<br>
+                - Volume constant, pressure drops<br>
+                - Work done = 0<br>
+                - Temperature decreases<br>
+                - Heat is released<br><br>
+                
+                <strong>C → A:</strong> Return path<br>
+                - Compression process<br>
+                - Work done ON gas
+            </div>
+            
+            <div class="exam-alert">
+                <strong>Important Conclusion:</strong><br><br>
+                For states A and C: If they have the same internal energy (same temperature), then from B to C, the gas maintains constant volume while pressure decreases. This means:<br><br>
+                - Temperature decreases<br>
+                - RMS speed of molecules decreases<br>
+                - The number of molecules hitting the unit area of wall per unit time is reduced
+            </div>
+        </div>
+
+        
+        <div id="checklist" class="section-card">
+            <h2 id="h2-checklist" style="scroll-margin-top: 120px;">P4 Checklist: Thermodynamics</h2>
+
+            <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+            
+            <div class="checklist-box">
+                <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">Essential Definitions</div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d1">
+                    <label for="d1"><strong>Internal energy:</strong> The sum of the random distribution of kinetic and potential energies of all molecules</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d2">
+                    <label for="d2"><strong>First Law:</strong> \(\Delta U = Q - W_{\text{by}}\) or \(\Delta U = Q + W_{\text{on}}\)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d3">
+                    <label for="d3"><strong>Work done by gas:</strong> \(W = \int P \, dV\) or \(W = P\Delta V\) at constant pressure</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d4">
+                    <label for="d4"><strong>Isochoric:</strong> \(W = 0\), so \(\Delta U = Q\)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d5">
+                    <label for="d5"><strong>Isothermal:</strong> \(\Delta U = 0\), so \(Q = W\)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d6">
+                    <label for="d6"><strong>Adiabatic:</strong> \(Q = 0\), so \(\Delta U = -W\)</label>
+                </div>
+            </div>
+
+            <div class="checklist-box">
+                <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e1">
+                    <label for="e1">Work done = Area under P-V curve</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e2">
+                    <label for="e2">For ideal gas: \(U\) depends only on temperature</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e3">
+                    <label for="e3">Cyclic process: \(\Delta U = 0\), so \(Q_{\text{net}} = W_{\text{net}}\)</label>
+                </div>
+            </div>
+            
+            <div class="tip-box" style="margin-top: 20px;">
+                <strong>Exam Strategy:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Always identify the type of process first (isobaric, isochoric, isothermal, or adiabatic)</li>
+                    <li>Draw a P-V diagram to visualize the process</li>
+                    <li>Apply the First Law: \(\Delta U = Q - W\)</li>
+                    <li>Remember that for ideal gases, internal energy depends only on temperature</li>
+                    <li>For cyclic processes: \(\Delta U = 0\), so \(Q_{\text{net}} = W_{\text{net}}\)</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    function toggleMobileNav() {
+        document.getElementById('mobileNav').classList.toggle('show');
+    }
+    function closeMobileNav() {
+        document.getElementById('mobileNav').classList.remove('show');
+    }
+    
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function updateReadingProgress() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (window.scrollY / docHeight) * 100;
+        document.getElementById('readingProgress').style.width = progress + '%';
+        
+        const backToTop = document.getElementById('backToTop');
+        if (window.scrollY > 400) {
+            backToTop.classList.add('show');
+        } else {
+            backToTop.classList.remove('show');
+        }
+    }
+    
+    window.addEventListener('scroll', updateReadingProgress);
+    
+    function scrollTo(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+    }
+    
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+        closeMobileNav();
+    }
+
+    
+    function updateActiveNav() {
+        const headings = document.querySelectorAll('h2[id], h3[id]');
+        const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+        
+        if (headings.length === 0 || navLinks.length === 0) return;
+        
+        let activeId = null;
+        let bestTop = Infinity;
+        
+        const scrollTop = window.scrollY;
+        
+        headings.forEach(h => {
+            const rect = h.getBoundingClientRect();
+            const offsetTop = rect.top + scrollTop;
+            if (offsetTop <= scrollTop + 150 && offsetTop > scrollTop - 100) {
+                if (offsetTop < bestTop) {
+                    bestTop = offsetTop;
+                    activeId = h.id;
+                }
+            }
+        });
+        
+        if (!activeId) return;
+        
+        navLinks.forEach(link => link.classList.remove('active'));
+        const activeLink = document.querySelector(`.sidebar-nav [data-section="${activeId}"]`);
+        if (activeLink) activeLink.classList.add('active');
+    }
+    
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    window.addEventListener('resize', updateActiveNav, { passive: true });
+    document.addEventListener('DOMContentLoaded', updateActiveNav);
+</script>
+
+<script>
+    function toggleMobileNav() {
+        document.getElementById('mobileNav').classList.toggle('show');
+    }
+    function closeMobileNav() {
+        document.getElementById('mobileNav').classList.remove('show');
+    }
+    
+    function toggleUnitNav() {
+        const dropdown = document.getElementById('unitNavDropdown');
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        const container = document.querySelector('[onclick="toggleUnitNav()"]');
+        const dropdown = document.getElementById('unitNavDropdown');
+        if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+    
+    function loadProgress(unitId) {
+        if (!Auth.isLoggedIn()) return;
+        fetch(`${API_BASE_URL}/progress/${unitId}`, {
+            headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.unit) {
+                updateProgressButtons(data.unit.status);
+            }
+        })
+        .catch(err => console.error('Load progress error:', err));
+    }
+    
+    function updateProgress(unitId, status) {
+        if (!Auth.isLoggedIn()) {
+            AuthModal.open();
+            return;
+        }
+        fetch(`${API_BASE_URL}/progress/${unitId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Auth.getToken()}`
+            },
+            body: JSON.stringify({ status })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                updateProgressButtons(status);
+            }
+        })
+        .catch(err => console.error('Update progress error:', err));
+    }
+    
+    function updateProgressButtons(status) {
+        ['not_started', 'in_progress', 'completed'].forEach(s => {
+            const btn = document.getElementById(`progress-btn-${s}`);
+            if (btn) btn.classList.toggle('active', s === status);
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        loadProgress('ch16');
+    });
+</script>
+
+
+<script src="../../auth/auth.js"></script>
+</body>
+</html>

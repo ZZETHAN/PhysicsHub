@@ -1,0 +1,304 @@
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const db = require('../database');
+const { JWT_SECRET, authenticateToken, requireAdmin, requireApproved } = require('../middleware/auth');
+
+const router = express.Router();
+
+// 注册 - 需要管理员审核
+router.post('/register', (req, res) => {
+    const { username, email, password } = req.body;
+
+    // 验证输入
+    if (!username || !email || !password) {
+        return res.status(400).json({ 
+            success: false, 
+            message: '请填写所有必填字段' 
+        });
+    }
+
+    // 验证邮箱格式
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ 
+            success: false, 
+            message: '请输入有效的邮箱地址' 
+        });
+    }
+
+    // 验证密码强度
+    if (password.length < 6) {
+        return res.status(400).json({ 
+            success: false, 
+            message: '密码至少需要6位字符' 
+        });
+    }
+
+    // 验证用户名
+    if (username.length < 3 || username.length > 20) {
+        return res.status(400).json({ 
+            success: false, 
+            message: '用户名长度需要在3-20个字符之间' 
+        });
+    }
+
+    const passwordHash = bcrypt.hashSync(password, 10);
+
+    db.run(
+        'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
+        [username, email, passwordHash],
+        function(err) {
+            if (err) {
+                if (err.message.includes('UNIQUE constraint failed')) {
+                    if (err.message.includes('username')) {
+                        return res.status(400).json({ 
+                            success: false, 
+                            message: '用户名已被使用' 
+                        });
+                    }
+                    if (err.message.includes('email')) {
+                        return res.status(400).json({ 
+                            success: false, 
+                            message: '邮箱已被注册' 
+                        });
+                    }
+                }
+                return res.status(500).json({ 
+                    success: false, 
+                    message: '注册失败，请稍后重试' 
+                });
+            }
+
+            res.json({ 
+                success: true, 
+                message: '注册申请已提交，请等待管理员审核通过后即可登录' 
+            });
+        }
+    );
+});
+
+// 登录
+router.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ 
+            success: false, 
+            message: '请填写用户名和密码' 
+        });
+    }
+
+    db.get(
+        'SELECT * FROM users WHERE username = ? OR email = ?',
+        [username, username],
+        (err, user) => {
+            if (err) {
+                return res.status(500).json({ 
+                    success: false, 
+                    message: '登录失败，请稍后重试' 
+                });
+            }
+
+            if (!user) {
+                return res.status(401).json({ 
+                    success: false, 
+                    message: '用户名或密码错误' 
+                });
+            }
+
+            // 检查账号状态
+            if (user.status === 'pending') {
+                return res.status(403).json({ 
+                    success: false, 
+                    message: '账号正在审核中，请等待管理员批准' 
+                });
+            }
+
+            if (user.status === 'rejected') {
+                return res.status(403).json({ 
+                    success: false, 
+                    message: '注册申请未通过审核，请联系管理员' 
+                });
+            }
+
+            // 验证密码
+            if (!bcrypt.compareSync(password, user.password_hash)) {
+                return res.status(401).json({ 
+                    success: false, 
+                    message: '用户名或密码错误' 
+                });
+            }
+
+            // 更新最后登录时间
+            db.run('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?', [user.id]);
+
+            // 生成 JWT Token
+            const token = jwt.sign(
+                { 
+                    userId: user.id, 
+                    username: user.username, 
+                    role: user.role,
+                    status: user.status 
+                },
+                JWT_SECRET,
+                { expiresIn: '24h' }
+            );
+
+            res.json({
+                success: true,
+                message: '登录成功',
+                token,
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    role: user.role
+                }
+            });
+        }
+    );
+});
+
+// 获取当前用户信息
+router.get('/me', authenticateToken, (req, res) => {
+    db.get(
+        'SELECT id, username, email, role, status, created_at FROM users WHERE id = ?',
+        [req.user.userId],
+        (err, user) => {
+            if (err || !user) {
+                return res.status(404).json({ 
+                    success: false, 
+                    message: '用户不存在' 
+                });
+            }
+            res.json({ success: true, user });
+        }
+    );
+});
+
+// ========== 管理员接口 ==========
+
+// 获取待审核用户列表
+router.get('/admin/pending', authenticateToken, requireAdmin, (req, res) => {
+    db.all(
+        'SELECT id, username, email, created_at FROM users WHERE status = ? ORDER BY created_at DESC',
+        ['pending'],
+        (err, users) => {
+            if (err) {
+                return res.status(500).json({ 
+                    success: false, 
+                    message: '获取失败' 
+                });
+            }
+            res.json({ success: true, users });
+        }
+    );
+});
+
+// 获取所有用户列表
+router.get('/admin/users', authenticateToken, requireAdmin, (req, res) => {
+    db.all(
+        `SELECT id, username, email, status, role, created_at, approved_at 
+         FROM users ORDER BY created_at DESC`,
+        (err, users) => {
+            if (err) {
+                return res.status(500).json({ 
+                    success: false, 
+                    message: '获取失败' 
+                });
+            }
+            res.json({ success: true, users });
+        }
+    );
+});
+
+// 审核通过用户
+router.post('/admin/approve/:id', authenticateToken, requireAdmin, (req, res) => {
+    const userId = req.params.id;
+    
+    db.run(
+        'UPDATE users SET status = ?, approved_at = CURRENT_TIMESTAMP, approved_by = ? WHERE id = ?',
+        ['approved', req.user.userId, userId],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ 
+                    success: false, 
+                    message: '审核失败' 
+                });
+            }
+            if (this.changes === 0) {
+                return res.status(404).json({ 
+                    success: false, 
+                    message: '用户不存在' 
+                });
+            }
+            res.json({ 
+                success: true, 
+                message: '审核通过' 
+            });
+        }
+    );
+});
+
+// 拒绝用户注册
+router.post('/admin/reject/:id', authenticateToken, requireAdmin, (req, res) => {
+    const userId = req.params.id;
+    
+    db.run(
+        'UPDATE users SET status = ?, approved_by = ? WHERE id = ?',
+        ['rejected', req.user.userId, userId],
+        function(err) {
+            if (err) {
+                return res.status(500).json({ 
+                    success: false, 
+                    message: '操作失败' 
+                });
+            }
+            if (this.changes === 0) {
+                return res.status(404).json({ 
+                    success: false, 
+                    message: '用户不存在' 
+                });
+            }
+            res.json({ 
+                success: true, 
+                message: '已拒绝该用户的注册申请' 
+            });
+        }
+    );
+});
+
+// 删除用户
+router.delete('/admin/users/:id', authenticateToken, requireAdmin, (req, res) => {
+    const userId = req.params.id;
+    
+    // 不能删除自己
+    if (parseInt(userId) === req.user.userId) {
+        return res.status(400).json({ 
+            success: false, 
+            message: '不能删除当前登录的账号' 
+        });
+    }
+    
+    db.run('DELETE FROM users WHERE id = ?', [userId], function(err) {
+        if (err) {
+            return res.status(500).json({ 
+                success: false, 
+                message: '删除失败' 
+            });
+        }
+        if (this.changes === 0) {
+            return res.status(404).json({ 
+                success: false, 
+                message: '用户不存在' 
+            });
+        }
+        res.json({ 
+            success: true, 
+            message: '用户已删除' 
+        });
+    });
+});
+
+module.exports = router;

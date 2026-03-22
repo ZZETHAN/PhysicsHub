@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见错误 - Ch 12: Motion in a Circle | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        .mistake-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            margin: var(--space-5) 0;
+            overflow: hidden;
+            border: 2px solid var(--gray-200);
+        }
+        .mistake-header {
+            background: var(--danger-light);
+            padding: var(--space-4) var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        .mistake-icon {
+            font-size: 24px;
+        }
+        .mistake-title {
+            font-weight: 700;
+            color: var(--danger);
+            margin: 0;
+        }
+        .mistake-body {
+            padding: var(--space-6);
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+            margin: var(--space-4) 0;
+        }
+        .comparison-wrong {
+            background: var(--danger-light);
+            border: 2px solid var(--danger);
+            border-radius: var(--radius);
+            padding: var(--space-4);
+        }
+        .comparison-right {
+            background: var(--success-light);
+            border: 2px solid var(--success);
+            border-radius: var(--radius);
+            padding: var(--space-4);
+        }
+        .comparison-label {
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+            font-size: var(--text-sm);
+        }
+        .comparison-wrong .comparison-label { color: var(--danger); }
+        .comparison-right .comparison-label { color: var(--success); }
+        .formula-box {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: var(--space-4);
+            margin: var(--space-4) 0;
+            text-align: center;
+        }
+        .tip-box-custom {
+            background: var(--warning-light);
+            border-left: 4px solid var(--warning);
+            padding: var(--space-4);
+            margin-top: var(--space-4);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        .checklist li {
+            padding-left: 28px;
+            position: relative;
+        }
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+        mjx-container {
+            font-size: 115% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../../index.html" style="text-decoration: none;"><div class="logo">PhysicsHub</div></a>
+                <div class="logo-sub">Ch 12 · Circular Motion</div>
+            </div>
+            
+            <nav class="nav-section">
+                <div class="nav-title">本单元导航</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><span class="nav-icon">📋</span>单元概览</a></li>
+                    <li class="nav-item"><a href="theory.html" class="nav-link"><span class="nav-icon">📖</span>理论讲解</a></li>
+                    <li class="nav-item"><a href="formulas.html" class="nav-link"><span class="nav-icon">📝</span>公式汇总</a></li>
+                    <li class="nav-item"><a href="examples.html" class="nav-link"><span class="nav-icon">💡</span>典型例题</a></li>
+                    <li class="nav-item"><a href="mistakes.html" class="nav-link active"><span class="nav-icon">⚠️</span>常见错误</a></li>
+                    <li class="nav-item"><a href="quiz.html" class="nav-link"><span class="nav-icon">✏️</span>单元测试</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main">
+            <div class="content-card">
+                <h1>常见错误与避坑指南</h1>
+                
+                <div class="box box-warning">
+                    <div class="box-title">⚠️ 为什么看这一页？</div>
+                    <p>这些错误来自历年真题答卷分析。提前了解可以帮你避免不必要的失分。</p>
+                </div>
+                
+                <!-- 错误1 -->
+                <div class="mistake-card">
+                    <div class="mistake-header">
+                        <span class="mistake-icon">❌</span>
+                        <h3 class="mistake-title">错误 1：向心力是一种"新的力"</h3>
+                    </div>
+                    
+                    <div class="mistake-body">
+                        <div class="comparison">
+                            <div class="comparison-wrong">
+                                <div class="comparison-label">❌ 错误做法</div>
+                                <p>在受力分析图中画一个额外的"向心力"箭头，好像它是一种独立的力。</p>
+                            </div>
+                            
+                            <div class="comparison-right">
+                                <div class="comparison-label">✅ 正确理解</div>
+                                <p>向心力是<strong>合力的效果</strong>，不是独立的力。它由其他真实力（张力、摩擦力、重力分量等）提供。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box-custom">
+                            <strong>💡 记忆技巧</strong><br>
+                            受力分析时只画三种基本力：重力、弹力、摩擦力。"向心力"是这些力的<strong>合力效果</strong>。
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 错误2 -->
+                <div class="mistake-card">
+                    <div class="mistake-header">
+                        <span class="mistake-icon">❌</span>
+                        <h3 class="mistake-title">错误 2：混淆周期 \(T\) 和频率 \(f\)</h3>
+                    </div>
+                    
+                    <div class="mistake-body">
+                        <div class="comparison">
+                            <div class="comparison-wrong">
+                                <div class="comparison-label">❌ 错误做法</div>
+                                <p>直接用 \(\omega = 2\pi T\)（忘记 \(T\) 在分母）或者把频率 Hz 当成 rad/s</p>
+                            </div>
+                            
+                            <div class="comparison-right">
+                                <div class="comparison-label">✅ 正确公式</div>
+                                <div class="formula-box">
+                                    \[
+                                    \omega = \frac{2\pi}{T} = 2\pi f
+                                    \]
+                                </div>
+                                <p>\(f = \dfrac{1}{T}\) (Hz)，\(\omega\) 的单位是 rad/s</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box-custom">
+                            <strong>💡 检查方法</strong><br>
+                            • 周期的单位是秒 (s)<br>
+                            • 频率的单位是赫兹 (Hz = s⁻¹)<br>
+                            • 角速度的单位是 rad/s<br>
+                            • 记住：频率越大，转动越快，角速度也越大
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 错误3 -->
+                <div class="mistake-card">
+                    <div class="mistake-header">
+                        <span class="mistake-icon">❌</span>
+                        <h3 class="mistake-title">错误 3：竖直圆环最高点受力方向搞错</h3>
+                    </div>
+                    
+                    <div class="mistake-body">
+                        <div class="comparison">
+                            <div class="comparison-wrong">
+                                <div class="comparison-label">❌ 错误做法</div>
+                                <p>在最高点写 \(T - mg = \dfrac{mv^2}{r}\)（把张力方向搞反）</p>
+                            </div>
+                            
+                            <div class="comparison-right">
+                                <div class="comparison-label">✅ 正确做法</div>
+                                <p>最高点（取向下为正，指向圆心）：</p>
+                                <div class="formula-box">
+                                    \[
+                                    T + mg = \frac{mv^2}{r}
+                                    \]
+                                </div>
+                                <p>最低点（取向上为正，指向圆心）：</p>
+                                <div class="formula-box">
+                                    \[
+                                    T - mg = \frac{mv^2}{r}
+                                    \]
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box-custom">
+                            <strong>💡 通用法则</strong><br>
+                            无论在哪一点，都取<strong>指向圆心的方向为正</strong>。这样向心力永远是正的。
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 错误4 -->
+                <div class="mistake-card">
+                    <div class="mistake-header">
+                        <span class="mistake-icon">❌</span>
+                        <h3 class="mistake-title">错误 4：圆锥摆中把半径当成绳长</h3>
+                    </div>
+                    
+                    <div class="mistake-body">
+                        <div class="comparison">
+                            <div class="comparison-wrong">
+                                <div class="comparison-label">❌ 错误做法</div>
+                                <p>直接用 \(F = m\omega^2 L\)（\(L\)是绳长）</p>
+                            </div>
+                            
+                            <div class="comparison-right">
+                                <div class="comparison-label">✅ 正确做法</div>
+                                <div class="formula-box">
+                                    \[
+                                    \text{圆周半径 } r = L \sin\theta
+                                    \]
+                                </div>                                
+                                <div class="formula-box">
+                                    \[
+                                    F = m\omega^2 r = m\omega^2 L \sin\theta
+                                    \]
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box-custom">
+                            <strong>💡 几何关系</strong><br>
+                            画图！圆周运动的半径是水平的，绳长 \(L\) 是斜边，两者的关系是 \(r = L \sin\theta\)。
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 错误5 -->
+                <div class="mistake-card">
+                    <div class="mistake-header">
+                        <span class="mistake-icon">❌</span>
+                        <h3 class="mistake-title">错误 5：单位不统一</h3>
+                    </div>
+                    
+                    <div class="mistake-body">
+                        <div class="comparison">
+                            <div class="comparison-wrong">
+                                <div class="comparison-label">❌ 错误做法</div>
+                                <p>速度用 km/h，半径用 m，然后直接代入公式</p>
+                            </div>
+                            
+                            <div class="comparison-right">
+                                <div class="comparison-label">✅ 正确做法</div>
+                                <p>全部转换为 SI 单位：</p>
+                                <ul>
+                                    <li>速度：km/h → m/s（除以 3.6）</li>
+                                    <li>质量：kg</li>
+                                    <li>长度：m</li>
+                                    <li>角度：rad（不是度）</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 错误6 -->
+                <div class="mistake-card">
+                    <div class="mistake-header">
+                        <span class="mistake-icon">❌</span>
+                        <h3 class="mistake-title">错误 6：竖直圆环能量守恒忘记高度差</h3>
+                    </div>
+                    
+                    <div class="mistake-body">
+                        <div class="comparison">
+                            <div class="comparison-wrong">
+                                <div class="comparison-label">❌ 错误做法</div>
+                                <p>\(\dfrac{1}{2}mv_{\text{bottom}}^2 = \dfrac{1}{2}mv_{\text{top}}^2\)（忘记势能变化）</p>
+                            </div>
+                            
+                            <div class="comparison-right">
+                                <div class="comparison-label">✅ 正确做法</div>
+                                <div class="formula-box">
+                                    \[
+                                    \frac{1}{2}mv_{\text{bottom}}^2 = \frac{1}{2}mv_{\text{top}}^2 + mg(2r)
+                                    \]
+                                </div>
+                                <p>最低点与最高点的高度差是 \(2r\)（直径）</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box-custom">
+                            <strong>💡 记忆方法</strong><br>
+                            画个圆，标出最高点和最低点。从最低点"爬"到最高点，高度上升了 \(2r\)（整个直径）。
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>考前检查清单</h2>
+                
+                <div class="box box-success">
+                    <div class="box-title">✅ 每道题做完后检查</div>
+                    
+                    <ul class="checklist">
+                        <li>受力分析图是否只画了真实力（没有画"向心力"）？</li>
+                        <li>所有单位是否统一为 SI 单位？</li>
+                        <li>角度是用弧度 (rad) 还是度数 (°)？（公式中必须用弧度）</li>
+                        <li>向心力方向是否指向圆心？</li>
+                        <li>竖直圆环问题中，高度差是否正确（\(2r\)）？</li>
+                        <li>答案的数量级是否合理？</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+    
+    <!-- MathJax 本地配置 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.1,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+</body>
+</html>

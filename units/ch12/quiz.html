@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单元测试 - Ch 12: Motion in a Circle | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        .quiz-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            margin: var(--space-5) 0;
+            overflow: hidden;
+        }
+        .quiz-header {
+            background: var(--primary-light);
+            padding: var(--space-4) var(--space-6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .quiz-number {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: var(--text-lg);
+        }
+        .quiz-meta {
+            display: flex;
+            gap: var(--space-3);
+        }
+        .quiz-tag {
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: var(--text-xs);
+            font-weight: 600;
+        }
+        .quiz-body {
+            padding: var(--space-6);
+        }
+        .quiz-question {
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-4);
+            line-height: 1.6;
+        }
+        .quiz-options {
+            list-style: none;
+            padding: 0;
+        }
+        .quiz-option {
+            padding: var(--space-4);
+            margin: var(--space-2) 0;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .answer-section {
+            margin-top: var(--space-5);
+            padding-top: var(--space-5);
+            border-top: 2px solid var(--gray-200);
+        }
+        .answer-toggle {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: var(--space-3) var(--space-5);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: var(--text-base);
+        }
+        .answer-content {
+            display: none;
+            margin-top: var(--space-4);
+            padding: var(--space-4);
+            background: var(--success-light);
+            border-left: 4px solid var(--success);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        .answer-content.show {
+            display: block;
+        }
+        .progress-bar {
+            background: var(--gray-200);
+            height: 8px;
+            border-radius: 4px;
+            margin: var(--space-4) 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: var(--success);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../../index.html" style="text-decoration: none;">
+                    <div class="logo">PhysicsHub</div>
+                </a>
+                <div class="logo-sub">Ch 12 · Circular Motion</div>
+            </div>
+            
+            <nav class="nav-section">
+                <div class="nav-title">本单元导航</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><span class="nav-icon">📋</span>单元概览</a></li>
+                    <li class="nav-item"><a href="theory.html" class="nav-link"><span class="nav-icon">📖</span>理论讲解</a></li>
+                    <li class="nav-item"><a href="formulas.html" class="nav-link"><span class="nav-icon">📝</span>公式汇总</a></li>
+                    <li class="nav-item"><a href="examples.html" class="nav-link"><span class="nav-icon">💡</span>典型例题</a></li>
+                    <li class="nav-item"><a href="mistakes.html" class="nav-link"><span class="nav-icon">⚠️</span>常见错误</a></li>
+                    <li class="nav-item"><a href="quiz.html" class="nav-link active"><span class="nav-icon">✏️</span>单元测试</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main">
+            <div class="content-card">
+                <h1>单元测试：圆周运动</h1>
+                
+                <div class="box box-info">
+                    <div class="box-title">📋 测试说明</div>
+                    <p>共 10 道题目，包含选择题和计算题。建议用时 30 分钟。</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--gray-500); margin-bottom: 0;">点击"查看答案"可查看详细解答</p>
+                </div>
+                
+                <!-- 题目1 -->
+                <div class="quiz-card">
+                    <div class="quiz-header">
+                        <span class="quiz-number">题目 1</span>
+                        <div class="quiz-meta">
+                            <span class="quiz-tag">选择题</span>
+                            <span class="quiz-tag">基础</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-body">
+                        <div class="quiz-question">
+                            一个物体做匀速圆周运动，下列说法正确的是：
+                        </div>
+                        
+                        <ul class="quiz-options">
+                            <li class="quiz-option">A. 速度不变，加速度为零</li>
+                            <li class="quiz-option">B. 速度大小不变，方向时刻改变，加速度指向圆心</li>
+                            <li class="quiz-option">C. 速度和加速度都保持不变</li>
+                            <li class="quiz-option">D. 速度为零时加速度最大</li>
+                        </ul>
+                        
+                        <div class="answer-section">
+                            <button class="answer-toggle" onclick="toggleAnswer(this)">查看答案</button>
+                            
+                            <div class="answer-content">
+                                <strong>正确答案：B</strong><br><br>
+                                <strong>解析：</strong><br>
+                                • 匀速圆周运动的"匀速"指的是<strong>速率</strong>不变，不是速度不变<br>
+                                • 速度方向时刻沿切线方向改变<br>
+                                • 向心加速度 a = v²/r，方向始终指向圆心<br>
+                                • 正是这个加速度改变了速度的方向
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 题目2 -->
+                <div class="quiz-card">
+                    <div class="quiz-header">
+                        <span class="quiz-number">题目 2</span>
+                        <div class="quiz-meta">
+                            <span class="quiz-tag">计算题</span>
+                            <span class="quiz-tag">基础</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-body">
+                        <div class="quiz-question">
+                            一辆汽车以 15 m/s 的速度在半径为 45 m 的水平弯道上行驶。求汽车的向心加速度。
+                        </div>
+                        
+                        <div class="answer-section">
+                            <button class="answer-toggle" onclick="toggleAnswer(this)">查看答案</button>
+                            
+                            <div class="answer-content">
+                                <strong>解答：</strong><br><br>
+                                \[
+                    a = v^\frac{2}{r} = (15)^\frac{2}{45} = \frac{225}{45} = 5 \frac{m}{s}^2
+                \]
+                                <strong>说明：</strong>方向指向弯道圆心。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 题目3 -->
+                <div class="quiz-card">
+                    <div class="quiz-header">
+                        <span class="quiz-number">题目 3</span>
+                        <div class="quiz-meta">
+                            <span class="quiz-tag">选择题</span>
+                            <span class="quiz-tag">概念</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-body">
+                        <div class="quiz-question">
+                            关于向心力，下列说法正确的是：
+                        </div>
+                        
+                        <ul class="quiz-options">
+                            <li class="quiz-option">A. 向心力是一种新的基本力，与重力、弹力并列</li>
+                            <li class="quiz-option">B. 向心力是物体做圆周运动时受到的所有力的合力</li>
+                            <li class="quiz-option">C. 向心力只改变速度的大小，不改变方向</li>
+                            <li class="quiz-option">D. 向心力方向与速度方向相同</li>
+                        </ul>
+                        
+                        <div class="answer-section">
+                            <button class="answer-toggle" onclick="toggleAnswer(this)">查看答案</button>
+                            
+                            <div class="answer-content">
+                                <strong>正确答案：B</strong><br><br>
+                                <strong>解析：</strong><br>
+                                • 向心力<strong>不是一种独立的力</strong>，而是其他力的合力效果<br>
+                                • 它可以由张力、摩擦力、重力分量等提供<br>
+                                • 向心力<strong>只改变速度的方向</strong>，不改变大小（因为与速度垂直）<br>
+                                • 向心力方向<strong>指向圆心</strong>，与速度方向垂直
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 题目4 -->
+                <div class="quiz-card">
+                    <div class="quiz-header">
+                        <span class="quiz-number">题目 4</span>
+                        <div class="quiz-meta">
+                            <span class="quiz-tag">计算题</span>
+                            <span class="quiz-tag">应用</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-body">
+                        <div class="quiz-question">
+                            一个质量为 0.5 kg 的小球在水平面内做匀速圆周运动，绳长 1.2 m，绳子与竖直方向夹角为 30°。求：<br>
+                            (a) 绳子的张力<br>
+                            (b) 小球的角速度
+                        </div>
+                        
+                        <div class="answer-section">
+                            <button class="answer-toggle" onclick="toggleAnswer(this)">查看答案</button>
+                            
+                            <div class="answer-content">
+                                <strong>解答：</strong><br><br>
+                                <strong>(a) 绳子张力：</strong><br>
+                                竖直方向平衡：T cos 30° = mg<br>
+                                \[
+                    T = \frac{mg}{cos} 30° = 0.5 × 9.\frac{81}{0}.866 ≈ 5.66 N
+                \]
+                                <br>
+                                <strong>(b) 角速度：</strong><br>
+                                水平方向：T sin 30° = mω²r<br>
+                                其中 r = L sin 30° = 1.2 × 0.5 = 0.6 m<br><br>
+                                代入：5.66 × 0.5 = 0.5 × ω² × 0.6<br>
+                                2.83 = 0.3 ω²<br>
+                                <div class="formula">
+                                    ω² = 9.43<br>
+                                    ω ≈ 3.07 rad/s
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 题目5 -->
+                <div class="quiz-card">
+                    <div class="quiz-header">
+                        <span class="quiz-number">题目 5</span>
+                        <div class="quiz-meta">
+                            <span class="quiz-tag">选择题</span>
+                            <span class="quiz-tag">竖直圆环</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-body">
+                        <div class="quiz-question">
+                            一个用绳子系着的小球在竖直平面内做圆周运动，半径为 r。小球刚好能通过最高点的最小速度为：
+                        </div>
+                        
+                        <ul class="quiz-options">
+                            <li class="quiz-option">A. √(gr/2)</li>
+                            <li class="quiz-option">B. √(gr)</li>
+                            <li class="quiz-option">C. √(2gr)</li>
+                            <li class="quiz-option">D. 2√(gr)</li>
+                        </ul>
+                        
+                        <div class="answer-section">
+                            <button class="answer-toggle" onclick="toggleAnswer(this)">查看答案</button>
+                            
+                            <div class="answer-content">
+                                <strong>正确答案：B</strong><br><br>
+                                <strong>解析：</strong><br>
+                                当小球刚好能通过最高点时，绳子张力 T = 0，仅由重力提供向心力：<br><br>
+                                <div class="formula">
+                                    mg = mv²/r<br>
+                                    v² = gr<br>
+                                    v = √(gr)
+                                </div>
+                                <br>
+                                <strong>注意：</strong>这是用绳子的情况。如果用杆支撑，最小速度可以为0。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; padding: var(--space-8); color: var(--gray-500);">
+                    <p>更多题目持续更新中... 🚧</p>
+                    <p style="font-size: 14px;">已完成 5/10 道题目</p>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        function toggleAnswer(btn) {
+            const answer = btn.nextElementSibling;
+            answer.classList.toggle('show');
+            btn.textContent = answer.classList.contains('show') ? '隐藏答案' : '查看答案';
+        }
+    </script>
+</body>
+</html>

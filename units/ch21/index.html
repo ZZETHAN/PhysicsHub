@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 21: Alternating Current | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        :root { --primary: #059669; --primary-light: #d1fae5; --fields-primary: #059669; --fields-dark: #047857; --fields-light: #d1fae5; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #047857 0%, #059669 100%); color: white; padding: 48px 0; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        h1 { font-size: 42px; font-weight: 700; margin: 12px 0 0; }
+        .subtitle { font-size: 18px; opacity: 0.9; margin-top: 16px; }
+
+        .content-grid { display: grid; grid-template-columns: 220px 1fr; gap: 24px; max-width: 1100px; margin: 32px auto; padding: 0 16px; }
+        .sidebar-nav { position: sticky; top: 80px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; padding: 8px 0; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--fields-light); border-radius: 4px; }
+        .nav-section-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; padding: 16px 16px 6px; }
+        .nav-section { padding: 0 8px; }
+        .nav-section-header { display: block; font-size: 13px; font-weight: 500; color: #374151; padding: 8px 12px; margin-top: 4px; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; text-decoration: none; }
+        .nav-section-header:hover { background: var(--fields-light); color: var(--fields-primary); }
+        .nav-section-header.active { background: var(--fields-light); color: var(--fields-dark); font-weight: 600; }
+        .nav-list { list-style: none; padding: 0; margin: 0 0 8px 0; }
+        .nav-item { margin-bottom: 1px; }
+        .nav-link { display: block; padding: 6px 12px; color: #6b7280; text-decoration: none; border-radius: 6px; font-size: 12px; transition: all 0.15s ease; cursor: pointer; }
+        .nav-link:hover { background: var(--fields-light); color: var(--fields-primary); }
+        .nav-link.active { background: var(--fields-light); color: var(--fields-dark); font-weight: 500; }
+
+        .main { max-width: 100%; }
+        .section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #e2e8f0; scroll-margin-top: 140px; }
+        .section h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+        .section h3 { font-size: 16px; font-weight: 600; margin: 20px 0 12px; color: #1e293b; }
+        .section h4 { font-size: 14px; font-weight: 600; margin: 16px 0 8px; color: #334155; }
+
+        .concept { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .highlight { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .formula { background: #f0fdf4; border: 1px solid #86efac; padding: 16px; margin: 16px 0; border-radius: 8px; text-align: center; }
+        .figure { background: #fafafa; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 24px; margin: 16px 0; text-align: center; font-size: 14px; color: #64748b; }
+        
+        .checklist-box {
+            background: var(--primary-light);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: #047857; }
+        
+        .checklist-box { background: var(--fields-light); border: 1px solid var(--fields-primary); border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .checklist-box::before {
+            content: 'Checklist';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--fields-primary);
+            margin-bottom: 12px;
+        }
+        .checklist-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; padding: 10px 12px; background: white; border-radius: 6px; }
+
+        .progress-btns { display: flex; gap: 8px; margin-top: 8px; }
+        .prog-btn { flex: 1; padding: 8px 4px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 11px; }
+        .prog-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .progress-btn.active { background: var(--fields-primary) !important; color: white; border-color: var(--fields-primary) !important; }
+        .progress-btn:hover:not(.active) { background: #f1f5f9; }
+
+        .mobile-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 20px; cursor: pointer; z-index: 1000; }
+        .mobile-nav { display: none; position: fixed; bottom: 80px; right: 20px; width: 280px; max-height: 70vh; overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 999; }
+        .mobile-nav.show { display: block; }
+        .reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #059669, #34d399); z-index: 1001; transition: width 0.1s ease; }
+        .back-to-top { position: fixed; bottom: 90px; right: 24px; width: 40px; height: 40px; border-radius: 50%; background: var(--fields-primary); border: none; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 101; text-decoration: none; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--fields-dark); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+        .mobile-nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; font-weight: 600; color: #64748b; }
+
+        .unit-dropdown { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001; }
+        .unit-dropdown.show { display: block; }
+        .dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+        .unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+        .unit-nav-link:hover { background: #f1f5f9; }
+        .unit-nav-link.active { background: #05966922; color: #059669; }
+        .unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+        .unit-nav-link .unit-title { color: #64748b; flex: 1; }
+        .unit-nav-link.active .unit-title { color: #059669; }
+
+        @media (max-width: 968px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .mobile-btn { display: flex; align-items: center; justify-content: center; }
+        }
+        mjx-container { font-size: 105% !important; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container" style="display:flex;justify-content:space-between;align-items:center;">
+            <a href="../../index.html" style="text-decoration:none;color:#1d4ed8;font-weight:500;font-size:15px;">← PhysicsHub</a>
+            <div style="display:flex;align-items:center;flex:1;justify-content:flex-end;padding-right:8px;">
+                <div style="position:relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #05966922 0%, white 100%); border: 1px solid #059669; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #059669; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" class="unit-dropdown">
+                        <div class="dropdown-header">A2 Physics Units</div>
+                        <a href="../ch12/index.html" class="unit-nav-link"><span class="unit-num">Unit 12</span><span class="unit-title">Motion in a Circle</span></a>
+                        <a href="../ch13/index.html" class="unit-nav-link"><span class="unit-num">Unit 13</span><span class="unit-title">Gravitational Field</span></a>
+                        <a href="../ch14/index.html" class="unit-nav-link"><span class="unit-num">Unit 14</span><span class="unit-title">Temperature</span></a>
+                        <a href="../ch15/index.html" class="unit-nav-link"><span class="unit-num">Unit 15</span><span class="unit-title">Ideal Gases</span></a>
+                        <a href="../ch16/index.html" class="unit-nav-link"><span class="unit-num">Unit 16</span><span class="unit-title">Thermodynamics</span></a>
+                        <a href="../ch17/index.html" class="unit-nav-link"><span class="unit-num">Unit 17</span><span class="unit-title">Oscillations</span></a>
+                        <a href="../ch18/index.html" class="unit-nav-link"><span class="unit-num">Unit 18</span><span class="unit-title">Electric Fields</span></a>
+                        <a href="../ch19/index.html" class="unit-nav-link"><span class="unit-num">Unit 19</span><span class="unit-title">Capacitance</span></a>
+                        <a href="../ch20/index.html" class="unit-nav-link"><span class="unit-num">Unit 20</span><span class="unit-title">Magnetic Fields</span></a>
+                        <a href="index.html" class="unit-nav-link active"><span class="unit-num">Unit 21</span><span class="unit-title">Alternating Currents</span></a>
+                        <a href="../ch22/index.html" class="unit-nav-link"><span class="unit-num">Unit 22</span><span class="unit-title">Quantum Physics</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <div style="font-size:13px;opacity:.8;">A2 Level > Unit 21</div>
+            <h1>Alternating Current</h1>
+            <p class="subtitle">Alternating currents, CRO measurements, RMS values, rectification and smoothing</p>
+        </div>
+    </div>
+
+    <div class="reading-progress" id="readingProgress"></div>
+    <a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+    <button class="mobile-btn" onclick="toggleMobileNav()">☰</button>
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <span>Unit Contents</span>
+            <button onclick="closeMobileNav()" style="background:none;border:none;font-size:20px;cursor:pointer;">×</button>
+        </div>
+        <ul style="list-style:none;padding:0;margin:0;">
+            <li style="margin-bottom:4px;"><a href="#intro" onclick="scrollTo('intro')" style="display:block;padding:8px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">Introduction</a></li>
+            <li style="margin-bottom:4px;font-size:12px;font-weight:600;color:#475569;padding:8px 12px 4px;">1. Characteristics</li>
+            <li style="margin-bottom:4px;padding-left:16px;"><a href="#ac-dc" onclick="scrollTo('ac-dc')" style="display:block;padding:6px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">1.1 AC vs DC</a></li>
+            <li style="margin-bottom:4px;padding-left:16px;"><a href="#variation" onclick="scrollTo('variation')" style="display:block;padding:6px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">1.2 Variation of AC</a></li>
+            <li style="margin-bottom:4px;padding-left:16px;"><a href="#cro" onclick="scrollTo('cro')" style="display:block;padding:6px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">1.3 CRO</a></li>
+            <li style="margin-bottom:4px;padding-left:16px;"><a href="#rms" onclick="scrollTo('rms')" style="display:block;padding:6px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">1.4 RMS Values</a></li>
+            <li style="margin-bottom:4px;padding-left:16px;"><a href="#power" onclick="scrollTo('power')" style="display:block;padding:6px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">1.5 Average Power</a></li>
+            <li style="margin-bottom:4px;font-size:12px;font-weight:600;color:#475569;padding:8px 12px 4px;">2. Rectification</li>
+            <li style="margin-bottom:4px;padding-left:16px;"><a href="#halfwave" onclick="scrollTo('halfwave')" style="display:block;padding:6px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">2.1 Half-Wave</a></li>
+            <li style="margin-bottom:4px;padding-left:16px;"><a href="#bridge" onclick="scrollTo('bridge')" style="display:block;padding:6px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">2.2 Bridge</a></li>
+            <li style="margin-bottom:4px;padding-left:16px;"><a href="#smoothing" onclick="scrollTo('smoothing')" style="display:block;padding:6px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">2.3 Smoothing</a></li>
+            <li style="margin-bottom:4px;"><a href="#checklist" onclick="scrollTo('checklist')" style="display:block;padding:8px 12px;color:#475569;text-decoration:none;border-radius:6px;font-size:13px;">P4 Checklist</a></li>
+        </ul>
+    </div>
+
+    <div class="content-grid">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#intro" class="nav-link" data-section="intro">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#ac-dc" class="nav-section-header" data-section="ac-dc">1. Characteristics of AC</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#ac-dc" class="nav-link" data-section="ac-dc">1.1 AC vs DC</a></li>
+                    <li class="nav-item"><a href="#variation" class="nav-link" data-section="variation">1.2 Variation of AC</a></li>
+                    <li class="nav-item"><a href="#cro" class="nav-link" data-section="cro">1.3 CRO</a></li>
+                    <li class="nav-item"><a href="#rms" class="nav-link" data-section="rms">1.4 RMS Values</a></li>
+                    <li class="nav-item"><a href="#power" class="nav-link" data-section="power">1.5 Average Power</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#halfwave" class="nav-section-header" data-section="halfwave">2. Rectification</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#halfwave" class="nav-link" data-section="halfwave">2.1 Half-Wave</a></li>
+                    <li class="nav-item"><a href="#bridge" class="nav-link" data-section="bridge">2.2 Bridge</a></li>
+                    <li class="nav-item"><a href="#smoothing" class="nav-link" data-section="smoothing">2.3 Smoothing</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#checklist" class="nav-link" data-section="checklist">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <div class="nav-section">
+                <a href="structured-questions.html" class="nav-link" style="color: var(--fields-primary);">Practice Questions →</a>
+            </div>
+            <div class="nav-section">
+                <a href="../../homework/ch21/" class="nav-link" style="color: var(--fields-primary);">📚 Homework</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <div class="nav-section">
+                <div style="display: flex; gap: 8px; padding: 0 8px;">
+                    <button onclick="setProgress('ch21','not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 8px 4px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 11px;">Start</button>
+                    <button onclick="setProgress('ch21','in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 8px 4px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 11px;">Active</button>
+                    <button onclick="setProgress('ch21','completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 8px 4px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 11px;">Done</button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main">
+            <div id="intro" class="section">
+                <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: What is Alternating Current?</h2>
+                <div class="concept">
+                    <strong>What is Alternating Current?</strong><br>
+                    An <em>alternating current (a.c.)</em> is a current that <em>changes direction</em> periodically, and whose magnitude varies with time.
+                </div>
+                <p>Most power distribution systems use alternating current because it can be easily transformed to different voltages. Understanding AC is essential for studying how electricity is generated, transmitted, and used in everyday life.</p>
+            </div>
+
+            <div id="ac-dc" class="section">
+                <h2>1.1 AC vs DC</h2>
+                <h3>Definitions</h3>
+                <div class="highlight">
+                    <strong>Direct Current (D.C.):</strong>
+                    <ul style="margin:8px 0 0 20px;">
+                        <li>Current flows in <strong>one direction only</strong></li>
+                        <li>Magnitude is constant (or nearly constant)</li>
+                        <li>Examples: battery-powered devices</li>
+                    </ul>
+                </div>
+                <div class="highlight">
+                    <strong>Alternating Current (A.C.):</strong>
+                    <ul style="margin:8px 0 0 20px;">
+                        <li>Current <strong>changes direction</strong> periodically</li>
+                        <li>Magnitude varies with time</li>
+                        <li>Examples: household mains supply (230V, 50Hz)</li>
+                    </ul>
+                </div>
+                <div class="figure">[Image Placeholder]<br><strong>Fig 21.1.1: DC vs AC Waveforms</strong></div>
+                <div class="concept">
+                    <strong>Essential Difference:</strong><br>
+                    The essential difference between AC and DC is <em>whether the direction of current changes with time</em>.
+                </div>
+            </div>
+
+            <div id="variation" class="section">
+                <h2>1.2 Variation of AC</h2>
+                <h3>Key Waveform Parameters</h3>
+                <p><strong>Peak Value ($V_0$ or $I_0$):</strong> Maximum magnitude of voltage or current</p>
+                <p><strong>Period (T):</strong> Time for one complete cycle, unit: seconds (s)</p>
+                <p><strong>Frequency (f):</strong> $f = \frac{1}{T}$, unit: hertz (Hz)</p>
+
+                <h3>Sinusoidal AC</h3>
+                <div class="formula">
+                    $V = V_0 \sin(\omega t) = V_0 \sin(2\pi ft)$<br><br>
+                    Where $\omega = 2\pi f$ is the angular frequency.
+                </div>
+                <div class="figure">[Image Placeholder]<br><strong>Fig 21.1.2: Sinusoidal AC Waveform</strong></div>
+            </div>
+
+            <div id="cro" class="section">
+                <h2>1.3 Cathode Ray Oscilloscope (CRO)</h2>
+                <h3>What is a CRO?</h3>
+                <div class="concept">
+                    A <strong>cathode-ray oscilloscope (CRO)</strong> is an electronic device to <strong>display waveforms</strong> on a fluorescent screen.
+                </div>
+
+                <h3>CRO Structure</h3>
+                <div class="figure">[Image Placeholder]<br><strong>Fig 21.1.3: CRO Structure</strong></div>
+                <p><strong>Y-plate:</strong> deflects vertically (voltage signal)</p>
+                <p><strong>X-plate:</strong> deflects horizontally (time base/sweep)</p>
+
+                <h3>Reading from CRO</h3>
+                <div class="formula">
+                    Peak voltage: $V_0 = \text{vertical divisions} \times \text{Y-gain}$<br>
+                    Period: $T = \text{horizontal divisions} \times \text{time-base}$<br>
+                    Frequency: $f = 1/T$
+                </div>
+                <div class="figure">[Image Placeholder]<br><strong>Fig 21.1.4: Reading Peak and Period from CRO</strong></div>
+            </div>
+
+            <div id="rms" class="section">
+                <h2>1.4 Root-Mean-Square (r.m.s.) Values</h2>
+                <h3>Why r.m.s.?</h3>
+                <div class="concept">
+                    The <strong>effective value</strong> of AC is the value that gives the same heating effect as an equivalent DC current.
+                </div>
+
+                <h3>r.m.s. Equations</h3>
+                <div class="formula">
+                    The r.m.s. current is the <strong>equivalent direct current</strong> that would produce the <strong>same heating effect</strong> in a resistor.<br><br>
+                    $I_{r.m.s.} = \frac{I_0}{\sqrt{2}} = 0.707 I_0$
+                </div>
+
+                <div class="formula">$V_{r.m.s.} = \frac{V_0}{\sqrt{2}} = 0.707 V_0$</div>
+
+                <h3>Power Calculation</h3>
+                <div class="formula">$P = I_{r.m.s.} \times V_{r.m.s.}$</div>
+
+                <div class="figure">[Image Placeholder]<br><strong>Fig 21.1.5: r.m.s. Concept</strong></div>
+            </div>
+
+            <div id="power" class="section">
+                <h2>1.5 Average Power in AC Circuits</h2>
+                <h3>Instantaneous Power</h3>
+                <div class="formula">
+                    $P = V_0 I_0 \sin^2(\omega t) = P_0 \sin^2(\omega t)$<br><br>
+                    where $P_0 = V_0 I_0$
+                </div>
+
+                <h3>Average Power</h3>
+                <div class="formula">$P_{avg} = \frac{P_0}{2} = V_{r.m.s.} \times I_{r.m.s.}$</div>
+            </div>
+
+            <div id="halfwave" class="section">
+                <h2>2.1 Half-Wave Rectification</h2>
+                <h3>What is Rectification?</h3>
+                <div class="concept"><strong>Rectification</strong> is converting AC to DC.</div>
+
+                <h3>Circuit Operation</h3>
+                <div class="figure">[Image Placeholder]<br><strong>Fig 21.2.1: Half-Wave Rectifier Circuit</strong></div>
+                <p>AC source → Diode → Load resistor R</p>
+                <p>Positive half-cycle: diode conducts → current flows</p>
+                <p>Negative half-cycle: diode blocks → no current</p>
+
+                <h3>Limitation</h3>
+                <div class="highlight">Half-wave rectification wastes the negative half-cycle — only one half used.</div>
+            </div>
+
+            <div id="bridge" class="section">
+                <h2>2.2 Bridge Rectifier</h2>
+                <h3>Full-Wave (Bridge) Rectification</h3>
+                <div class="figure">[Image Placeholder]<br><strong>Fig 21.2.2: Bridge Rectifier Circuit</strong></div>
+                <p>4 diodes in bridge configuration</p>
+
+                <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+                    <tr style="background:#f1f5f9;">
+                        <th style="padding:10px;border:1px solid #e2e8f0;text-align:left;">Half-Cycle</th>
+                        <th style="padding:10px;border:1px solid #e2e8f0;text-align:left;">Diodes Conducting</th>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">Positive</td>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">2 diodes conduct</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">Negative</td>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">2 diodes conduct</td>
+                    </tr>
+                </table>
+
+                <div class="concept">Result: Current flows in same direction for both half-cycles.</div>
+
+                <h3>Advantage over Half-Wave</h3>
+                <ul style="margin-left:20px;">
+                    <li>All input cycles utilized</li>
+                    <li>Higher efficiency</li>
+                    <li>More power delivered</li>
+                </ul>
+            </div>
+
+            <div id="smoothing" class="section">
+                <h2>2.3 Smoothing</h2>
+                <h3>The Problem</h3>
+                <p>Rectified output is <strong>pulsating DC</strong> — it varies with time, not a steady direct voltage. The output rises to a peak then falls to zero, then repeats.</p>
+
+                <h3>Capacitor Smoothing</h3>
+                <div class="figure">[Image Placeholder]<br><strong>Fig 21.7: Rectified vs Smoothed Output</strong></div>
+                <p>Capacitor charges at peaks, discharges between peaks to maintain voltage.</p>
+
+                <h3>Ripple Voltage Factors</h3>
+                <p>The <strong>ripple voltage</strong> is the small variation between charging cycles.</p>
+
+                <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+                    <tr style="background:#f1f5f9;">
+                        <th style="padding:10px;border:1px solid #e2e8f0;text-align:left;">Factor</th>
+                        <th style="padding:10px;border:1px solid #e2e8f0;text-align:left;">Effect</th>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">Larger C</td>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">Smaller ripple</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">Larger R</td>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">Smaller ripple</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">Higher frequency</td>
+                        <td style="padding:10px;border:1px solid #e2e8f0;">Smaller ripple</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="checklist" class="section">
+                <h2>P4 Checklist: Key Formulas</h2>
+
+                <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--fields-primary); margin-bottom: 12px;">Essential Definitions</div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d1">
+                        <label for="d1">Alternating current: current that changes direction periodically</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d2">
+                        <label for="d2">RMS (root mean square): effective value of AC for power calculations</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d3">
+                        <label for="d3">Rectification: conversion of AC to DC</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d4">
+                        <label for="d4">Smoothing: using capacitor to reduce ripple in DC output</label>
+                    </div>
+                </div>
+
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--fields-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e1">
+                        <label for="e1">$V = V_0 \sin(\omega t)$</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e2">
+                        <label for="e2">$f = 1/T$</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e3">
+                        <label for="e3">$I_{r.m.s.} = I_0/\sqrt{2}$</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e4">
+                        <label for="e4">Peak = divisions × Y-gain</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e5">
+                        <label for="e5">Half-wave: one diode; Bridge: four diodes</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e6">
+                        <label for="e6">Smoothing: capacitor at peaks</label>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:24px;">Exam Tips</h3>
+                <div class="highlight">
+                    <strong>CRO:</strong> Peak = vertical div × Y-gain; Period = horizontal div × time-base<br><br>
+                    <strong>r.m.s.:</strong> Use r.m.s. for power calculations<br><br>
+                    <strong>Rectification:</strong> Half-wave wastes negative cycle; Bridge uses both
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../auth/auth.js"></script>
+    <script>
+        function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('show'); }
+        function closeMobileNav() { document.getElementById('mobileNav').classList.remove('show'); }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function updateReadingProgress() {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / docHeight) * 100;
+            document.getElementById('readingProgress').style.width = progress + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 400) { backToTop.classList.add('show'); } else { backToTop.classList.remove('show'); }
+        }
+        window.addEventListener('scroll', updateReadingProgress);
+        
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('.section[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            
+            if (sections.length === 0 || navLinks.length === 0) return;
+            
+            let activeId = null;
+            let bestTop = Infinity;
+            
+            sections.forEach(s => {
+                const rect = s.getBoundingClientRect();
+                // When at top of page, allow sections that are visible at top
+                if (rect.top >= 0 && rect.top < bestTop) {
+                    bestTop = rect.top;
+                    activeId = s.id;
+                }
+            });
+            
+            if (!activeId) return;
+            
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.nav-section-header').forEach(h => h.classList.remove('active'));
+            // First try to find a nav-link (prefer child over parent)
+            const activeLink = document.querySelector(`.sidebar-nav .nav-link[data-section="${activeId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            } else {
+                // Fall back to nav-section-header if no nav-link found
+                const activeHeader = document.querySelector(`.sidebar-nav .nav-section-header[data-section="${activeId}"]`);
+                if (activeHeader) activeHeader.classList.add('active');
+            }
+        }
+        
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('resize', updateActiveNav, { passive: true });
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
+        
+        function scrollTo(sectionId) {
+            var el = document.getElementById(sectionId);
+            if (el) {
+                var top = el.getBoundingClientRect().top + window.pageYOffset - 140;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+            closeMobileNav();
+        }
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('[onclick="toggleUnitNav()"]');
+            const dropdown = document.getElementById('unitNavDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+                container.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        });
+        function setProgress(unitId, status) {
+            if (typeof Auth !== 'undefined' && Auth.isLoggedIn()) {
+                fetch(API_BASE_URL + '/progress/' + unitId, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + Auth.getToken() },
+                    body: JSON.stringify({ status: status })
+                }).then(function(r) { return r.json(); }).then(function(data) {
+                    if (data.success) {
+                        document.querySelectorAll('.prog-btn').forEach(function(b) { b.classList.remove('active'); });
+                        event.target.classList.add('active');
+                    }
+                });
+            } else {
+                alert('Please log in to track progress');
+            }
+        }
+        document.addEventListener('click', function(e) {
+            var dd = document.getElementById('unitNavDd');
+            var btn = e.target.closest('button[onclick="toggleUnitNav()"]');
+            if (!dd.contains(e.target) && !btn) { dd.classList.remove('show'); }
+        });
+    </script>
+</body>
+</html>

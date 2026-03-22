@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 24: Medical Physics | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\(', '\)']],
+                displayMath: [['\[' , '\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    <style>
+        :root {
+            --thermo-primary: #dc2626;
+            --thermo-dark: #991b1b;
+            --thermo-light: #fee2e2;
+            --modern-primary: #be185d;
+            --modern-dark: #9d174d;
+            --modern-light: #fce7f3;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        
+        .header {
+            background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0;
+            position: sticky; top: 0; z-index: 100;
+        }
+        
+        .unit-header {
+            background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+            color: white; padding: 48px 0;
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        
+        .content-grid {
+            display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+            max-width: 1100px; margin: 32px auto; padding: 0 16px;
+        }
+        
+        .sidebar-nav {
+            position: sticky; top: 80px; height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            background: white; border-radius: 12px; padding: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 3px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: var(--modern-light);
+            border-radius: 3px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: var(--modern-primary);
+        }
+        
+        .nav-section-title {
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; color: #64748b; margin-bottom: 12px;
+        }
+        
+        .nav-section-header {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            padding: 10px 12px;
+            margin-top: 8px;
+            margin-bottom: 2px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        
+        .nav-section-header:hover {
+            background: var(--modern-light);
+            color: var(--modern-primary);
+        }
+        
+        .nav-section-header.active {
+            background: var(--modern-light);
+            color: var(--modern-dark);
+        }
+        
+        .nav-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .nav-item { margin-bottom: 4px; }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        a.nav-link {
+            display: block;
+        }
+        
+        .nav-link::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--modern-light);
+            margin-right: 10px;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        
+        .nav-link:hover { 
+            background: var(--modern-light); 
+            color: var(--modern-primary);
+        }
+        
+        .nav-link:hover::before {
+            background: var(--modern-primary);
+        }
+        
+        .nav-link.active { 
+            background: var(--modern-light); 
+            color: var(--modern-dark);
+            font-weight: 500;
+        }
+        
+        .nav-link.active::before {
+            background: var(--modern-primary);
+        }
+        
+        .main-content { max-width: 100%; min-width: 0; }
+        
+        .section-card {
+            background: white; border-radius: 12px; padding: 24px;
+            margin-bottom: 20px; border: 1px solid #e2e8f0;
+            scroll-margin-top: 140px;
+        }
+        
+        .section-card h2 { margin-top: 0; color: #1e293b; font-size: 22px; font-weight: 700; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        .section-card h3 { color: #1e293b; font-size: 18px; font-weight: 600; margin-top: 24px; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        .section-card h4 { color: #334155; font-size: 16px; font-weight: 600; margin-top: 20px; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        
+        .concept-box { background: var(--thermo-light); border-left: 4px solid var(--thermo-primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .definition-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .formula-box { background: var(--thermo-light); border: 1px solid var(--thermo-primary); padding: 24px 32px; margin: 20px 0; border-radius: 8px; text-align: center; font-size: 18px; }
+        .formula-box strong { color: var(--thermo-dark); font-size: 16px; }
+        .formula-box p { color: var(--thermo-dark); font-size: 14px; margin-top: 12px; }
+        .exam-alert { background: #eff6ff; border: 1px solid #3b82f6; padding: 14px 18px; margin: 16px 0; border-radius: 8px; }
+        .exam-alert strong { color: #1d4ed8; }
+        
+        .tip-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: #1d4ed8; }
+        
+        .key-points { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+        .key-points li { margin-bottom: 8px; }
+        
+        .checklist-box {
+            background: var(--thermo-light);
+            border: 1px solid var(--thermo-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--thermo-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--thermo-dark); }
+        
+        .graph-placeholder { 
+            background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; 
+            padding: 20px; margin: 16px 0; text-align: center; 
+        }
+        
+        .graph-placeholder-placeholder {
+            border: 2px dashed #cbd5e1; border-radius: 8px;
+            padding: 40px; color: #64748b; margin: 16px 0;
+            background: #f8fafc;
+        }
+        
+        .mobile-menu-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--thermo-primary); color: white; border: none; font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .mobile-nav { display: none; position: fixed; bottom: 80px; right: 20px; width: 260px; max-height: 70vh; overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 999; }
+        .mobile-nav.show { display: block; }
+        .reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #991b1b, #dc2626, #ef4444); z-index: 1001; transition: width 0.1s ease; }
+        .back-to-top { position: fixed; bottom: 90px; right: 24px; width: 40px; height: 40px; border-radius: 50%; background: var(--thermo-primary); border: none; box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 101; text-decoration: none; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--thermo-dark); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+        
+        @media (max-width: 968px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .sidebar-nav { display: none; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+        }
+        
+        .progress-btn.active {
+            background: #be185d !important;
+            color: white;
+            border-color: #be185d !important;
+        }
+        
+        .progress-btn:hover:not(.active) {
+            background: #f1f5f9;
+        }
+        
+        mjx-container { font-size: 105% !important; }
+        
+        .figure-img {
+            background: #fafafa;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .figure-img img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        
+        .figure-caption {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 12px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        
+        table th, table td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        table th {
+            background: var(--thermo-light);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--thermo-dark);
+        }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: #f1f5f9; }
+.unit-nav-link.active { background: #be185d22; color: #be185d; }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: #be185d; }
+</style>
+
+</head>
+<body>
+
+    <header style="background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">←</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            
+            
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #be185d22 0%, white 100%); border: 1px solid #be185d; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #be185d; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+                        <a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+                        <a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+                        <a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+                        <a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+                        <a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+                        <a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+                        <a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+                        <a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+                        <a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+                        <a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span></a>
+                        <a href="../ch23/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 23</span><span style="color: #64748b; flex: 1;">Nuclear Physics</span></a>
+                        <a href="index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; background: #be185d22;" onmouseover="this.style.background='#be185d22'" onmouseout="this.style.background='#be185d22'"><span style="font-weight: 600; min-width: 52px; color: #be185d;">Unit 24</span><span style="color: #64748b; flex: 1;">Medical Physics</span><span style="width: 8px; height: 8px; background: #be185d; border-radius: 50%;"></span></a>
+                        <a href="../ch25/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 25</span><span style="color: #64748b; flex: 1;">Astronomy & Cosmology</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+<div class="unit-header" style="background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%); color: white; padding: 48px 0; margin-bottom: 32px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+        <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">A2 Level > Unit 24</div>
+        <h1 style="margin: 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">Medical Physics</h1>
+        <p style="margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">Ultrasound, X-rays, and PET Scanning</p>
+    </div>
+</div>
+
+<div class="reading-progress" id="readingProgress"></div>
+<a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+<button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+
+<div class="mobile-nav" id="mobileNav">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+        <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+    </div>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="margin-bottom: 4px;"><a href="#h2-intro" onclick="scrollTo('h2-intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+        <li style="margin-bottom: 4px;"><a href="#h2-ultrasound" onclick="scrollTo('h2-ultrasound')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1. Ultrasound</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-us-1-1" onclick="scrollTo('h3-us-1-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1 Principles of Ultrasound</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-us-1-2" onclick="scrollTo('h3-us-1-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.2 Acoustic Impedance</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-us-1-3" onclick="scrollTo('h3-us-1-3')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.3 A-scan & B-scan</a></li>
+        <li style="margin-bottom: 4px;"><a href="#h2-xray" onclick="scrollTo('h2-xray')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2. X-rays</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-xray-2-1" onclick="scrollTo('h3-xray-2-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1 X-ray Production</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-xray-2-2" onclick="scrollTo('h3-xray-2-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.2 X-ray Spectrum</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-xray-2-3" onclick="scrollTo('h3-xray-2-3')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.3 Attenuation</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-xray-2-4" onclick="scrollTo('h3-xray-2-4')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.4 CT Scanning</a></li>
+        <li style="margin-bottom: 4px;"><a href="#h2-pet" onclick="scrollTo('h2-pet')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3. PET Scanning</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-pet-3-1" onclick="scrollTo('h3-pet-3-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1 Annihilation</a></li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-pet-3-2" onclick="scrollTo('h3-pet-3-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.2 Detection</a></li>
+        <li style="margin-bottom: 4px;"><a href="#h2-equations" onclick="scrollTo('h2-equations')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4. Key Equations</a></li>
+        <li style="margin-bottom: 4px;"><a href="#h2-checklist" onclick="scrollTo('h2-checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">5. P4 Checklist</a></li>
+    </ul>
+    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+        <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+            <button onclick="updateProgress('ch24', 'not_started')" id="progress-btn-not_started-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+            <button onclick="updateProgress('ch24', 'in_progress')" id="progress-btn-in_progress-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+            <button onclick="updateProgress('ch24', 'completed')" id="progress-btn-completed-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+        </div>
+    </div>
+</div>
+
+<div class="content-grid">
+    <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#h2-intro" class="nav-link" data-section="h2-intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-ultrasound" class="nav-section-header" data-section="h2-ultrasound">1. Ultrasound</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-us-1-1" class="nav-link" data-section="h3-us-1-1">1.1 Principles of Ultrasound</a></li>
+                    <li class="nav-item"><a href="#h3-us-1-2" class="nav-link" data-section="h3-us-1-2">1.2 Acoustic Impedance</a></li>
+                    <li class="nav-item"><a href="#h3-us-1-3" class="nav-link" data-section="h3-us-1-3">1.3 A-scan & B-scan</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-xray" class="nav-section-header" data-section="h2-xray">2. X-rays</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-xray-2-1" class="nav-link" data-section="h3-xray-2-1">2.1 X-ray Production</a></li>
+                    <li class="nav-item"><a href="#h3-xray-2-2" class="nav-link" data-section="h3-xray-2-2">2.2 X-ray Spectrum</a></li>
+                    <li class="nav-item"><a href="#h3-xray-2-3" class="nav-link" data-section="h3-xray-2-3">2.3 Attenuation</a></li>
+                    <li class="nav-item"><a href="#h3-xray-2-4" class="nav-link" data-section="h3-xray-2-4">2.4 CT Scanning</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-pet" class="nav-section-header" data-section="h2-pet">3. PET Scanning</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-pet-3-1" class="nav-link" data-section="h3-pet-3-1">3.1 Annihilation</a></li>
+                    <li class="nav-item"><a href="#h3-pet-3-2" class="nav-link" data-section="h3-pet-3-2">3.2 Detection</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-equations" class="nav-link" data-section="h2-equations" style="margin-top:8px;">4. Key Equations</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-checklist" class="nav-link" data-section="h2-checklist" style="margin-top:8px;">5. P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../../homework/ch24/" class="nav-link" style="color: #16a34a;">Homework</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch24', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch24', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch24', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+
+    <main class="main-content">
+        
+        
+        <div id="intro" class="section-card">
+            <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: What is Medical Physics?</h2>
+            
+            <div class="concept-box">
+                <strong>Medical imaging technologies</strong> allow us to see inside the human body without invasive surgery. Three main techniques we study:
+                <ul style="margin-top: 12px;">
+                    <li><strong>Ultrasound</strong> - Uses high-frequency sound waves; safe, non-invasive</li>
+                    <li><strong>X-rays</strong> - Electromagnetic radiation; good for bone imaging</li>
+                    <li><strong>PET Scanning</strong> - Uses radioactive tracers from within the body</li>
+                </ul>
+            </div>
+            
+            <p>Each technique has advantages and limitations. Understanding the physics behind these technologies helps you appreciate their clinical applications.</p>
+        </div>
+        
+        
+        <div id="ultrasound" class="section-card">
+            <h2 id="h2-ultrasound" style="scroll-margin-top: 120px;">1. Ultrasound</h2>
+            
+            <h3 id="h3-us-1-1" style="scroll-margin-top: 80px;">1.1 Principles of Ultrasound</h3>
+            
+            <p><strong>Ultrasound</strong> refers to sound waves with frequencies above the upper limit of human hearing (>20 kHz). Medical ultrasound typically uses frequencies between 1-15 MHz.</p>
+            
+            <div class="concept-box">
+                <strong>Key Advantages of Ultrasound:</strong>
+                <ul style="margin-top: 12px;">
+                    <li>No harmful side effects (non-ionizing radiation)</li>
+                    <li>Real-time imaging capability</li>
+                    <li>Relatively inexpensive and portable</li>
+                    <li>Excellent for soft tissue imaging and fetal monitoring</li>
+                </ul>
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">Frequency and Resolution</h4>
+            <p>There is a trade-off between frequency and penetration depth:</p>
+            <ul>
+                <li><strong>High frequency</strong> - short wavelength - high resolution - fast attenuation - shallow penetration</li>
+                <li><strong>Low frequency</strong> - long wavelength - lower resolution - slow attenuation - deep penetration</li>
+            </ul>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">The Piezoelectric Effect</h4>
+            <div class="definition-box">
+                <strong>Piezoelectric Effect:</strong> Certain crystals (e.g., quartz) can convert electrical energy to mechanical energy (and vice versa). When an alternating voltage is applied, the crystal contracts and expands, producing ultrasound pulses.
+            </div>
+            
+            <div class="formula-box">
+                <strong>Resonance Condition:</strong><br><br>
+                For maximum amplitude, the crystal thickness must be half the wavelength of the ultrasound:<br><br>
+                \[t = \frac{\lambda}{2}\]
+            </div>
+            
+            <h3 id="h3-us-1-2" style="scroll-margin-top: 80px;">1.2 Acoustic Impedance</h3>
+            
+            <p>When ultrasound reaches a boundary between two media, reflection occurs. The amount of reflection depends on the <strong>acoustic impedance</strong> of each medium.</p>
+            
+            <div class="formula-box">
+                <strong>Acoustic Impedance:</strong><br><br>
+                \[Z = \rho v\]<br><br>
+                Where:
+                <ul style="text-align: left; margin-top: 8px;">
+                    <li>\(Z\) = acoustic impedance (kg m^-2 s^-1 or Rayls)</li>
+                    <li>\(\rho\) = density of the medium (kg m^-3)</li>
+                    <li>\(v\) = speed of sound in the medium (m s^-1)</li>
+                </ul>
+            </div>
+            
+            <div class="formula-box">
+                <strong>Reflection Coefficient:</strong><br><br>
+                \[R = \left(\frac{Z_2 - Z_1}{Z_2 + Z_1}\right)^2\]
+            </div>
+            
+            <div class="tip-box">
+                <strong>Key Insight:</strong> The greater the difference in acoustic impedance between two media, the greater the reflection coefficient. This explains why ultrasound is almost completely reflected at an air-tissue boundary.
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">Coupling Gel</h4>
+            <div class="exam-alert">
+                <strong>Why coupling gel is essential:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Without gel: skin-air mismatch - 99% reflected at surface</li>
+                    <li>With gel: eliminates air gap - most ultrasound enters body</li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-us-1-3" style="scroll-margin-top: 80px;">1.3 A-scan & B-scan</h3>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">A-scan (Amplitude scan)</h4>
+            <ul>
+                <li>1D pulse-echo technique</li>
+                <li>Time between pulse and echo - depth of interface</li>
+                <li>Amplitude of echo - reflectivity at interface</li>
+                <li>Must be pulsed (transducer cannot emit and detect simultaneously)</li>
+            </ul>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">B-scan (Brightness scan)</h4>
+            <ul>
+                <li>2D cross-sectional image from many A-scans</li>
+                <li>Dot position = interface location</li>
+                <li>Brightness = reflection intensity</li>
+            </ul>
+            
+            <div class="figure-img">
+                <img src="../../assets/images/ch24/fig24_1_ascale_bscan.png" alt="A-scan diagram" style="max-width: 100%; border-radius: 8px;">
+                <img src="../../assets/images/ch24/fig24_1_ascale_bscan_b.png" alt="B-scan diagram" style="max-width: 100%; border-radius: 8px; margin-top: 16px;">
+                <div class="figure-caption"><strong>Fig 24.1</strong> - A-scan: pulse-echo peaks vs time (left); B-scan: 2D brightness cross-section (right)</div>
+            </div>
+        </div>
+        
+        
+        <div id="xray" class="section-card">
+            <h2 id="h2-xray" style="scroll-margin-top: 120px;">2. X-rays</h2>
+            
+            <h3 id="h3-xray-2-1" style="scroll-margin-top: 80px;">2.1 X-ray Production</h3>
+            
+            <p><strong>X-rays</strong> are electromagnetic radiation with wavelengths from 10^-8 m to 10^-13 m. They have the same nature as gamma-rays but differ in origin.</p>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">X-ray Tube</h4>
+            <p>The X-ray tube consists of:</p>
+            <ul>
+                <li><strong>Cathode</strong> (heated filament) - emits electrons</li>
+                <li><strong>Anode</strong> (tungsten target) - electrons strike here, producing X-rays</li>
+                <li><strong>High voltage</strong> - accelerates electrons from cathode to anode</li>
+            </ul>
+            
+            <div class="figure-img">
+                <img src="../../assets/images/ch24/fig24_2_xray_tube.png" alt="X-ray tube diagram" style="max-width: 100%; border-radius: 8px;">
+                <div class="figure-caption"><strong>Fig 24.2</strong> - X-ray tube: cathode (filament) emits electrons; high voltage accelerates them to anode (tungsten target)</div>
+            </div>
+            
+            <div class="definition-box">
+                <strong>X-ray Properties:</strong><br><br>
+                <ul>
+                    <li><strong>Penetration (hardness)</strong> proportional to accelerating voltage (kVp)</li>
+                    <li><strong>Intensity</strong> proportional to filament current (mA)</li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-xray-2-2" style="scroll-margin-top: 80px;">2.2 X-ray Spectrum</h3>
+            
+            <p>The X-ray spectrum consists of two components:</p>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">Continuous Spectrum (Bremsstrahlung)</h4>
+            <p>Caused by electrons decelerating in the target. As electrons lose different amounts of energy, they produce X-rays of different wavelengths, creating a continuous spectrum.</p>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">Cut-off Wavelength</h4>
+            <div class="formula-box">
+                <strong>Maximum photon energy:</strong><br><br>
+                \[E_{\text{max}} = eV\]<br><br>
+                <strong>Minimum wavelength (cut-off):</strong><br><br>
+                \[\lambda_{\text{min}} = \frac{hc}{eV}\]
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">Characteristic Peaks</h4>
+            <p>Discrete peaks caused by electrons knocking inner shell electrons out of tungsten atoms. When outer electrons fall to fill the vacancies, X-rays of specific energies are emitted.</p>
+            
+            <div class="figure-img">
+                <img src="../../assets/images/ch24/fig24_3_xray_spectrum.png" alt="X-ray spectrum" style="max-width: 100%; border-radius: 8px;">
+                <div class="figure-caption"><strong>Fig 24.3</strong> - X-ray spectrum: continuous Bremsstrahlung with cut-off lambda_min, and characteristic peaks</div>
+            </div>
+            
+            <h3 id="h3-xray-2-3" style="scroll-margin-top: 80px;">2.3 Attenuation</h3>
+            
+            <p>X-rays are attenuated (reduced in intensity) as they pass through matter. The attenuation follows an exponential law:</p>
+            
+            <div class="formula-box">
+                <strong>Attenuation Law:</strong><br><br>
+                \[I = I_0 e^{-\mu x}\]<br><br>
+                Where:
+                <ul style="text-align: left; margin-top: 8px;">
+                    <li>\(I\) = intensity after passing through material</li>
+                    <li>\(I_0\) = initial intensity</li>
+                    <li>\(\mu\) = linear attenuation coefficient (m^-1)</li>
+                    <li>\(x\) = thickness of material (m)</li>
+                </ul>
+                <p style="margin-top: 12px;"><strong>Note:</strong> This equation applies to parallel beams only.</p>
+            </div>
+            
+            <h3 id="h3-xray-2-4" style="scroll-margin-top: 80px;">2.4 CT Scanning</h3>
+            
+            <p><strong>Computed Tomography (CT)</strong> uses rotating X-ray tubes and detector rings to produce cross-sectional images of the body.</p>
+            
+            <div class="concept-box">
+                <strong>CT Scanner Features:</strong>
+                <ul style="margin-top: 12px;">
+                    <li>Multiple X-ray projections from different angles</li>
+                    <li>Computer reconstruction of cross-sectional slices</li>
+                    <li>Higher radiation dose than plain X-ray</li>
+                    <li>Excellent for detecting internal injuries and diseases</li>
+                </ul>
+            </div>
+            
+            <div class="figure-img">
+                <img src="../../assets/images/ch24/fig24_4_ct_scanner.png" alt="CT scanner" style="max-width: 100%; border-radius: 8px;">
+                <div class="figure-caption"><strong>Fig 24.4</strong> - CT scanner: rotating X-ray tube + detector ring; computer reconstructs cross-sectional slices</div>
+            </div>
+        </div>
+        
+        
+        <div id="pet" class="section-card">
+            <h2 id="h2-pet" style="scroll-margin-top: 120px;">3. PET Scanning</h2>
+            
+            <p><strong>Positron Emission Tomography (PET)</strong> is a nuclear medicine imaging technique that produces 3D images of functional processes in the body.</p>
+            
+            <div class="exam-alert">
+                <strong>Key Distinction:</strong>
+                <ul style="margin-top: 8px;">
+                    <li><strong>PET</strong> = internal imaging (tracer from within the body)</li>
+                    <li><strong>CT/Ultrasound</strong> = external source imaging</li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-pet-3-1" style="scroll-margin-top: 80px;">3.1 Annihilation</h3>
+            
+            <p>A positron (antimatter electron) is emitted during beta+ decay. When it meets an electron, both particles annihilate.</p>
+            
+            <div class="formula-box">
+                <strong>Annihilation Reaction:</strong><br><br>
+                \[e^+ + e^- \rightarrow 2\gamma\]
+            </div>
+            
+            <div class="definition-box">
+                <strong>Annihilation Properties:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Two gamma photons produced, each with energy 0.511 MeV</li>
+                    <li>Photons emitted at 180 degrees to each other</li>
+                    <li>Momentum before = 0, so momentum must be conserved</li>
+                </ul>
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">Radiotracers</h4>
+            <ul>
+                <li><strong>Fluorine-18</strong> - undergoes beta+ decay; travels 1-2 mm before annihilating</li>
+                <li><strong>FDG (Fluorodeoxyglucose)</strong> - glucose analog; metabolically active cells (cancer, neurons) avidly uptake it</li>
+                <li>Short half-life requires on-site cyclotron for production</li>
+            </ul>
+            
+            <h3 id="h3-pet-3-2" style="scroll-margin-top: 80px;">3.2 Detection</h3>
+            
+            <p>PET scanners use rings of detectors around the patient:</p>
+            <ul>
+                <li><strong>Time coincidence:</strong> two gamma-rays arrive simultaneously at opposite detectors</li>
+                <li>This defines the <strong>Line of Response (LOR)</strong></li>
+                <li><strong>Time difference</strong> between detections indicates off-center position</li>
+            </ul>
+            
+            <div class="figure-img">
+                <img src="../../assets/images/ch24/fig24_5_pet_detection.png" alt="PET detection" style="max-width: 100%; border-radius: 8px;">
+                <div class="figure-caption"><strong>Fig 24.5</strong> - PET: annihilation produces two gamma photons (0.511 MeV, 180 degrees); coincidence detection defines LOR</div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Clinical Applications:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Detecting cancer and metastases</li>
+                    <li>Brain imaging (epilepsy, dementia)</li>
+                    <li>Assessing heart function</li>
+                </ul>
+            </div>
+        </div>
+        
+        
+        <div id="equations" class="section-card">
+            <h2 id="h2-equations" style="scroll-margin-top: 120px;">4. Key Equations</h2>
+            
+            <table>
+                <tr>
+                    <th>Equation</th>
+                    <th>Meaning</th>
+                </tr>
+                <tr>
+                    <td>\(Z = \rho v\)</td>
+                    <td>Acoustic impedance</td>
+                </tr>
+                <tr>
+                    <td>\(R = \left(\frac{Z_2 - Z_1}{Z_2 + Z_1}\right)^2\)</td>
+                    <td>Reflection coefficient</td>
+                </tr>
+                <tr>
+                    <td>\(t = \frac{\lambda}{2}\)</td>
+                    <td>Resonance crystal thickness</td>
+                </tr>
+                <tr>
+                    <td>\(E_{\text{max}} = eV\)</td>
+                    <td>Maximum X-ray photon energy</td>
+                </tr>
+                <tr>
+                    <td>\(\lambda_{\text{min}} = \frac{hc}{eV}\)</td>
+                    <td>X-ray cut-off wavelength</td>
+                </tr>
+                <tr>
+                    <td>\(I = I_0 e^{-\mu x}\)</td>
+                    <td>X-ray attenuation</td>
+                </tr>
+                <tr>
+                    <td>\(e^+ + e^- \rightarrow 2\gamma\)</td>
+                    <td>PET annihilation (0.511 MeV each)</td>
+                </tr>
+            </table>
+        </div>
+        
+        
+        <div id="checklist" class="section-card">
+            <h2 id="h2-checklist" style="scroll-margin-top: 120px;">5. P4 Checklist</h2>
+
+            <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+            
+            <div class="checklist-box">
+                <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">Ultrasound</div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c1">
+                    <label for="c1">Piezoelectric effect: electrical to mechanical energy conversion</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c2">
+                    <label for="c2">Resonance: crystal thickness = lambda/2</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c3">
+                    <label for="c3">Acoustic impedance Z = rho v</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c4">
+                    <label for="c4">Reflection coefficient formula</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c5">
+                    <label for="c5">Coupling gel eliminates air gap</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c6">
+                    <label for="c6">A-scan: 1D pulse-echo, time proportional to depth</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c7">
+                    <label for="c7">B-scan: 2D from multiple A-scans, brightness = reflection</label>
+                </div>
+            </div>
+
+            <div class="checklist-box">
+                <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">X-rays</div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c8">
+                    <label for="c8">X-ray tube: cathode to anode to X-rays</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c9">
+                    <label for="c9">Hardness proportional to voltage; intensity proportional to current</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c10">
+                    <label for="c10">Continuous (Bremsstrahlung) + characteristic spectra</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c11">
+                    <label for="c11">lambda_min = hc/eV cut-off wavelength</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c12">
+                    <label for="c12">I = I_0 e^(-mu x) attenuation law</label>
+                </div>
+            </div>
+            
+            <div class="checklist-box">
+                <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">PET Scanning</div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c13">
+                    <label for="c13">e+ + e- to 2 gamma (0.511 MeV, 180 degrees)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c14">
+                    <label for="c14">Time coincidence determines LOR</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="c15">
+                    <label for="c15">FDG radiotracer for metabolic imaging</label>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Exam Tips:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Remember the trade-off between ultrasound frequency and penetration depth</li>
+                    <li>For X-rays, higher voltage means shorter wavelength (harder X-rays)</li>
+                    <li>PET requires two photons detected simultaneously (momentum conservation)</li>
+                    <li>CT produces cross-sectional images unlike plain X-rays</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    function toggleUnitNav() {
+        const dropdown = document.getElementById('unitNavDropdown');
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    }
+    
+    document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('unitNavDropdown');
+        const btn = document.getElementById('unitNavBtn');
+        if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    function toggleMobileNav() {
+        document.getElementById('mobileNav').classList.toggle('show');
+    }
+    function closeMobileNav() {
+        document.getElementById('mobileNav').classList.remove('show');
+    }
+    
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function updateReadingProgress() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (window.scrollY / docHeight) * 100;
+        document.getElementById('readingProgress').style.width = progress + '%';
+        
+        const backToTop = document.getElementById('backToTop');
+        if (window.scrollY > 400) {
+            backToTop.classList.add('show');
+        } else {
+            backToTop.classList.remove('show');
+        }
+    }
+    
+    window.addEventListener('scroll', updateReadingProgress);
+    
+    function scrollTo(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+        closeMobileNav();
+    }
+    
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+        closeMobileNav();
+    }
+    
+    function updateActiveNav() {
+        const headings = document.querySelectorAll('h2[id], h3[id]');
+        const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+        let activeId = null;
+        
+        headings.forEach(heading => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top < 150) {
+                activeId = heading.id;
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.dataset.section === activeId) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', updateActiveNav);
+    updateActiveNav();
+    
+    function loadProgress(unitId) {
+        if (typeof Auth === 'undefined' || !Auth.isLoggedIn()) return;
+        fetch(API_BASE_URL + '/progress/' + unitId, {
+            headers: { 'Authorization': 'Bearer ' + Auth.getToken() }
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.unit) {
+                updateProgressButtons(data.unit.status);
+            }
+        })
+        .catch(err => console.error('Load progress error:', err));
+    }
+    
+    function updateProgress(unitId, status) {
+        if (typeof Auth === 'undefined' || !Auth.isLoggedIn()) {
+            if (typeof AuthModal !== 'undefined') AuthModal.open();
+            return;
+        }
+        fetch(API_BASE_URL + '/progress/' + unitId, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Auth.getToken()
+            },
+            body: JSON.stringify({ status })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                updateProgressButtons(status);
+            }
+        })
+        .catch(err => console.error('Update progress error:', err));
+    }
+    
+    function updateProgressButtons(status) {
+        ['not_started', 'in_progress', 'completed'].forEach(s => {
+            const btn = document.getElementById('progress-btn-' + s);
+            if (btn) btn.classList.toggle('active', s === status);
+            const mobileBtn = document.getElementById('progress-btn-' + s + '-mobile');
+            if (mobileBtn) mobileBtn.classList.toggle('active', s === status);
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        loadProgress('ch24');
+    });
+</script>
+
+
+<script src="../../auth/auth.js"></script>
+
+</body>
+</html>

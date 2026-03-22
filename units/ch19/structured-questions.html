@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 19: Structured Questions | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <style>
+        :root {
+            --ef-primary: #1e40af;
+            --ef-secondary: #3b82f6;
+            --ef-light: #dbeafe;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; line-height: 1.6; }
+        
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #047857 0%, #059669 100%); color: white; padding: 40px 0; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        .back-link:hover { color: white; }
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        .content { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+        
+        .question-card {
+            background: white; border-radius: 12px; padding: 28px;
+            margin-bottom: 24px; border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .question-meta { display: flex; gap: 12px; align-items: center; }
+        .exam-badge { background: #1e293b; color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+        .topic-tag { background: var(--ef-light); color: var(--ef-primary); padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .marks { font-size: 14px; color: #64748b; font-weight: 600; }
+        
+        .question-content { color: #1e293b; font-size: 15px; line-height: 1.7; }
+        .question-content p { margin: 12px 0; }
+        .part-label { font-weight: 600; color: #1e293b; }
+        
+        .figure-placeholder {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        .figure-placeholder-inner {
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 30px;
+            color: #64748b;
+            background: #f8fafc;
+        }
+        
+        .mark-scheme {
+            margin-top: 24px; padding-top: 20px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        
+        .mark-scheme-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .mark-scheme-title { font-weight: 600; color: #1e293b; font-size: 16px; }
+        
+        .toggle-btn {
+            background: var(--cap-light); color: var(--cap-primary);
+            border: 1px solid var(--cap-primary); padding: 8px 16px;
+            border-radius: 6px; font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        
+        .toggle-btn:hover { background: var(--cap-primary); color: white; }
+        
+        .mark-scheme-content {
+            display: none;
+            background: #f8fafc; padding: 20px;
+            border-radius: 8px; border-left: 4px solid #22c55e;
+        }
+        
+        .mark-scheme-content.show { display: block; }
+        
+        .mark-type-legend {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #166534;
+        }
+        
+        .mark-subsection {
+            margin: 16px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #22c55e;
+        }
+        
+        .mark-subsection-title {
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .mark-point {
+            display: flex; gap: 12px; margin: 8px 0;
+            padding: 8px;
+            background: #fafafa;
+            border-radius: 6px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .mark-point span:not(.mark-badge) {
+            min-width: 0;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        
+        .mark-badge {
+            background: #22c55e;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            height: fit-content;
+            font-family: monospace;
+            text-transform: uppercase;
+            min-width: 28px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .tip-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 24px;
+        }
+        
+        .tip-box strong { color: #1d4ed8; }
+        
+        .tip-box ul { margin: 8px 0 0 0; padding-left: 20px; }
+        .tip-box li { margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            <a href="./index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">&#8592;</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #dbeafe 0%, white 100%); border: 1px solid #1e40af; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #1e40af; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px; transition: transform 0.2s;">&#9660;</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+                        <a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+                        <a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ffedd5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+                        <a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+                        <a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+                        <a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#cffafe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+                        <a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+                        <a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; background: #dbeafe; font-weight: 500; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #1e40af;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span><span style="width: 8px; height: 8px; background: #1e40af; border-radius: 50%;"></span></a>
+                        <a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <div class="subtitle">Unit 19</div>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Past Exam Questions with Mark Schemes</p>
+        </div>
+    </div>
+
+    <div class="content">
+        
+        <!-- Question 1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q1</span>
+                    <span class="topic-tag">Capacitance Definition and Energy</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Define the capacitance of a capacitor.</p>
+                <p><strong>(b)</strong> A capacitor has a charge of 200 μC on one plate when the potential difference across it is 50 V.</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> Calculate the capacitance of the capacitor.</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> Calculate the energy stored in the capacitor.</p>
+                <p><strong>(c)</strong> Explain why a capacitor stores energy but not charge.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Capacitance is defined as the ratio of charge stored to the potential difference across the plates: \(C = \frac{Q}{V}\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Unit: Farad (F)</span></div>
+                    
+                    <p><strong>(b)(i)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(C = \frac{Q}{V} = \frac{200 \times 10^{-6}}{50} = 4.0 \times 10^{-6} \, \text{F} = 4.0 \, \mu\text{F}\)</span></div>
+                    
+                    <p><strong>(b)(ii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(E = \frac{1}{2}CV^2 = \frac{1}{2} \times 4.0 \times 10^{-6} \times 50^2\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(= 5.0 \times 10^{-3} \, \text{J} = 5.0 \, \text{mJ}\)</span></div>
+                    
+                    <p><strong>(c)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Capacitor has equal magnitudes of positive and negative charges (total charge = zero)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Work is done to separate the positive and negative charges — this work is stored as electrical potential energy</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q2</span>
+                    <span class="topic-tag">Parallel Plate Capacitor</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> State the formula for the capacitance of a parallel plate capacitor in terms of its physical dimensions.</p>
+                <p><strong>(b)</strong> A parallel plate capacitor has plates of area 0.020 m² separated by a distance of 0.50 mm, with air between the plates.</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> Calculate the capacitance. (ε₀ = 8.85 × 10⁻¹² F m⁻¹)</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> The capacitor is charged to a potential difference of 100 V. Calculate the charge on each plate.</p>
+                <p style="padding-left: 20px;"><strong>(iii)</strong> Calculate the energy stored in the charged capacitor.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(C = \frac{\varepsilon_0 A}{d}\)</span></div>
+                    
+                    <p><strong>(b)(i)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(C = \frac{8.85 \times 10^{-12} \times 0.020}{0.50 \times 10^{-3}}\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(= 3.54 \times 10^{-10} \, \text{F} = 354 \, \text{pF}\)</span></div>
+                    
+                    <p><strong>(b)(ii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(Q = CV = 3.54 \times 10^{-10} \times 100\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(= 3.54 \times 10^{-8} \, \text{C}\)</span></div>
+                    
+                    <p><strong>(b)(iii)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(E = \frac{1}{2}CV^2 = \frac{1}{2} \times 3.54 \times 10^{-10} \times 100^2\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(= 1.77 \times 10^{-6} \, \text{J}\)</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q3</span>
+                    <span class="topic-tag">Capacitors in Parallel</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Two capacitors of capacitances 100 μF and 200 μF are connected in parallel across a battery of e.m.f. 9.0 V.</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> Draw a circuit diagram showing this arrangement.</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> Calculate the total capacitance.</p>
+                <p style="padding-left: 20px;"><strong>(iii)</strong> Calculate the total charge stored.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)(ii)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(C_{total} = 100 + 200 = 300 \, \mu\text{F}\)</span></div>
+                    
+                    <p><strong>(a)(iii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(Q_{total} = C_{total}V = 300 \times 10^{-6} \times 9.0\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(= 2.7 \times 10^{-3} \, \text{C} = 2.7 \, \text{mC}\)</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 4 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q4</span>
+                    <span class="topic-tag">Capacitors in Series</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Two capacitors of capacitance C₁ and C₂ are connected in series with a battery of e.m.f. V.</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> State and explain what is the same about each capacitor.</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> Derive an expression for the total capacitance in terms of C₁ and C₂.</p>
+                <p><strong>(b)</strong> Two 100 μF capacitors are connected in series with a 12 V battery. Calculate the total capacitance and the charge on each capacitor.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)(i)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Capacitors in series all store the same charge</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Explanation: When charge +Q enters one plate, an equal charge −Q is repelled off the adjacent plate</span></div>
+                    
+                    <p><strong>(a)(ii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>\(V = V_1 + V_2 = \frac{Q}{C_1} + \frac{Q}{C_2} = Q(\frac{1}{C_1} + \frac{1}{C_2})\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(C_{total} = \frac{1}{\frac{1}{C_1} + \frac{1}{C_2}} = \frac{C_1 C_2}{C_1 + C_2}\)</span></div>
+                    
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(C_{total} = \frac{100 \times 100}{100 + 100} = 50 \, \mu\text{F}\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(Q_1 = Q_2 = Q = C_{total}V = 50 \times 10^{-6} \times 12 = 6.0 \times 10^{-4} \, \text{C}\)</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 5 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q5</span>
+                    <span class="topic-tag">Charge and Energy Sharing</span>
+                </div>
+                <span class="marks">[8 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> A 100 μF capacitor is charged to a potential difference of 20 V and then disconnected from the battery. It is connected across an identical uncharged capacitor.</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> Calculate the initial charge on the first capacitor.</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> Calculate the total energy initially stored.</p>
+                <p style="padding-left: 20px;"><strong>(iii)</strong> Calculate the final potential difference across each capacitor.</p>
+                <p style="padding-left: 20px;"><strong>(iv)</strong> Calculate the total energy finally stored.</p>
+                <p style="padding-left: 20px;"><strong>(v)</strong> Hence, calculate the energy lost during the sharing process.</p>
+                <p><strong>(b)</strong> Explain why this energy is lost.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)(i)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(Q = CV = 100 \times 10^{-6} \times 20 = 2.0 \times 10^{-3} \, \text{C} = 2.0 \, \text{mC}\)</span></div>
+                    
+                    <p><strong>(a)(ii)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(E_i = \frac{1}{2}CV^2 = \frac{1}{2} \times 100 \times 10^{-6} \times 20^2 = 2.0 \times 10^{-2} \, \text{J} = 20 \, \text{mJ}\)</span></div>
+                    
+                    <p><strong>(a)(iii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Total capacitance: \(C_{total} = 100 + 100 = 200 \, \mu\text{F}\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Conservation: \(Q_0 = Q_1 + Q_2 \Rightarrow V_f = \frac{Q_0}{C_{total}} = 10 \, \text{V}\)</span></div>
+                    
+                    <p><strong>(a)(iv)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(E_f = \frac{1}{2}C_1 V_f^2 + \frac{1}{2}C_2 V_f^2 = 10 \, \text{mJ}\)</span></div>
+                    
+                    <p><strong>(a)(v)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(\Delta E = E_i - E_f = 20 - 10 = 10 \, \text{mJ}\) (half the energy is lost)</span></div>
+                    
+                    <p><strong>(b)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Energy is lost because charge flowing through the connecting wires encounters resistance — electrical energy is dissipated as heat</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 6 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q6</span>
+                    <span class="topic-tag">Discharging a Capacitor</span>
+                </div>
+                <span class="marks">[8 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Define the time constant of a discharging circuit.</p>
+                <p><strong>(b)</strong> A 500 μF capacitor is discharged through a 600 Ω resistor.</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> Calculate the time constant of the circuit.</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> Calculate the time taken for the charge to fall to 37% of its initial value.</p>
+                <p style="padding-left: 20px;"><strong>(iii)</strong> Calculate the time taken for the charge to fall to 1% of its initial value.</p>
+                <p><strong>(c)</strong> State two factors that determine the rate at which a capacitor discharges.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>The time constant τ is the time taken for the charge/current to fall to 1/e (approximately 37%) of its initial value</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>τ = RC</span></div>
+                    
+                    <p><strong>(b)(i)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(\tau = RC = 600 \times 500 \times 10^{-6} = 0.30 \, \text{s}\)</span></div>
+                    
+                    <p><strong>(b)(ii)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>By definition, after one time constant, charge = Q₀/e. Time = τ = 0.30 s</span></div>
+                    
+                    <p><strong>(b)(iii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>After 5τ, charge ≈ Q₀/100 (less than 1%)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Time = \(5 \times 0.30 = 1.5 \, \text{s}\)</span></div>
+                    
+                    <p><strong>(c)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Resistance R (larger R → slower discharge)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Capacitance C (larger C → slower discharge)</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 7 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q7</span>
+                    <span class="topic-tag">Exponential Discharge Equations</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Write down the equations for:</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> charge Q on a discharging capacitor at time t</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> potential difference V across the plates at time t</p>
+                <p style="padding-left: 20px;"><strong>(iii)</strong> current I in the circuit at time t</p>
+                <p style="padding-left: 20px;">In each case, state what each symbol represents.</p>
+                <p><strong>(b)</strong> A 400 μF capacitor is charged to 20 V and then discharged through a resistor. The time constant of the circuit is 5.5 s.</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> Write down the value of the resistance.</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> Calculate the potential difference across the capacitor 5.5 s after discharge begins.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)(i-iii)</strong> [3 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(Q = Q_0 e^{-t/RC}\) where Q₀ is initial charge, RC is time constant</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(V = V_0 e^{-t/RC}\) where V₀ is initial p.d.</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(I = I_0 e^{-t/RC}\) where I₀ is initial current</span></div>
+                    
+                    <p><strong>(b)(i)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(R = \frac{\tau}{C} = \frac{5.5}{400 \times 10^{-6}} = 13750 \, \Omega = 13.75 \, k\Omega\)</span></div>
+                    
+                    <p><strong>(b)(ii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>After one time constant, \(V = V_0/e = V_0 \times 0.368\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(V = 20 \times 0.368 = 7.36 \, \text{V}\)</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 8 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q8</span>
+                    <span class="topic-tag">Camera Flash Application</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> In a simple photographic flashgun, a 0.20 F capacitor is charged by a 9.0 V battery.</p>
+                <p style="padding-left: 20px;"><strong>(i)</strong> Calculate the energy stored in the fully charged capacitor.</p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> The flash lasts for 0.010 s. Calculate the average power dissipated during the flash.</p>
+                <p style="padding-left: 20px;"><strong>(iii)</strong> Calculate the approximate resistance of the bulb.</p>
+                <p><strong>(b)</strong> State two advantages of using a capacitor in a camera flash rather than directly using the battery.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)(i)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(E = \frac{1}{2}CV^2 = \frac{1}{2} \times 0.20 \times 9.0^2 = 8.1 \, \text{J}\)</span></div>
+                    
+                    <p><strong>(a)(ii)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(P = \frac{E}{t} = \frac{8.1}{0.010} = 810 \, \text{W}\)</span></div>
+                    
+                    <p><strong>(a)(iii)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Using \(P = V^2/R\): \(R = \frac{V^2}{P} = \frac{81}{810} = 0.10 \, \Omega\)</span></div>
+                    
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Capacitor can release energy much faster (higher power) than battery</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Battery would be damaged by the high instantaneous current</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 9 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q9</span>
+                    <span class="topic-tag">Capacitor Network</span>
+                </div>
+                <span class="marks">[8 marks]</span>
+            </div>
+            <div class="question-content">
+                <p>Three capacitors of capacitances 100 pF, 200 pF, and 600 pF are available.</p>
+                <p><strong>(a)</strong> Calculate the maximum total capacitance that can be obtained by connecting them in any combination.</p>
+                <p><strong>(b)</strong> Calculate the minimum total capacitance that can be obtained by connecting them in any combination.</p>
+                <p><strong>(c)</strong> Sketch the circuits used in (a) and (b), labeling each capacitor with its capacitance value.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Maximum capacitance: all in parallel</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(C_{max} = 100 + 200 + 600 = 900 \, \text{pF}\)</span></div>
+                    
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Minimum capacitance: all in series</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(\frac{1}{C_{min}} = \frac{1}{100} + \frac{1}{200} + \frac{1}{600} = \frac{10}{600} \Rightarrow C_{min} = 60 \, \text{pF}\)</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 10 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q10</span>
+                    <span class="topic-tag">Discharge Graph Analysis</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p>A capacitor of capacitance 500 μF is discharged through a resistor of resistance R. The graph shows the variation of ln(Q) with time t.</p>
+                <p><strong>(a)</strong> Use the graph to determine the time constant of the circuit.</p>
+                <p><strong>(b)</strong> Hence, calculate the resistance R.</p>
+                <p><strong>(c)</strong> Use the graph to find the initial charge Q₀ on the capacitor.</p>
+                <p><strong>(d)</strong> Calculate the energy stored in the capacitor at t = 0.</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Gradient of ln(Q) vs t graph = \(-1/\tau\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>From graph: gradient = \(-0.20 \, \text{s}^{-1}\) → \(\tau = \frac{1}{0.20} = 5.0 \, \text{s}\)</span></div>
+                    
+                    <p><strong>(b)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>\(R = \frac{\tau}{C} = \frac{5.0}{500 \times 10^{-6}} = 10000 \, \Omega = 10 \, k\Omega\)</span></div>
+                    
+                    <p><strong>(c)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>At t = 0, ln(Q) = ln(Q₀) = value from graph (e.g., if intercept = 13.8, then Q₀ = e¹³·⁸)</span></div>
+                    
+                    <p><strong>(d)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>\(E = \frac{1}{2}CV_0^2\) or \(E = \frac{Q_0^2}{2C}\)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Calculate using values from graph</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tip-box">
+            <strong>Exam Tips:</strong>
+            <ul style="margin-top: 8px; margin-bottom: 0;">
+                <li>Watch units! Convert μF, nF to Farads; kΩ to Ohms</li>
+                <li>Series capacitors combine reciprocally — smaller than smallest</li>
+                <li>Parallel capacitors add — larger than largest</li>
+                <li>Energy sharing always loses half the energy</li>
+                <li>τ = RC has units of seconds (Ω × F = s)</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <script>
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('[onclick="toggleUnitNav()"]');
+            const dropdown = document.getElementById('unitNavDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+                container.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

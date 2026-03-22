@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 22: Structured Questions | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <style>
+        :root {
+            --ef-primary: #7c3aed;
+            --ef-secondary: #a78bfa;
+            --ef-light: #ede9fe;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; line-height: 1.6; }
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #9d174d 0%, #be185d 100%); color: white; padding: 40px 0; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        .back-link:hover { color: white; }
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        .content { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+        .question-card { background: white; border-radius: 12px; padding: 28px; margin-bottom: 24px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .question-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0; }
+        .question-meta { display: flex; gap: 12px; align-items: center; }
+        .exam-badge { background: #1e293b; color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+        .topic-tag { background: var(--ef-light); color: var(--ef-primary); padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .marks { font-size: 14px; color: #64748b; font-weight: 600; }
+        .question-content { color: #1e293b; font-size: 15px; line-height: 1.7; }
+        .question-content p { margin: 12px 0; }
+        .part-label { font-weight: 600; color: #1e293b; }
+        .figure-placeholder { background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 16px 0; text-align: center; }
+        .figure-placeholder-inner { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 30px; color: #64748b; background: #f8fafc; }
+        .mark-scheme { margin-top: 24px; padding-top: 20px; border-top: 1px dashed #cbd5e1; }
+        .mark-scheme-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .mark-scheme-title { font-weight: 600; color: #1e293b; font-size: 16px; }
+        .toggle-btn { background: var(--ef-light); color: var(--ef-primary); border: 1px solid var(--ef-primary); padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .toggle-btn:hover { background: var(--ef-primary); color: white; }
+        .mark-scheme-content { display: none; background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e; }
+        .mark-scheme-content.show { display: block; }
+        .mark-type-legend { background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #166534; }
+        .mark-point { display: flex; gap: 12px; margin: 8px 0; padding: 8px; background: #fafafa; border-radius: 6px; align-items: flex-start; flex-wrap: wrap; }
+        .mark-point span:not(.mark-badge) { min-width: 0; overflow-wrap: break-word; word-break: break-word; line-height: 1.4; }
+        .mark-badge { background: #22c55e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; flex-shrink: 0; height: fit-content; font-family: monospace; text-transform: uppercase; min-width: 28px; text-align: center; display: inline-block; }
+        @media (max-width: 640px) { .question-header { flex-direction: column; gap: 12px; } .question-card { padding: 20px; } }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; font-size: 15px; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">&#8592;</span> PhysicsHub
+            </a>
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #ede9fe 0%, white 100%); border: 1px solid #7c3aed; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #7c3aed; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px; transition: transform 0.2s;">&#9660;</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+                        <a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+                        <a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ffedd5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+                        <a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+                        <a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+                        <a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#cffafe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+                        <a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+                        <a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+                        <a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+                        <a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ccfbf1'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Current</span></a>
+                        <a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; background: #ede9fe; font-weight: 500; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #7c3aed;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span><span style="width: 8px; height: 8px; background: #7c3aed; border-radius: 50%;"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <a href="index.html" class="back-link">&#8592; Unit 22: Quantum Physics</a>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Past Exam Questions with Mark Schemes — Photons, Photoelectric Effect, Wave-Particle Duality, Energy Levels</p>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Q1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q1</span>
+                    <span class="topic-tag">Photon Energy</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> State the formula for photon energy in terms of frequency. <span class="part-label">[1]</span></p>
+                <p><strong>(b)</strong> Calculate the energy of a photon with wavelength 550 nm. <span class="part-label">[3]</span></p>
+                <p>Given: \(E = hc/\lambda\), \(h = 6.63 \times 10^{-34}\) J·s, \(c = 3.00 \times 10^8\) m/s</p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    <p><strong>(a)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>E = hf (or E = hc/λ)</span></div>
+                    <p><strong>(b)</strong> [3 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>E = hc/λ</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>= (6.63 × 10⁻³⁴ × 3.00 × 10⁸) / (550 × 10⁻⁹)</span></div>
+                    <div class="mark-point"><span class="mark-badge">A1</span><span>= 3.6 × 10⁻¹⁹ J</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q2</span>
+                    <span class="topic-tag">Photoelectric Effect</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Define threshold frequency. <span class="part-label">[2]</span></p>
+                <p><strong>(b)</strong> State two observations from the photoelectric effect that wave theory cannot explain. <span class="part-label">[2]</span></p>
+                <p><strong>(c)</strong> Light of frequency \(6.0 \times 10^{14}\) Hz hits a metal with work function Φ = 2.4 eV. Calculate whether electrons are emitted. <span class="part-label">[2]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Minimum frequency of incident radiation for electron emission from metal surface</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Below this frequency, NO electrons are emitted regardless of intensity</span></div>
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Existence of threshold frequency (no emission below f₀)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Instantaneous emission (no time lag even at low intensity)</span></div>
+                    <p><strong>(c)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Photon energy E = hf = 6.63 × 10⁻³⁴ × 6.0 × 10¹⁴</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>= 3.98 × 10⁻¹⁹ J = 2.49 eV</span></div>
+                    <div class="mark-point"><span class="mark-badge">A1</span><span>Since E > Φ (2.49 eV > 2.4 eV), electrons ARE emitted</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q3</span>
+                    <span class="topic-tag">Einstein's Equation</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Write \(hf = \Phi + KE_{\max}\) and define each symbol. <span class="part-label">[2]</span></p>
+                <p><strong>(b)</strong> Light of wavelength 450 nm hits a metal with work function Φ = 2.3 eV. Calculate the maximum kinetic energy of emitted electrons (in eV). <span class="part-label">[3]</span></p>
+                <p><strong>(c)</strong> State the effect of increasing the light intensity on \(KE_{\max}\). <span class="part-label">[1]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>hf = photon energy; Φ = work function (minimum energy to escape)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>KEₘₐₓ = maximum kinetic energy of emitted electron</span></div>
+                    <p><strong>(b)</strong> [3 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>E = hf = hc/λ = (1240 eV·nm) / 450 nm = 2.76 eV</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>KEₘₐₓ = hf − Φ = 2.76 − 2.3</span></div>
+                    <div class="mark-point"><span class="mark-badge">A1</span><span>= 0.46 eV</span></div>
+                    <p><strong>(c)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>No effect on KEₘₐₓ (depends only on frequency, not intensity)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q4</span>
+                    <span class="topic-tag">Work Function</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Define work function. <span class="part-label">[2]</span></p>
+                <p><strong>(b)</strong> A metal has a threshold wavelength of 520 nm. Find the work function in joules. <span class="part-label">[2]</span></p>
+                <p>Given: \(h = 6.63 \times 10^{-34}\) J·s, \(c = 3.00 \times 10^8\) m/s</p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Minimum energy required to liberate (remove) an electron from metal surface</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Also called binding energy or extraction energy</span></div>
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Φ = hc/λ₀</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>= (6.63 × 10⁻³⁴ × 3 × 10⁸) / (520 × 10⁻⁹)</span></div>
+                    <div class="mark-point"><span class="mark-badge">A1</span><span>= 3.8 × 10⁻¹⁹ J</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q5</span>
+                    <span class="topic-tag">de Broglie Wavelength</span>
+                </div>
+                <span class="marks">[5 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> State de Broglie's hypothesis. <span class="part-label">[2]</span></p>
+                <p><strong>(b)</strong> An electron is accelerated through a potential difference of 150 V. Calculate its de Broglie wavelength. <span class="part-label">[3]</span></p>
+                <p>Given: \(m_e = 9.11 \times 10^{-31}\) kg, \(e = 1.60 \times 10^{-19}\) C, \(h = 6.63 \times 10^{-34}\) J·s</p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>All matter has wave-like properties (wave-particle duality)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Wavelength λ = h/p = h/(mv)</span></div>
+                    <p><strong>(b)</strong> [3 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>K.E. = eV = 150 eV (convert to joules: 150 × 1.6 × 10⁻¹⁹)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>λ = h/√(2mₑeV) for accelerated electron</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>= (6.63 × 10⁻³⁴) / √(2 × 9.11 × 10⁻³¹ × 150 × 1.6 × 10⁻¹⁹)</span></div>
+                    <div class="mark-point"><span class="mark-badge">A1</span><span>= 1.0 × 10⁻¹⁰ m (0.10 nm)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q6</span>
+                    <span class="topic-tag">Electron Diffraction</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Name the experiment that proved the wave nature of electrons. <span class="part-label">[1]</span></p>
+                <p><strong>(b)</strong> Describe what is observed in this experiment. <span class="part-label">[2]</span></p>
+                <p><strong>(c)</strong> What does this prove about electrons? <span class="part-label">[1]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Davisson-Germer experiment (electron diffraction by crystal lattice)</span></div>
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Diffraction pattern (concentric rings or spots) observed on fluorescent screen</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Pattern only explained by wave interference, not particle behavior alone</span></div>
+                    <p><strong>(c)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Electrons exhibit wave properties (diffraction and interference)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q7</span>
+                    <span class="topic-tag">Energy Levels</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> In an energy level diagram, state which level is the ground state. <span class="part-label">[1]</span></p>
+                <p><strong>(b)</strong> An electron falls from energy level \(E_2 = -3.4\) eV to \(E_1 = -13.6\) eV. Calculate the energy of the emitted photon (in eV). <span class="part-label">[2]</span></p>
+                <p><strong>(c)</strong> A photon with energy greater than the ionization energy is absorbed. What happens to the electron? <span class="part-label">[1]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>E₀ (lowest energy level, n=1)</span></div>
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>ΔE = E(final) − E(initial) = E₁ − E₂</span></div>
+                    <div class="mark-point"><span class="mark-badge">A1</span><span>ΔE = (−13.6) − (−3.4) = 10.2 eV</span></div>
+                    <p><strong>(c)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Electron becomes free / atom is ionized (electron ejected from atom)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q8</span>
+                    <span class="topic-tag">Line Spectra</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>(a)</strong> Distinguish between emission and absorption spectra. <span class="part-label">[2]</span></p>
+                <p><strong>(b)</strong> State one application of line spectra. <span class="part-label">[1]</span></p>
+                <p><strong>(c)</strong> Why do atoms produce line spectra rather than continuous spectra? <span class="part-label">[1]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Emission: bright colored lines on dark background (photons emitted)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Absorption: dark lines on bright background (photons absorbed at specific wavelengths)</span></div>
+                    <p><strong>(b)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Astronomy (stellar composition analysis) / chemical analysis / spectroscopy</span></div>
+                    <p><strong>(c)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Electrons in atoms have discrete (quantized) energy levels → only specific photon energies are absorbed/emitted</span></div>
+                </div>
+            </div>
+        </div>
+
+        <p style="text-align: center; color: #64748b; padding: 20px 0; font-weight: 600;">Total: 39 marks</p>
+
+    </div>
+
+    <script>
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('[onclick="toggleUnitNav()"]');
+            const dropdown = document.getElementById('unitNavDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+                container.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

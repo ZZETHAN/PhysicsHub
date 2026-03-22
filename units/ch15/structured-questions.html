@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 15: Structured Questions | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; line-height: 1.6; }
+        
+        .header {
+            background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0;
+            position: sticky; top: 0; z-index: 100;
+        }
+        
+        .unit-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+            color: white; padding: 40px 0;
+        }
+        
+        .container {
+            max-width: 900px; margin: 0 auto; padding: 0 24px;
+        }
+        
+        .back-link {
+            color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px;
+        }
+        
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        
+        .content {
+            max-width: 900px; margin: 0 auto; padding: 32px 24px;
+        }
+        
+        .question-card {
+            background: white; border-radius: 12px; padding: 28px;
+            margin-bottom: 24px; border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px; padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .question-meta {
+            display: flex; gap: 12px; align-items: center;
+        }
+        
+        .exam-badge {
+            background: #1e293b; color: white;
+            padding: 6px 12px; border-radius: 6px;
+            font-size: 13px; font-weight: 600;
+        }
+        
+        .topic-tag {
+            background: #f3e8ff; color: #7c3aed;
+            padding: 4px 12px; border-radius: 4px;
+            font-size: 12px; font-weight: 500;
+        }
+        
+        .marks {
+            font-size: 14px; color: #64748b; font-weight: 600;
+        }
+        
+        .question-content {
+            color: #1e293b; font-size: 15px; line-height: 1.7;
+        }
+        
+        .question-content p {
+            margin: 12px 0;
+        }
+        
+        .part-label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .mark-scheme {
+            margin-top: 24px; padding-top: 20px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        
+        .mark-scheme-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .mark-scheme-title {
+            font-weight: 600; color: #1e293b; font-size: 16px;
+        }
+        
+        .toggle-btn {
+            background: #eff6ff; color: #1d4ed8;
+            border: 1px solid #3b82f6; padding: 8px 16px;
+            border-radius: 6px; font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        
+        .toggle-btn:hover {
+            background: #3b82f6; color: white;
+        }
+        
+        .mark-scheme-content {
+            display: none;
+            background: #f8fafc; padding: 20px;
+            border-radius: 8px; border-left: 4px solid #22c55e;
+        }
+        
+        .mark-scheme-content.show {
+            display: block;
+        }
+        
+        .mark-type-legend {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #166534;
+        }
+        
+        .mark-subsection {
+            margin: 16px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #22c55e;
+        }
+        
+        .mark-subsection-title {
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .mark-point {
+            display: flex; gap: 12px; margin: 8px 0;
+            padding: 8px;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+        
+        .mark-badge {
+            background: #22c55e;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            height: fit-content;
+            font-family: monospace;
+            text-transform: uppercase;
+            min-width: 28px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .mark-badge.b { background: #3b82f6; }
+        .mark-badge.m { background: #f59e0b; }
+        .mark-badge.a { background: #22c55e; }
+        .mark-badge.c { background: #8b5cf6; }
+        
+        .tip-box {
+            background: #eff6ff; border-left: 4px solid #3b82f6;
+            padding: 16px 20px; margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-box strong {
+            color: #1d4ed8;
+        }
+        
+        @media (max-width: 640px) {
+            .question-card { padding: 20px; }
+            .question-header { flex-direction: column; gap: 12px; }
+            h1 { font-size: 26px; }
+        }
+        
+        mjx-container { font-size: 105% !important; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="../../index.html" style="text-decoration: none; font-size: 18px; font-weight: 700; color: #1d4ed8;">PhysicsHub<span style="font-weight: 400; color: #64748b; font-size: 13px; margin-left: 6px;">by Ethan</span></a>
+            <div style="font-size: 11px; font-weight: 600; color: #7c3aed; background: #f3e8ff; padding: 4px 10px; border-radius: 4px; margin-right: 12px;">A2 LEVEL</div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    <div class="unit-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to Unit 15</a>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Ideal Gases - Past Exam Questions with Mark Schemes</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        
+        <!-- Question 1: Ideal Gas Equation -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">Ideal Gas Equation</span>
+                </div>
+                <span class="marks">[8 marks]</span>
+            </div>            
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> A container of volume 0.25 m³ contains an ideal gas at pressure 1.2 × 10⁵ Pa and temperature 300 K. [3]</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(i)</span> Calculate the number of moles of gas in the container.</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(ii)</span> Calculate the number of molecules in the container.</p>                
+                <p><span class="part-label">(b)</span> The temperature of the gas is increased to 350 K at constant volume. [3]</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(i)</span> Calculate the new pressure of the gas.</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(ii)</span> Explain, in terms of molecular motion, why the pressure increases.</p>                
+                <p><span class="part-label">(c)</span> State two assumptions of the kinetic theory of ideal gases. [2]</p>                
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a)(i) - Moles calculation [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(n = \frac{pV}{RT} = \frac{1.2 \times 10^5 \times 0.25}{8.31 \times 300}\)</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>12.0 mol (accept 12 mol)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(ii) - Molecules calculation [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(N = nN_A = 12.0 \times 6.02 \times 10^{23}\)</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>\(7.2 \times 10^{24}\) molecules (accept 7.22 or 7.3)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b)(i) - New pressure [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(p_2 = p_1 \times \frac{T_2}{T_1} = 1.2 \times 10^5 \times \frac{350}{300}\)</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>\(1.40 \times 10^5\) Pa (accept 1.4 × 10⁵)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(ii) - Explanation [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Higher temperature means molecules move faster / have greater kinetic energy</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>More frequent collisions with walls / greater momentum change per collision</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c) - Assumptions [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Any two from: molecules in random motion; elastic collisions; negligible molecular volume; no intermolecular forces; large number of molecules</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Second valid assumption</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Remember that temperature must be in Kelvin for all gas law calculations. For explanations about pressure, always link to molecular collisions with container walls.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 2: RMS Speed -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">RMS Speed</span>
+                </div>
+                <span class="marks">[7 marks]</span>
+            </div>            
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> State the equation relating the root-mean-square speed \(c_{rms}\) of gas molecules to the absolute temperature \(T\). [1]</p>                
+                
+                <p><span class="part-label">(b)</span> A gas cylinder contains helium gas (molar mass 4.0 g mol⁻¹) at a temperature of 300 K. [3]</p>                
+                
+                <p style="margin-left: 24px;"><span class="part-label">(i)</span> Calculate the root-mean-square speed of the helium atoms.</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(ii)</span> Calculate the average kinetic energy of a helium atom.</p>                
+                <p><span class="part-label">(c)</span> The temperature of the gas is increased to 400 K. [3]</p>                
+                
+                <p style="margin-left: 24px;"><span class="part-label">(i)</span> Determine the ratio \(\frac{c_{rms}(400K)}{c_{rms}(300K)}\).</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(ii)</span> Explain why the average kinetic energy of the helium atoms increases.</p>                
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Equation [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>\(c_{rms} = \sqrt{\frac{3kT}{m}}\) or \(c_{rms} = \sqrt{\frac{3RT}{M}}\)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b)(i) - RMS speed calculation [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Correct substitution: \(c_{rms} = \sqrt{\frac{3 \times 8.31 \times 300}{0.004}}\)</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>1370 m s⁻¹ (accept 1360-1380, allow 1.37 × 10³)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(ii) - Average kinetic energy [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(E_k = \frac{3}{2}kT = \frac{3}{2} \times 1.38 \times 10^{-23} \times 300\)</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>\(6.21 \times 10^{-21}\) J (accept 6.2 × 10⁻²¹)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c)(i) - Ratio [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(\frac{c_{400}}{c_{300}} = \sqrt{\frac{400}{300}} = \sqrt{\frac{4}{3}}\)</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>1.15 (accept 1.154 or 2/√3)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(ii) - Explanation [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>\(\langle E_k \rangle = \frac{3}{2}kT\), so kinetic energy is proportional to temperature</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Higher temperature means molecules move faster / have greater average kinetic energy</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Remember that RMS speed depends on √(T) not T. For the same temperature, lighter molecules have higher RMS speed. Also note that average kinetic energy is the same for all gases at the same temperature!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tip-box">
+            <strong>💡 Exam Tips:</strong>
+            <ul style="margin-top: 8px; margin-bottom: 0;">
+                <li>Always convert molar mass to kg mol⁻¹ for calculations (divide by 1000)</li>
+                <li>Remember: \(c_{rms} \propto \sqrt{T}\) and \(c_{rms} \propto \frac{1}{\sqrt{m}}\)</li>
+                <li>Average kinetic energy \(\langle E_k \rangle = \frac{3}{2}kT\) depends only on temperature</li>
+                <li>At the same temperature, all ideal gas molecules have the same average kinetic energy</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <script>
+        function toggleScheme(btn) {
+            const content = btn.parentElement.nextElementSibling;
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Hide' : 'Show';
+        }
+    </script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

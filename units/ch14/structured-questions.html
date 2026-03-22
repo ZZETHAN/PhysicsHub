@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 14: Structured Questions | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: 'Inter', sans-serif; 
+            background: #f8fafc; 
+            line-height: 1.6; 
+        }
+        
+        .header {
+            background: white; 
+            border-bottom: 1px solid #e2e8f0; 
+            padding: 12px 0;
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+        }
+        
+        .unit-header {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white; 
+            padding: 40px 0;
+        }
+        
+        .container {
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 0 24px;
+        }
+        
+        .back-link {
+            color: rgba(255,255,255,0.8); 
+            text-decoration: none; 
+            font-size: 14px;
+        }
+        
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        
+        .content {
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 32px 24px;
+        }
+        
+        .question-card {
+            background: white; 
+            border-radius: 12px; 
+            padding: 28px;
+            margin-bottom: 24px; 
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start;
+            margin-bottom: 20px; 
+            padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .question-meta {
+            display: flex; 
+            gap: 12px; 
+            align-items: center;
+        }
+        
+        .exam-badge {
+            background: #1e293b; 
+            color: white;
+            padding: 6px 12px; 
+            border-radius: 6px;
+            font-size: 13px; 
+            font-weight: 600;
+        }
+        
+        .topic-tag {
+            background: #dcfce7; 
+            color: #059669;
+            padding: 4px 12px; 
+            border-radius: 4px;
+            font-size: 12px; 
+            font-weight: 500;
+        }
+        
+        .marks {
+            font-size: 14px; 
+            color: #64748b; 
+            font-weight: 600;
+        }
+        
+        .question-content {
+            color: #1e293b; 
+            font-size: 15px; 
+            line-height: 1.7;
+        }
+        
+        .question-content p {
+            margin: 12px 0;
+        }
+        
+        .mark-scheme {
+            margin-top: 24px; 
+            padding-top: 20px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        
+        .mark-scheme-header {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .mark-scheme-title {
+            font-weight: 600; 
+            color: #1e293b; 
+            font-size: 16px;
+        }
+        
+        .toggle-btn {
+            background: #eff6ff; 
+            color: #1d4ed8;
+            border: 1px solid #3b82f6; 
+            padding: 8px 16px;
+            border-radius: 6px; 
+            font-size: 13px; 
+            font-weight: 500;
+            cursor: pointer; 
+            transition: all 0.2s;
+        }
+        
+        .toggle-btn:hover {
+            background: #3b82f6; 
+            color: white;
+        }
+        
+        .mark-scheme-content {
+            display: none;
+            background: #f8fafc; 
+            padding: 20px;
+            border-radius: 8px; 
+            border-left: 4px solid #22c55e;
+        }
+        
+        .mark-scheme-content.show {
+            display: block;
+        }
+        
+        .mark-type-legend {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #166534;
+        }
+        
+        .mark-subsection {
+            margin: 16px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #22c55e;
+        }
+        
+        .mark-subsection-title {
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .mark-point {
+            display: flex; 
+            gap: 12px; 
+            margin: 8px 0;
+            padding: 8px;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+        
+        .mark-badge {
+            background: #22c55e;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            height: fit-content;
+            font-family: monospace;
+            text-transform: uppercase;
+            min-width: 28px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .mark-badge.b { background: #3b82f6; }
+        .mark-badge.m { background: #f59e0b; }
+        .mark-badge.a { background: #22c55e; }
+        .mark-badge.c { background: #8b5cf6; }
+        .mark-badge.e { background: #ec4899; }
+        .mark-badge.e { background: #ec4899; }
+        
+        .tip-box {
+            background: #eff6ff; 
+            border-left: 4px solid #3b82f6;
+            padding: 16px 20px; 
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-box strong {
+            color: #1d4ed8;
+        }
+        
+        .part-label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        @media (max-width: 640px) {
+            .question-card { padding: 20px; }
+            .question-header { flex-direction: column; gap: 12px; }
+            h1 { font-size: 26px; }
+        }
+        
+        mjx-container { font-size: 105% !important; }
+    </style>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="../../index.html" style="text-decoration: none; font-size: 18px; font-weight: 700; color: #1d4ed8;">PhysicsHub<span style="font-weight: 400; color: #64748b; font-size: 13px; margin-left: 6px;">by Ethan</span></a>
+            <div style="font-size: 11px; font-weight: 600; color: #059669; background: #dcfce7; padding: 4px 10px; border-radius: 4px; margin-right: 12px;">A2 LEVEL</div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    <div class="unit-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to Unit 14</a>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Temperature - Past Exam Questions with Mark Schemes</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        
+        <!-- Question 1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">Specific Heat Capacity</span>
+                </div>
+                <span class="marks">[8 marks]</span>
+            </div>            
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> Define specific heat capacity and state its unit. [2]</p>                
+                
+                <p><span class="part-label">(b)</span> A student wishes to determine the specific heat capacity of aluminium using an electrical method. A 0.50 kg block of aluminium is heated using an electric heater rated at 12 V, 4.0 A. The initial temperature of the block is 22°C. After heating for 5.0 minutes, the temperature rises to 42°C. [6]</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(i)</span> Calculate the electrical energy supplied to the heater. [2]</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(ii)</span> Calculate the specific heat capacity of aluminium. [2]</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(iii)</span> Suggest why the value obtained is likely to be higher than the accepted value, and explain one modification to reduce this error. [2]</p>                
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend"
+                        <strong>Mark Types:</strong> B = Bookwork/Definition | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Definition [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Energy required to raise the temperature of 1 kg of a substance by 1 K</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Unit: J kg⁻¹ K⁻¹</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b)(i) - Energy Calculation [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Energy = IVt = 4.0 × 12 × (5.0 × 60)</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>14,400 J (accept 14.4 kJ)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(ii) - Specific Heat Capacity [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>c = E/(mΔT) = 14400/(0.50 × 20)</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>1440 J kg⁻¹ K⁻¹ (ecf from energy value)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(iii) - Error Analysis [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge e">E1</span>
+                            <div>Heat loss to surroundings / not all heat transferred to block</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge e">E1</span>
+                            <div>Insulate the block / use lid / polish surface / reduce heating time</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Remember to convert time to seconds. 5.0 minutes = 300 s, not 5.0 s!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">Latent Heat</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>            
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> Explain why the temperature of a substance remains constant during a phase change, even though thermal energy is being supplied. [2]</p>                
+                
+                <p><span class="part-label">(b)</span> An electric kettle is used to boil water. The kettle contains 0.80 kg of water at an initial temperature of 20°C. The kettle is rated at 2.0 kW. [4]</p>                
+                <p>Given: specific heat capacity of water = 4200 J kg⁻¹ K⁻¹, specific latent heat of vaporization of water = 2.3 × 10⁶ J kg⁻¹</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(i)</span> Calculate the time taken for the water to reach its boiling point. [2]</p>                
+                <p style="margin-left: 24px;"><span class="part-label">(ii)</span> Calculate the additional time required to boil away 0.10 kg of water. [2]</p>                
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork/Definition | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Explanation [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Energy is used to break intermolecular bonds / increase potential energy</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>No increase in kinetic energy of molecules / no temperature change</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b)(i) - Heating Time [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Energy = mcΔT = 0.80 × 4200 × 80</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>134 s (accept 135 s or 2.2 min)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(ii) - Vaporization Time [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Energy = mL = 0.10 × 2.3 × 10⁶</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>115 s (accept 2.3 × 10⁵ ÷ 2000)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Note that boiling away water takes almost as long as heating it from 20°C to 100°C! This shows how large the latent heat of vaporization is compared to specific heat capacity.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">Method of Mixtures</span>
+                </div>
+                <span class="marks">[7 marks]</span>
+            </div>            
+            
+            <div class="question-content">
+                <p>A piece of metal of mass 0.15 kg is heated to 100°C in boiling water. It is then quickly transferred to a copper calorimeter of mass 0.20 kg containing 0.40 kg of water at 25°C. The final temperature of the mixture is 28.5°C. [6]</p>                
+                <p>Given: specific heat capacity of water = 4200 J kg⁻¹ K⁻¹, specific heat capacity of copper = 390 J kg⁻¹ K⁻¹</p>                
+                <p><span class="part-label">(a)</span> Explain why the metal must be transferred quickly to the calorimeter. [1]</p>                
+                <p><span class="part-label">(b)</span> Calculate the specific heat capacity of the metal. [4]</p>                
+                <p><span class="part-label">(c)</span> Suggest one source of error in this experiment and its effect on the calculated value. [2]</p>                
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> C = Comprehension | M = Method | A = Answer | E = Evaluation
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Explanation [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge c">C1</span>
+                            <div>To reduce heat loss to surroundings / keep initial temperature at 100°C</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b) - Calculation [4 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Heat lost by metal = heat gained by water + heat gained by calorimeter</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>0.15 × c × 71.5 = 0.40 × 4200 × 3.5 + 0.20 × 390 × 3.5</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Right side = 5880 + 273 = 6153 J</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>c = 570 J kg⁻¹ K⁻¹ (accept 574 J kg⁻¹ K⁻¹)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c) - Error Analysis [2 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge e">E1</span>
+                            <div>Heat loss to surroundings / metal not at 100°C / water splashed out</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge e">E1</span>
+                            <div>Calculated c would be too high (or consistent with error stated)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 4 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">Temperature Scales</span>
+                </div>
+                <span class="marks">[5 marks]</span>
+            </div>            
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> State the Zeroth Law of Thermodynamics and explain how it enables temperature measurement. [3]</p>                
+                <p><span class="part-label">(b)</span> A thermometer shows a reading of -40°C. Calculate this temperature in kelvin. [1]</p>                
+                <p><span class="part-label">(c)</span> Explain why the Kelvin scale is preferred over the Celsius scale in thermodynamic calculations. [1]</p>                
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork/Definition | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Zeroth Law [3 marks]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>If A and C are in thermal equilibrium, and B and C are in thermal equilibrium, then A and B are in thermal equilibrium</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Allows a thermometer (C) to be used to compare temperatures of A and B</div>
+                        </div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Two objects in thermal equilibrium have the same temperature</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b) - Temperature Conversion [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>233 K (accept 273 + (-40) = 233)</div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c) - Kelvin Scale Advantage [1 mark]</div>                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Kelvin has absolute zero / no negative values / ratios are meaningful / directly proportional to average kinetic energy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tip-box">
+            <strong>💡 Exam Tips:</strong>
+            <ul style="margin-top: 8px; margin-bottom: 0;">
+                <li>Always show your working clearly with the formula first</li>
+                <li>Remember to convert temperatures to kelvin for gas law calculations only</li>
+                <li>For method of mixtures: Heat lost = Heat gained (conservation of energy)</li>
+                <li>During phase changes, temperature remains constant while energy is absorbed/released</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <script>
+        function toggleScheme(btn) {
+            const content = btn.parentElement.nextElementSibling;
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Hide' : 'Show';
+        }
+    </script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 22: Quantum Physics | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    <style>
+        :root {
+            --modern-primary: #be185d;
+            --modern-dark: #9d174d;
+            --modern-light: #fce7f3;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #9d174d 0%, #be185d 100%); color: white; padding: 48px 0; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        h1 { margin: 12px 0 0 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; }
+        .subtitle { margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; }
+        
+        .content-grid { display: grid; grid-template-columns: 220px 1fr; gap: 24px; max-width: 1100px; margin: 32px auto; padding: 0 16px; }
+        
+        .sidebar-nav { position: sticky; top: 80px; height: fit-content; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; max-height: calc(100vh - 120px); overflow-y: auto; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; border-radius: 3px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--modern-light); border-radius: 3px; }
+        .sidebar-nav::-webkit-scrollbar-thumb:hover { background: var(--modern-primary); }
+        .nav-section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 12px; }
+        .nav-section-header { display: block; font-size: 13px; font-weight: 500; color: #374151; padding: 8px 12px; margin-top: 4px; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; text-decoration: none; }
+        .nav-section-header:hover { background: var(--modern-light); color: var(--modern-primary); }
+        .nav-section-header.active { background: var(--modern-light); color: var(--modern-primary); font-weight: 600; }
+        .nav-list { list-style: none; padding: 0; margin: 0 0 8px 0; }
+        .nav-item { margin-bottom: 4px; }
+        .nav-link { display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px; transition: all 0.2s; cursor: pointer; }
+        .nav-link:hover { background: var(--modern-light); color: var(--modern-primary); }
+        .nav-link.active { background: var(--modern-light); color: var(--modern-primary); font-weight: 500; }
+        
+        .main-content { max-width: 100%; min-width: 0; }
+        .section-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #e2e8f0; scroll-margin-top: 140px; }
+        .section-card h2 { margin-top: 0; color: #1e293b; font-size: 22px; font-weight: 700; }
+        .section-card h3 { color: #1e293b; font-size: 18px; font-weight: 600; margin-top: 24px; }
+        .section-card h4 { color: #334155; font-size: 16px; font-weight: 600; margin-top: 20px; }
+        
+        .concept-box { background: var(--modern-light); border-left: 4px solid var(--modern-primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .concept-box strong { color: var(--modern-primary); }
+        .concept-box em { color: var(--modern-primary); font-style: normal; font-weight: 600; }
+        
+        .definition-box { background: #fdf2f8; border-left: 4px solid #ec4899; padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .definition-box .def-title { font-weight: 600; color: #be185d; margin-bottom: 8px; }
+        
+        .formula-box { background: #fdf2f8; border: 1px solid #f9a8d4; padding: 16px; margin: 16px 0; border-radius: 8px; text-align: center; }
+        .formula-box strong { color: #9d174d; }
+        
+        .exam-alert { background: var(--modern-light); border: 1px solid var(--modern-primary); padding: 14px 18px; margin: 16px 0; border-radius: 8px; }
+        .exam-alert strong { color: var(--modern-primary); }
+        
+        .tip-box { background: #fdf2f8; border-left: 4px solid #ec4899; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: #be185d; }
+        
+        .key-points { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+        .key-points li { margin-bottom: 8px; }
+        
+        .checklist-box {
+            background: var(--modern-light);
+            border: 1px solid var(--modern-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--modern-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--modern-dark); }
+        
+        .figure-placeholder { background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 16px 0; text-align: center; }
+        .figure-placeholder-inner { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 30px; color: #64748b; background: #f8fafc; }
+        
+        .highlight-box { background: #fdf2f8; border: 2px solid #ec4899; border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-box strong { color: #be185d; }
+        
+        .star-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .star-table th, .star-table td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
+        .star-table th { background: var(--modern-light); font-weight: 600; }
+        .star-table tr:hover { background: #f8fafc; }
+        
+        .mobile-menu-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--modern-primary); color: white; border: none; font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .mobile-nav { display: none; position: fixed; bottom: 80px; right: 20px; width: 260px; max-height: 70vh; overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 999; }
+        .mobile-nav.show { display: block; }
+        .reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #be185d, #f472b6); z-index: 1001; transition: width 0.1s; }
+        .back-to-top { display: none; position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; background: #be185d; color: white; border: none; border-radius: 50%; font-size: 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(190, 24, 93, 0.3); z-index: 1000; transition: opacity 0.2s, transform 0.2s; text-decoration: none; }
+        .back-to-top:hover { background: #9d174d; transform: translateY(-2px); }
+        .back-to-top.show { display: flex; align-items: center; justify-content: center; }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+        
+        .progress-btn.active { background: #7c3aed !important; color: white; border-color: #7c3aed !important; }
+        .progress-btn:hover:not(.active) { background: #f1f5f9; }
+        
+        .checklist-box { background: var(--modern-light); border: 1px solid var(--modern-primary); border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .checklist-box::before {
+            content: 'Checklist';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--modern-primary);
+            margin-bottom: 12px;
+        }
+        .checklist-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; padding: 10px 12px; background: white; border-radius: 6px; }
+        .checklist-item input[type="checkbox"] { margin-right: 12px; margin-top: 4px; width: 18px; height: 18px; cursor: pointer; }
+        
+        @media (max-width: 968px) { .content-grid { grid-template-columns: 1fr; } .sidebar-nav { display: none; } .mobile-menu-btn { display: flex; align-items: center; justify-content: center; } }
+        mjx-container { font-size: 105% !important; }
+        
+        @media (max-width: 640px) {
+            .section-card { padding: 16px; }
+            .section-card h2 { font-size: 20px; }
+            h1 { font-size: 32px; }
+        }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: #f1f5f9; }
+.unit-nav-link.active { background: #be185d22; color: #be185d; }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: #be185d; }
+</style>
+
+</head>
+<body>
+
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">←</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #be185d22 0%, white 100%); border: 1px solid #be185d; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #be185d; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1d4ed822'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+<a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+<a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##ea580c22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+<a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##16a34a22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+<a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##dc262622'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+<a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+<a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##be185d22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+<a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+<a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0f766e22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='transparent'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #be185d;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span><span style="width: 8px; height: 8px; background: #be185d; border-radius: 50%;"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">A2 Level > Unit 22</div>
+            <h1>Quantum Physics</h1>
+            <p class="subtitle">Photons, photoelectric effect, wave-particle duality, energy levels and line spectra</p>
+        </div>
+    </div>
+
+    <div class="reading-progress" id="readingProgress"></div>
+    <a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+            <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 4px;"><a href="#h2-intro" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;" onclick="closeMobileNav()">Introduction</a></li>
+            <li style="margin-bottom: 2px;"><a href="#h2-photon" style="display: block; padding: 8px 12px; color: #7c3aed; text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600;" onclick="closeMobileNav()">1. Energy and Momentum of a Photon</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-11-black-body" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">1.1 Black Body Radiation</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-12-planck" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">1.2 Planck's Quantum Hypothesis</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-13-einstein" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">1.3 Einstein's Light Quanta</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-14-electron-volt" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">1.4 Electron Volt</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-15-photon-momentum" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">1.5 Photon Momentum</a></li>
+            <li style="margin-bottom: 2px; margin-top: 8px;"><a href="#h2-photoelectric" style="display: block; padding: 8px 12px; color: #7c3aed; text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600;" onclick="closeMobileNav()">2. Photoelectric Effect</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-21-key-observations" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">2.1 Key Observations</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-22-work-function" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">2.2 Work Function</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-23-photoelectric-equation" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">2.3 Photoelectric Equation</a></li>
+            <li style="margin-bottom: 2px; margin-top: 8px;"><a href="#h2-duality" style="display: block; padding: 8px 12px; color: #7c3aed; text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600;" onclick="closeMobileNav()">3. Wave-Particle Duality</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-31-de-broglie" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">3.1 de Broglie Wavelength</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-32-electron-diffraction" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">3.2 Electron Diffraction</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-33-complementary" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">3.3 Complementary Phenomena</a></li>
+            <li style="margin-bottom: 2px; margin-top: 8px;"><a href="#h2-energy-levels" style="display: block; padding: 8px 12px; color: #7c3aed; text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600;" onclick="closeMobileNav()">4. Energy Levels and Line Spectra</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-41-energy-levels" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">4.1 Energy Levels in Atoms</a></li>
+            <li style="margin-bottom: 2px; padding-left: 12px;"><a href="#h3-42-line-spectra" style="display: block; padding: 6px 12px; color: #64748b; text-decoration: none; border-radius: 6px; font-size: 12px;" onclick="closeMobileNav()">4.2 Line Spectra</a></li>
+            <li style="margin-bottom: 4px; margin-top: 16px;"><a href="#h2-checklist" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;" onclick="closeMobileNav()">P4 Checklist</a></li>
+        </ul>
+        <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+            <span style="font-size: 14px; font-weight: 600; color: #64748b;">Resources</span>
+            <ul style="list-style: none; padding: 0; margin: 12px 0 0 0;">
+                <li style="margin-bottom: 4px;"><a href="structured-questions.html" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;" onclick="closeMobileNav()">Practice Questions</a></li>
+                <li style="margin-bottom: 4px;"><a href="../../homework/ch22/" style="display: block; padding: 8px 12px; color: #16a34a; text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 500;" onclick="closeMobileNav()">📚 Homework</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#intro" class="nav-link" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-photon" class="nav-section-header" data-section="h2-photon">1. Energy and Momentum of a Photon</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-11-black-body" class="nav-link" data-section="h3-11-black-body">1.1 Black Body Radiation</a></li>
+                    <li class="nav-item"><a href="#h3-12-planck" class="nav-link" data-section="h3-12-planck">1.2 Planck's Quantum Hypothesis</a></li>
+                    <li class="nav-item"><a href="#h3-13-einstein" class="nav-link" data-section="h3-13-einstein">1.3 Einstein's Light Quanta</a></li>
+                    <li class="nav-item"><a href="#h3-14-electron-volt" class="nav-link" data-section="h3-14-electron-volt">1.4 Electron Volt</a></li>
+                    <li class="nav-item"><a href="#h3-15-photon-momentum" class="nav-link" data-section="h3-15-photon-momentum">1.5 Photon Momentum</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-photoelectric" class="nav-section-header" data-section="h2-photoelectric">2. Photoelectric Effect</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-21-key-observations" class="nav-link" data-section="h3-21-key-observations">2.1 Key Observations</a></li>
+                    <li class="nav-item"><a href="#h3-22-work-function" class="nav-link" data-section="h3-22-work-function">2.2 Work Function</a></li>
+                    <li class="nav-item"><a href="#h3-23-photoelectric-equation" class="nav-link" data-section="h3-23-photoelectric-equation">2.3 Photoelectric Equation</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-duality" class="nav-section-header" data-section="h2-duality">3. Wave-Particle Duality</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-31-de-broglie" class="nav-link" data-section="h3-31-de-broglie">3.1 de Broglie Wavelength</a></li>
+                    <li class="nav-item"><a href="#h3-32-electron-diffraction" class="nav-link" data-section="h3-32-electron-diffraction">3.2 Electron Diffraction</a></li>
+                    <li class="nav-item"><a href="#h3-33-complementary" class="nav-link" data-section="h3-33-complementary">3.3 Complementary Phenomena</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-energy-levels" class="nav-section-header" data-section="h2-energy-levels">4. Energy Levels and Line Spectra</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-41-energy-levels" class="nav-link" data-section="h3-41-energy-levels">4.1 Energy Levels in Atoms</a></li>
+                    <li class="nav-item"><a href="#h3-42-line-spectra" class="nav-link" data-section="h3-42-line-spectra">4.2 Line Spectra</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-checklist" class="nav-link" style="margin-top:8px;" data-section="h2-checklist">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../../homework/ch22/" class="nav-link" style="color: #16a34a;">📚 Homework (Exercises)</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <div style="padding: 8px 0; display: flex; gap: 8px;">
+                        <button onclick="updateProgress('ch22', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; min-width: 0; padding: 8px 4px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 11px; white-space: nowrap;">Start</button>
+                        <button onclick="updateProgress('ch22', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; min-width: 0; padding: 8px 4px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 11px; white-space: nowrap;">Active</button>
+                        <button onclick="updateProgress('ch22', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; min-width: 0; padding: 8px 4px; border: 1px solid #e2e8f0; border-radius: 6px; background: white; cursor: pointer; font-size: 11px; white-space: nowrap;">Done</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        
+        <main class="main-content">
+            
+            
+            <div id="intro" class="section-card">
+                <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: What is Quantum Physics?</h2>
+                
+                <div class="concept-box">
+                    <strong>What is Quantum Physics?</strong><br>
+                    Quantum physics describes the behavior of matter and energy at the <em>atomic and subatomic scale</em>, where classical physics breaks down and new, counterintuitive principles emerge.
+                </div>
+                
+                <p>Key phenomena studied in this unit include:</p>
+                <ul>
+                    <li><strong>Black body radiation</strong> — why hot objects glow</li>
+                    <li><strong>Photoelectric effect</strong> — how light ejects electrons from metals</li>
+                    <li><strong>Wave-particle duality</strong> — matter behaving as both waves and particles</li>
+                    <li><strong>Energy levels and line spectra</strong> — why atoms emit specific colors</li>
+                </ul>
+            </div>
+
+            
+            <div id="photon" class="section-card">
+                <h2 id="h2-photon" style="scroll-margin-top: 120px;">1. Energy and Momentum of a Photon</h2>
+                
+                <h3 id="h3-11-black-body" style="scroll-margin-top: 120px;">1.1 Black Body Radiation</h3>
+                
+                <div class="definition-box">
+                    <div class="def-title">Definition — Black Body:</div>
+                    An object that absorbs <strong>all</strong> radiation incident on it. It appears black at room temperature and glows with characteristic color at high temperatures.
+                </div>
+
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <div style="margin-bottom: 8px;">[Image Placeholder]</div>
+                        <strong>图 22.1.1: Black Body Radiation Intensity vs Wavelength</strong><br>
+                        <span style="font-size: 13px; color: #64748b;">Peak shifts to shorter wavelengths as T increases | Hot objects glow from red → orange → white</span>
+                    </div>
+                </div>
+
+                <h4>Key Observations:</h4>
+                <ol>
+                    <li>Total radiation intensity increases with temperature</li>
+                    <li>Peak wavelength <strong>shifts</strong> to shorter wavelengths as T increases</li>
+                    <li>Hot objects glow from red → orange → white (shifts through the spectrum)</li>
+                </ol>
+
+                <div class="exam-alert">
+                    <strong>⭐ Classical Problem — Ultraviolet Catastrophe:</strong><br>
+                    Classical physics predicted infinite energy at short wavelengths. This was <strong>wrong</strong>. <em>Quantum theory</em> solved this problem.
+                </div>
+
+                <h3 id="h3-12-planck" style="scroll-margin-top: 120px;">1.2 Planck's Quantum Hypothesis</h3>
+                
+                <div class="concept-box">
+                    <strong>Planck's Key Assumption:</strong><br>
+                    Energy of vibrating particles is <em>quantized</em> — only discrete values are allowed.
+                </div>
+
+                <div class="formula-box">
+                    $E = nhf \quad (n = 1, 2, 3, ...)$
+                </div>
+                
+                <p>Where $h = 6.63 \times 10^{-34}$ J·s (Planck's constant)</p>
+
+                <table class="star-table">
+                    <thead>
+                        <tr>
+                            <th>Classical Physics</th>
+                            <th>Quantum Physics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Energy is <strong>continuous</strong></td>
+                            <td>Energy is <strong>discrete</strong> (quantized)</td>
+                        </tr>
+                        <tr>
+                            <td>Any value allowed</td>
+                            <td>Only multiples of $hf$</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="h3-13-einstein" style="scroll-margin-top: 120px;">1.3 Einstein's Light Quanta</h3>
+                
+                <div class="concept-box">
+                    <strong>Einstein's Revolutionary Idea:</strong><br>
+                    Light exists as <em>discrete packets</em> called <strong>photons</strong> (quanta).<br><br>
+                    Energy of one photon: $E = hf$
+                </div>
+
+                <h4>Key Properties of Photons:</h4>
+                <ul>
+                    <li>Particle-like packets of electromagnetic energy</li>
+                    <li><strong>Massless</strong> (rest mass = 0)</li>
+                    <li>Travel at speed of light $c$</li>
+                    <li>Discrete, indivisible ("quanta")</li>
+                </ul>
+
+                <div class="formula-box">
+                    <strong>Photon Energy Formula:</strong><br>
+                    $E = hf = \frac{hc}{\lambda}$
+                </div>
+                
+                <p>Where:</p>
+                <ul>
+                    <li>$h = 6.63 \times 10^{-34}$ J·s (Planck constant)</li>
+                    <li>$f$ = frequency (Hz)</li>
+                    <li>$\lambda$ = wavelength (m)</li>
+                    <li>$c = 3 \times 10^8$ m/s (speed of light)</li>
+                </ul>
+
+                <div class="exam-alert">
+                    <strong>⭐ Worked Examples:</strong><br><br>
+                    <strong>Red light (λ = 650 nm):</strong><br>
+                    $E = hc/\lambda = (6.63 \times 10^{-34} \times 3 \times 10^8) / (650 \times 10^{-9})$<br>
+                    $E \approx 3.1 \times 10^{-19}$ J = <strong>1.9 eV</strong><br><br>
+                    <strong>Blue light (λ = 450 nm):</strong><br>
+                    $E \approx 4.4 \times 10^{-19}$ J = <strong>2.8 eV</strong>
+                </div>
+
+                <h3 id="h3-14-electron-volt" style="scroll-margin-top: 120px;">1.4 Electron Volt</h3>
+                
+                <div class="definition-box">
+                    <div class="def-title">Definition — Electron Volt:</div>
+                    $1 \text{ eV} = \text{energy gained by an electron accelerated through 1 V} = 1.6 \times 10^{-19} \text{ J}$
+                </div>
+
+                <div class="formula-box">
+                    $1 \text{ keV} = 10^3 \text{ eV}$<br>
+                    $1 \text{ MeV} = 10^6 \text{ eV}$
+                </div>
+
+                <h3 id="h3-15-photon-momentum" style="scroll-margin-top: 120px;">1.5 Photon Momentum</h3>
+                
+                <div class="formula-box">
+                    $p = \frac{E}{c} = \frac{hf}{c} = \frac{h}{\lambda}$
+                </div>
+
+                <div class="tip-box">
+                    <strong>Evidence for Photon Momentum:</strong><br>
+                    Comet tails always point <strong>away from the Sun</strong> due to radiation pressure — photons carry momentum!
+                </div>
+            </div>
+
+            
+            <div id="photoelectric" class="section-card">
+                <h2 id="h2-photoelectric" style="scroll-margin-top: 120px;">2. Photoelectric Effect</h2>
+                
+                <div class="definition-box">
+                    <div class="def-title">Definition — Photoelectric Effect:</div>
+                    Emission of electrons from a metal surface when electromagnetic radiation <strong>above a threshold frequency</strong> shines on it.
+                </div>
+
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <div style="margin-bottom: 8px;">[Image Placeholder]</div>
+                        <strong>图 22.2.1: Photoelectric Effect Experiment</strong><br>
+                        <span style="font-size: 13px; color: #64748b;">UV light → Zinc plate → Electron emission → Electroscope deflects</span>
+                    </div>
+                </div>
+
+                <h3 id="h3-21-key-observations" style="scroll-margin-top: 120px;">2.1 Key Observations</h3>
+                
+                <h4>Experiment 1: Frequency Variation</h4>
+                <table class="star-table">
+                    <thead>
+                        <tr>
+                            <th>Observation</th>
+                            <th>Wave Theory Prediction</th>
+                            <th>Photon Theory Reality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>No emission below threshold $f$</td>
+                            <td>Energy accumulates</td>
+                            <td>Photon energy insufficient</td>
+                        </tr>
+                        <tr>
+                            <td>Instant emission above threshold</td>
+                            <td>Delay expected</td>
+                            <td>One-to-one photon-electron</td>
+                        </tr>
+                        <tr>
+                            <td>Higher frequency = more energetic $e^-$</td>
+                            <td>Wrong</td>
+                            <td>$KE_{max} = hf - \Phi$</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Experiment 2: Intensity Variation</h4>
+                <table class="star-table">
+                    <thead>
+                        <tr>
+                            <th>Change</th>
+                            <th>Effect on Electrons</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Higher intensity</td>
+                            <td>More electrons emitted (more photons)</td>
+                        </tr>
+                        <tr>
+                            <td>Same intensity, higher frequency</td>
+                            <td>Same number, but more energetic</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="h3-22-work-function" style="scroll-margin-top: 120px;">2.2 Threshold Frequency and Work Function</h3>
+                
+                <div class="definition-box">
+                    <div class="def-title">Work Function ($\Phi$):</div>
+                    Minimum energy needed to liberate an electron from a metal surface.
+                </div>
+
+                <div class="formula-box">
+                    $f_0 = \frac{\Phi}{h}$ &nbsp;&nbsp; (threshold frequency)
+                </div>
+
+                <table class="star-table">
+                    <thead>
+                        <tr>
+                            <th>Metal</th>
+                            <th>Work Function (eV)</th>
+                            <th>Threshold λ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sodium</td>
+                            <td>1.9 eV</td>
+                            <td>~650 nm (red)</td>
+                        </tr>
+                        <tr>
+                            <td>Zinc</td>
+                            <td>4.3 eV</td>
+                            <td>~290 nm (UV)</td>
+                        </tr>
+                        <tr>
+                            <td>Copper</td>
+                            <td>4.4 eV</td>
+                            <td>~280 nm (UV)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="h3-23-photoelectric-equation" style="scroll-margin-top: 120px;">2.3 Einstein's Photoelectric Equation</h3>
+                
+                <div class="formula-box">
+                    $hf = \Phi + KE_{max}$
+                </div>
+                
+                <p>Or:</p>
+                <div class="formula-box">
+                    $KE_{max} = hf - \Phi = \frac{1}{2}mv_{max}^2$
+                </div>
+
+                <h4>Key Predictions:</h4>
+                <ol>
+                    <li>$KE_{max}$ depends only on <strong>frequency</strong> (not intensity)</li>
+                    <li><strong>Threshold frequency</strong> exists — below it, no emission</li>
+                    <li>Emission is <strong>instantaneous</strong> (one-to-one interaction)</li>
+                    <li>Higher intensity → more electrons, same max energy</li>
+                </ol>
+
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <div style="margin-bottom: 8px;">[Image Placeholder]</div>
+                        <strong>图 22.2.2: Photoelectric Energy Diagram</strong><br>
+                        <span style="font-size: 13px; color: #64748b;">Photon energy hf | Work function Φ (binding energy) | K.E.max = hf - Φ (excess energy)</span>
+                    </div>
+                </div>
+
+                <div class="exam-alert">
+                    <strong>⭐ Exam Tip — Always Check:</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>$hf > \Phi$ for electron emission to occur</li>
+                        <li>$KE_{max} = hf - \Phi$ <strong>(not just hf)</strong></li>
+                        <li>Higher frequency → more energetic electrons, <strong>not more electrons</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div id="duality" class="section-card">
+                <h2 id="h2-duality" style="scroll-margin-top: 120px;">3. Wave-Particle Duality</h2>
+                
+                <h3 id="h3-31-de-broglie" style="scroll-margin-top: 120px;">3.1 de Broglie Wavelength</h3>
+                
+                <div class="concept-box">
+                    <strong>de Broglie's Hypothesis (1924):</strong><br>
+                    All matter has <em>wave-like properties</em>.<br><br>
+                    Wavelength: $\lambda = \frac{h}{p} = \frac{h}{mv}$
+                </div>
+
+                <div class="formula-box">
+                    <strong>For electrons accelerated by voltage V:</strong><br>
+                    $\lambda = \frac{h}{\sqrt{2m_e KE}} = \frac{h}{\sqrt{2m_e eV}}$
+                </div>
+
+                <div class="exam-alert">
+                    <strong>⭐ Worked Example:</strong><br>
+                    An electron accelerated through 100 V:<br>
+                    $KE = eV = 100$ eV $= 1.6 \times 10^{-17}$ J<br>
+                    $\lambda = \frac{h}{\sqrt{2m_e KE}} = \frac{6.63 \times 10^{-34}}{\sqrt{2 \times 9.11 \times 10^{-31} \times 1.6 \times 10^{-17}}}$<br>
+                    $\lambda \approx 1.2 \times 10^{-10}$ m = <strong>0.12 nm</strong> (comparable to atomic spacing!)
+                </div>
+
+                <h3 id="h3-32-electron-diffraction" style="scroll-margin-top: 120px;">3.2 Electron Diffraction</h3>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <div style="margin-bottom: 8px;">[Image Placeholder]</div>
+                        <strong>图 22.3.1: Electron Diffraction Pattern</strong><br>
+                        <span style="font-size: 13px; color: #64748b;">Crystal lattice acts as diffraction grating | Bright spots = constructive interference</span>
+                    </div>
+                </div>
+
+                <p><strong>Davisson-Germer Experiment:</strong> Diffraction patterns were observed for electrons, proving their wave nature. The wavelength calculated matches the de Broglie prediction.</p>
+
+                <h3 id="h3-33-complementary" style="scroll-margin-top: 120px;">3.3 Complementary Phenomena</h3>
+                
+                <table class="star-table">
+                    <thead>
+                        <tr>
+                            <th>Light</th>
+                            <th>Phenomenon</th>
+                            <th>Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Wave nature</td>
+                            <td>Interference, diffraction</td>
+                            <td>Double-slit, diffraction gratings</td>
+                        </tr>
+                        <tr>
+                            <td>Particle nature</td>
+                            <td>Photoelectric effect</td>
+                            <td>Single photon interactions</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="star-table">
+                    <thead>
+                        <tr>
+                            <th>Electrons</th>
+                            <th>Phenomenon</th>
+                            <th>Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Particle nature</td>
+                            <td>Deflection in magnetic fields</td>
+                            <td>$F = Bqv$</td>
+                        </tr>
+                        <tr>
+                            <td>Wave nature</td>
+                            <td>Electron diffraction</td>
+                            <td>Diffraction patterns from crystals</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="concept-box">
+                    <strong>Complementarity Principle:</strong><br>
+                    Nature is <em>complementary</em> — different experiments reveal different aspects. Both wave and particle descriptions are needed; neither alone is complete.
+                </div>
+            </div>
+
+            
+            <div id="energy-levels" class="section-card">
+                <h2 id="h2-energy-levels" style="scroll-margin-top: 120px;">4. Energy Levels and Line Spectra</h2>
+                
+                <h3 id="h3-41-energy-levels" style="scroll-margin-top: 120px;">4.1 Energy Levels in Atoms</h3>
+                
+                <div class="concept-box">
+                    <strong>Key Idea:</strong> Electrons in atoms can only occupy <em>discrete energy levels</em> — not continuous values.
+                </div>
+
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <div style="margin-bottom: 8px;">[Image Placeholder]</div>
+                        <strong>图 22.4.1: Energy Level Diagram</strong><br>
+                        <span style="font-size: 13px; color: #64748b;">E₃ ——— | E₂ ——— | E₁ —— | E₀ ═══ Ground state</span>
+                    </div>
+                </div>
+
+                <ul>
+                    <li><strong>Ground State:</strong> Lowest energy (electron bound)</li>
+                    <li><strong>Excited State:</strong> Higher energy level</li>
+                    <li><strong>Ionization:</strong> Electron completely removed (E = 0)</li>
+                </ul>
+
+                <h4>Hydrogen Energy Levels (eV):</h4>
+                <table class="star-table">
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Energy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>n = 1 (ground)</td>
+                            <td>−13.6 eV</td>
+                        </tr>
+                        <tr>
+                            <td>n = 2</td>
+                            <td>−3.4 eV</td>
+                        </tr>
+                        <tr>
+                            <td>n = 3</td>
+                            <td>−1.51 eV</td>
+                        </tr>
+                        <tr>
+                            <td>n = ∞ (ionized)</td>
+                            <td>0 eV</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="formula-box">
+                    <strong>Hydrogen Energy Formula:</strong><br>
+                    $E_n = -\frac{13.6}{n^2}$ eV
+                </div>
+
+                <h3 id="h3-42-line-spectra" style="scroll-margin-top: 120px;">4.2 Line Spectra</h3>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <div style="margin-bottom: 8px;">[Image Placeholder]</div>
+                        <strong>图 22.4.2: Emission vs Absorption Spectra</strong><br>
+                        <span style="font-size: 13px; color: #64748b;">Emission: Bright lines on dark background | Absorption: Dark lines on bright background</span>
+                    </div>
+                </div>
+
+                <p><strong>Emission Spectrum:</strong> When electrons fall from higher to lower energy levels, photons are emitted at specific frequencies.</p>
+                
+                <p><strong>Absorption Spectrum:</strong> When white light passes through a gas, photons are absorbed at specific frequencies, causing dark lines.</p>
+
+                <div class="formula-box">
+                    <strong>Photon Energy for Transition:</strong><br>
+                    $\Delta E = hf = E_f - E_i$
+                </div>
+
+                <div class="tip-box">
+                    <strong>Conservation of Energy:</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li><strong>Emission:</strong> Electron falls → photon emitted</li>
+                        <li><strong>Absorption:</strong> Photon absorbed → electron excited</li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div id="checklist" class="section-card">
+                <h2 id="h2-checklist" style="scroll-margin-top: 120px;">P4 Checklist: Key Definitions & Formulas</h2>
+                
+                <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--modern-primary); margin-bottom: 12px;">Essential Definitions</div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d1">
+                        <label for="d1"><strong>Photon:</strong> Discrete packet of electromagnetic energy, $E = hf$</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d2">
+                        <label for="d2"><strong>Work function ($\Phi$):</strong> Minimum energy needed to eject an electron</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d3">
+                        <label for="d3"><strong>Threshold frequency:</strong> Minimum frequency for photoelectric emission</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d4">
+                        <label for="d4"><strong>de Broglie wavelength:</strong> $\lambda = h/mv = h/p$ for matter particles</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d5">
+                        <label for="d5"><strong>Energy level:</strong> Discrete quantized energy state in an atom</label>
+                    </div>
+                </div>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--modern-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f1">
+                        <label for="f1">$E = hf = hc/\lambda$ (photon energy)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f2">
+                        <label for="f2">$p = h/\lambda$ (photon momentum)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f3">
+                        <label for="f3">$hf = \Phi + KE_{max}$ (photoelectric equation)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f4">
+                        <label for="f4">$\lambda = h/mv = h/p$ (de Broglie wavelength)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f5">
+                        <label for="f5">$\Delta E = hf$ ( photon emission/absorption)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f6">
+                        <label for="f6">$E_n = -13.6/n^2$ eV (hydrogen energy levels)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f7">
+                        <label for="f7">1 eV = $1.6 \times 10^{-19}$ J</label>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="section-card">
+                <h2 id="h2-exam-tips" style="scroll-margin-top: 120px;">⭐ Exam Tips</h2>
+                
+                <div class="exam-alert">
+                    <strong>Photoelectric Effect:</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>Always check: $hf > \Phi$ for emission</li>
+                        <li>$KE_{max} = hf - \Phi$ <strong>(not just hf)</strong></li>
+                        <li>Higher frequency → more energetic electrons (not more electrons)</li>
+                    </ul>
+                </div>
+
+                <div class="exam-alert">
+                    <strong>de Broglie Wavelength:</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>$\lambda = h/p = h/(mv)$ for matter particles</li>
+                        <li>Note: $mv$ is <strong>momentum</strong></li>
+                        <li>For accelerated electrons: $KE = \frac{1}{2}mv^2 = eV$</li>
+                    </ul>
+                </div>
+
+                <div class="exam-alert">
+                    <strong>Energy Levels:</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>Emission: Electron falls → photon emitted</li>
+                        <li>Absorption: Photon absorbed → electron excited</li>
+                        <li>Energy conserved in transitions</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../../auth/auth.js"></script>
+    <script>
+        function scrollTo(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                const offset = 100;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            closeMobileNav();
+        }
+        
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('show');
+        }
+        
+        function closeMobileNav() {
+            document.getElementById('mobileNav').classList.remove('show');
+        }
+
+        function updateReadingProgress() {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / docHeight) * 100;
+            document.getElementById('readingProgress').style.width = progress + '%';
+
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        }
+
+        window.addEventListener('scroll', updateReadingProgress);
+
+        function updateActiveNav() {
+            const headings = document.querySelectorAll('h2[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            
+            if (headings.length === 0 || navLinks.length === 0) return;
+            
+            let activeId = null;
+            let bestTop = Infinity;
+            
+            const scrollTop = window.scrollY;
+            
+            headings.forEach(h => {
+                const rect = h.getBoundingClientRect();
+                const offsetTop = rect.top + scrollTop;
+                if (offsetTop <= scrollTop + 150 && offsetTop > scrollTop - 100) {
+                    if (offsetTop < bestTop) {
+                        bestTop = offsetTop;
+                        activeId = h.id;
+                    }
+                }
+            });
+            
+            if (!activeId) return;
+            
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav [data-section="${activeId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+        
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('resize', updateActiveNav, { passive: true });
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
+
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        function updateProgress(unit, status) {
+            localStorage.setItem('progress_' + unit, status);
+            document.querySelectorAll('.progress-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.id === 'progress-btn-' + status) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        (function() {
+            const saved = localStorage.getItem('progress_ch22');
+            if (saved) {
+                const btn = document.getElementById('progress-btn-' + saved);
+                if (btn) btn.classList.add('active');
+            }
+        })();
+
+        // Scroll spy - using position-based detection for stable highlighting
+        function updateActiveNav() {
+            const headings = document.querySelectorAll('h2[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            
+            if (headings.length === 0 || navLinks.length === 0) return;
+            
+            let activeId = null;
+            let bestTop = Infinity;
+            
+            headings.forEach(h => {
+                const rect = h.getBoundingClientRect();
+                if (rect.top >= 80 && rect.top < bestTop) {
+                    bestTop = rect.top;
+                    activeId = h.id;
+                }
+            });
+            
+            if (!activeId) return;
+            
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav [data-section="${activeId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+        
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('resize', updateActiveNav, { passive: true });
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
+    </script>
+</body>
+</html>

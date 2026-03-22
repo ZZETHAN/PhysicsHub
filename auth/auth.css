@@ -1,0 +1,563 @@
+/* ========== PhysicsHub 认证系统样式 ========== */
+
+/* 强制登录遮罩 */
+body.auth-required {
+    overflow: hidden;
+}
+
+body.auth-required .main-content {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+}
+
+body.auth-required .content-grid {
+    pointer-events: none;
+}
+
+/* 登录/注册弹窗 - 强制模式（无关闭按钮） */
+.auth-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 250, 252, 0.95);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    padding: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.auth-modal-container {
+    background: white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f1f5f9;
+    border-radius: 50%;
+    font-size: 20px;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-modal-close:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+/* Tab 切换 */
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 2px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #64748b;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.auth-tab.active {
+    color: #0891b2;
+}
+
+.auth-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #0891b2, #06b6d4);
+    border-radius: 2px;
+}
+
+/* 表单 */
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.auth-input-group {
+    margin-bottom: 20px;
+}
+
+.auth-input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.auth-input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+/* 密码输入框包装器 */
+.auth-password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-password-wrapper input {
+    padding-right: 44px; /* 为按钮留出空间 */
+}
+
+/* 密码显示/隐藏按钮 */
+.auth-password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.auth-password-toggle:hover {
+    opacity: 1;
+}
+
+.auth-password-toggle:focus {
+    outline: none;
+}
+
+.auth-input-group input:focus {
+    outline: none;
+    border-color: #0891b2;
+    box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+}
+
+.auth-input-group input::placeholder {
+    color: #9ca3af;
+}
+
+/* 提示信息 */
+.auth-notice {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #1e40af;
+    margin-bottom: 20px;
+}
+
+/* 提交按钮 */
+.auth-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: #0891b2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.auth-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px -5px rgba(8, 145, 178, 0.3);
+}
+
+.auth-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* 消息提示 */
+.auth-message {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    display: none;
+}
+
+.auth-message.success {
+    display: block;
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.auth-message.error {
+    display: block;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* 导航栏登录按钮区域 */
+#authBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 登录链接 */
+.login-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #0891b2;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.login-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
+}
+
+/* 用户菜单容器 */
+.user-menu-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 用户资料链接 */
+.user-profile-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+
+.user-profile-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #0891b2;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.user-name {
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 500;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 管理后台链接 */
+.admin-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.admin-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(30deg);
+}
+
+/* 管理员入口 */
+#userInfo {
+    display: none;
+}
+
+/* 登录遮罩层 */
+#authOverlay {
+    animation: fadeIn 0.3s ease;
+}
+
+/* 响应式 - 移动端优化 */
+@media (max-width: 768px) {
+    /* 登录链接移动端适配 */
+    .login-link {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    /* 用户资料链接移动端适配 */
+    .user-profile-link {
+        padding: 4px 8px;
+        gap: 6px;
+    }
+    
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+    }
+    
+    .user-name {
+        max-width: 60px;
+        font-size: 13px;
+    }
+    
+    .admin-link {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .admin-link svg {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* 超小屏幕适配 */
+@media (max-width: 360px) {
+    .user-name {
+        display: none; /* 超小屏幕只显示头像 */
+    }
+    
+    .user-profile-link {
+        padding: 4px;
+        border-radius: 50%;
+    }
+    
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+}
+
+/* 响应式 - 平板 */
+@media (max-width: 768px) {
+    .auth-modal-overlay {
+        padding: 16px;
+        align-items: flex-start;
+        overflow-y: auto;
+    }
+    
+    .auth-modal-container {
+        padding: 24px 20px;
+        margin: 20px auto;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .auth-tabs {
+        margin-bottom: 20px;
+    }
+    
+    .auth-tab {
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+    
+    .auth-input-group {
+        margin-bottom: 16px;
+    }
+    
+    .auth-input-group label {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    
+    .auth-input-group input {
+        padding: 10px 14px;
+        font-size: 16px; /* 防止iOS缩放 */
+    }
+    
+    .auth-submit-btn {
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+
+/* 响应式 - 手机 */
+@media (max-width: 480px) {
+    .auth-modal-overlay {
+        padding: 0;
+        background: rgba(255, 255, 255, 0.98);
+    }
+    
+    .auth-modal-container {
+        padding: 20px 16px;
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: none;
+    }
+    
+    .auth-tabs {
+        margin-bottom: 20px;
+    }
+    
+    .auth-tab {
+        padding: 12px 8px;
+        font-size: 16px;
+    }
+    
+    .auth-input-group {
+        margin-bottom: 14px;
+    }
+    
+    .auth-input-group label {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    
+    .auth-input-group input {
+        padding: 12px 14px;
+        font-size: 16px; /* 关键：防止iOS Safari自动缩放 */
+        border-radius: 10px;
+    }
+    
+    .auth-password-wrapper input {
+        padding-right: 44px;
+    }
+    
+    .auth-password-toggle {
+        right: 10px;
+        font-size: 20px;
+    }
+    
+    .auth-submit-btn {
+        padding: 14px;
+        font-size: 17px;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+    
+    .auth-notice {
+        padding: 10px 12px;
+        font-size: 12px;
+        margin-bottom: 16px;
+    }
+    
+    .auth-message {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* 响应式 - 超小屏幕 */
+@media (max-width: 360px) {
+    .auth-modal-container {
+        padding: 16px 14px;
+    }
+    
+    .auth-tab {
+        font-size: 15px;
+        padding: 10px 6px;
+    }
+    
+    .auth-input-group input {
+        padding: 11px 12px;
+    }
+    
+    .auth-submit-btn {
+        padding: 13px;
+        font-size: 16px;
+    }
+}
+
+/* ========== 强制登录遮罩移动端优化 ========== */
+@media (max-width: 480px) {
+    #authOverlay > div {
+        padding: 12px !important;
+    }
+    
+    #authOverlayContent {
+        padding: 28px 20px !important;
+        max-width: 100% !important;
+    }
+    
+    #authOverlayContent h2 {
+        font-size: 18px !important;
+    }
+    
+    #authOverlayContent p {
+        font-size: 13px !important;
+    }
+}

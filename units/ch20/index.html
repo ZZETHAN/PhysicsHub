@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 20: Magnetic Fields | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    <style>
+        html { scroll-behavior: smooth; }
+        :root {
+            --fields-primary: #059669;
+            --fields-dark: #047857;
+            --fields-light: #d1fae5;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #047857 0%, #059669 100%); color: white; padding: 48px 0; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        h1 { margin: 12px 0 0 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; }
+        .subtitle { margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; }
+        
+        .content-grid { display: grid; grid-template-columns: 220px 1fr; gap: 24px; max-width: 1100px; margin: 32px auto; padding: 0 16px; }
+        
+        .sidebar-nav { position: sticky; top: 80px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; padding: 8px 0; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--fields-light); border-radius: 4px; }
+        .nav-section-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; padding: 16px 16px 6px; }
+        .nav-section { padding: 0 8px; }
+        .nav-section-header { display: block; font-size: 13px; font-weight: 500; color: #374151; padding: 8px 12px; margin-top: 4px; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; text-decoration: none; }
+        .nav-section-header:hover { background: var(--fields-light); color: var(--fields-primary); }
+        .nav-section-header.active { background: var(--fields-light); color: var(--fields-dark); font-weight: 600; }
+        .nav-list { list-style: none; padding: 0; margin: 0 0 8px 0; }
+        .nav-link { display: block; padding: 6px 12px; color: #6b7280; text-decoration: none; border-radius: 6px; font-size: 12px; transition: all 0.15s ease; cursor: pointer; }
+        .nav-link:hover { background: var(--fields-light); color: var(--fields-primary); }
+        .nav-link.active { background: var(--fields-light); color: var(--fields-dark); font-weight: 500; }
+        .nav-item { margin-bottom: 1px; }
+        
+        .main-content { max-width: 100%; min-width: 0; }
+        .section-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #e2e8f0; scroll-margin-top: 140px; }
+        .section-card h2 { margin-top: 0; color: #1e293b; font-size: 22px; font-weight: 700; }
+        .section-card h3 { color: #1e293b; font-size: 18px; font-weight: 600; margin-top: 24px; }
+        .section-card h4 { color: #334155; font-size: 16px; font-weight: 600; margin-top: 20px; }
+        
+        .concept-box { background: var(--fields-light); border-left: 4px solid var(--fields-primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .concept-box strong { color: var(--fields-primary); }
+        .concept-box em { color: var(--fields-primary); font-style: normal; font-weight: 600; }
+        
+        .definition-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .definition-box .def-title { font-weight: 600; color: #1e40af; margin-bottom: 8px; }
+        
+        .formula-box { background: #f0fdf4; border: 1px solid #86efac; padding: 16px; margin: 16px 0; border-radius: 8px; text-align: center; }
+        .formula-box strong { color: #166534; }
+        
+        .exam-alert { background: var(--fields-light); border: 1px solid var(--fields-primary); padding: 14px 18px; margin: 16px 0; border-radius: 8px; }
+        .exam-alert strong { color: var(--fields-primary); }
+        
+        .tip-box { background: #ecfdf5; border-left: 4px solid #10b981; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: #0e7490; }
+        
+        .key-points { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+        .key-points li { margin-bottom: 8px; }
+        
+        .checklist-box {
+            background: var(--fields-light);
+            border: 1px solid var(--fields-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--fields-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--fields-dark); }
+        
+        .figure-placeholder { background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 16px 0; text-align: center; }
+        .figure-placeholder-inner { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 30px; color: #64748b; background: #f8fafc; }
+        
+        .highlight-box { background: #eff6ff; border: 2px solid #3b82f6; border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-box strong { color: #1e40af; }
+        
+        .star-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .star-table th, .star-table td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
+        .star-table th { background: var(--fields-light); font-weight: 600; }
+        .star-table tr:hover { background: #f8fafc; }
+        
+        .mobile-menu-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--fields-primary); color: white; border: none; font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .mobile-nav { display: none; position: fixed; bottom: 80px; right: 20px; width: 260px; max-height: 70vh; overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 999; }
+        .mobile-nav.show { display: block; }
+        .reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #059669, #34d399); z-index: 1001; transition: width 0.1s ease; }
+        .back-to-top { position: fixed; bottom: 90px; right: 24px; width: 40px; height: 40px; border-radius: 50%; background: var(--fields-primary); border: none; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 101; text-decoration: none; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--fields-dark); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+        
+        .progress-btn.active { background: #059669 !important; color: white; border-color: #059669 !important; }
+        .progress-btn:hover:not(.active) { background: #f1f5f9; }
+        
+        .checklist-box { background: #f0fdf4; border: 2px solid #22c55e; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .checklist-item { display: flex; align-items: flex-start; margin: 12px 0; padding: 12px; background: white; border-radius: 6px; }
+        .checklist-item input[type="checkbox"] { margin-right: 12px; margin-top: 4px; width: 18px; height: 18px; cursor: pointer; }
+        
+        @media (max-width: 968px) { .content-grid { grid-template-columns: 1fr; } .sidebar-nav { display: none; } .mobile-menu-btn { display: flex; align-items: center; justify-content: center; } }
+        mjx-container { font-size: 105% !important; }
+        
+        @media (max-width: 640px) {
+            .section-card { padding: 16px; }
+            .section-card h2 { font-size: 20px; }
+            h1 { font-size: 32px; }
+        }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: #f1f5f9; }
+.unit-nav-link.active { background: #1e40af22; color: #1e40af; }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: #1e40af; }
+</style>
+
+</head>
+<body>
+
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">←</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #05966922 0%, white 100%); border: 1px solid #059669; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #059669; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1d4ed822'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+<a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+<a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##ea580c22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+<a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##16a34a22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+<a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##dc262622'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+<a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##05966922'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+<a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1e40af22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+<a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+<a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='transparent'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #059669;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span><span style="width: 8px; height: 8px; background: #059669; border-radius: 50%;"></span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0f766e22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##be185d22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">A2 Level > Unit 20</div>
+            <h1>Magnetic Fields</h1>
+            <p class="subtitle">Deep dive into magnetic forces, Lorentz force, electromagnetic induction, and Lenz's Law</p>
+        </div>
+    </div>
+
+    <div class="reading-progress" id="readingProgress"></div>
+    <a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+            <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 4px;"><a href="#h2-intro" onclick="scrollTo('h2-intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">1. Magnetic Field Basics</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-field-basics" onclick="scrollTo('h2-field-basics')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1-1.4 Field Basics</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">2. Lorentz Force</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-lorentz" onclick="scrollTo('h2-lorentz')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1-2.4 Lorentz Force</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">3. Electromagnetic Induction</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-emi" onclick="scrollTo('h2-emi')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1-3.3 EMI</a></li>
+            <li style="margin-bottom: 4px;"><a href="#h2-checklist" onclick="scrollTo('h2-checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">P4 Checklist</a></li>
+        </ul>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch20', 'not_started')" id="progress-btn-not_started-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch20', 'in_progress')" id="progress-btn-in_progress-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch20', 'completed')" id="progress-btn-completed-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#h2-intro" class="nav-link" data-section="h2-intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-field-basics" class="nav-section-header" data-section="h2-field-basics">1. Magnetic Field Basics</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-1-1-magnetic-field" class="nav-link" data-section="h3-1-1-magnetic-field">1.1 What is a Magnetic Field?</a></li>
+                    <li class="nav-item"><a href="#h3-1-2-magnetic-field-lines" class="nav-link" data-section="h3-1-2-magnetic-field-lines">1.2 Magnetic Field Lines</a></li>
+                    <li class="nav-item"><a href="#h3-1-3-conductors" class="nav-link" data-section="h3-1-3-conductors">1.3 Conductors</a></li>
+                    <li class="nav-item"><a href="#h3-1-4-flux-density" class="nav-link" data-section="h3-1-4-flux-density">1.4 Flux Density</a></li>
+                    <li class="nav-item"><a href="#h3-1-5-amperes-force" class="nav-link" data-section="h3-1-5-amperes-force">1.5 Ampere's Force</a></li>
+                    <li class="nav-item"><a href="#h3-1-6-parallel-wires" class="nav-link" data-section="h3-1-6-parallel-wires">1.6 Parallel Wires</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-lorentz" class="nav-section-header" data-section="h2-lorentz">2. Lorentz Force</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-2-1-lorentz-force" class="nav-link" data-section="h3-2-1-lorentz-force">2.1 Lorentz Force</a></li>
+                    <li class="nav-item"><a href="#h3-2-2-charged-particles" class="nav-link" data-section="h3-2-2-charged-particles">2.2 Charged Particles</a></li>
+                    <li class="nav-item"><a href="#h3-2-3-velocity-selector" class="nav-link" data-section="h3-2-3-velocity-selector">2.3 Velocity Selector</a></li>
+                    <li class="nav-item"><a href="#h3-2-4-hall-effect" class="nav-link" data-section="h3-2-4-hall-effect">2.4 Hall Effect</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-emi" class="nav-section-header" data-section="h2-emi">3. Electromagnetic Induction</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-3-1-magnetic-flux" class="nav-link" data-section="h3-3-1-magnetic-flux">3.1 Magnetic Flux</a></li>
+                    <li class="nav-item"><a href="#h3-3-2-lenz-law" class="nav-link" data-section="h3-3-2-lenz-law">3.2 Lenz's Law</a></li>
+                    <li class="nav-item"><a href="#h3-3-3-three-questions" class="nav-link" data-section="h3-3-3-three-questions">3.3 Three Questions</a></li>
+                    <li class="nav-item"><a href="#h3-3-4-opposition" class="nav-link" data-section="h3-3-4-opposition">3.4 Opposition</a></li>
+                    <li class="nav-item"><a href="#h3-3-5-energy-conservation" class="nav-link" data-section="h3-3-5-energy-conservation">3.5 Energy Conservation</a></li>
+                    <li class="nav-item"><a href="#h3-3-6-four-cases" class="nav-link" data-section="h3-3-6-four-cases">3.6 Four Cases</a></li>
+                    <li class="nav-item"><a href="#h3-3-7-faradays-law" class="nav-link" data-section="h3-3-7-faradays-law">3.7 Faraday's Law</a></li>
+                    <li class="nav-item"><a href="#h3-3-8-bicycle-dynamo" class="nav-link" data-section="h3-3-8-bicycle-dynamo">3.8 Bicycle Dynamo</a></li>
+                    <li class="nav-item"><a href="#h3-3-9-applications" class="nav-link" data-section="h3-3-9-applications">3.9 Applications</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-checklist" class="nav-link" data-section="h2-checklist" style="margin-top:8px;">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../../homework/ch20/" class="nav-link" style="color: #16a34a;">📚 Homework (Exercises)</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch20', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch20', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch20', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+        
+        <main class="main-content">
+
+        
+            <div id="intro" class="section-card">
+                <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: What is Electromagnetic Induction?</h2>
+                
+                <div class="concept-box">
+                    <strong>Think about these experiences:</strong>
+                    <ul style="margin-top: 12px;">
+                        <li>Why does a magnet attract iron but not copper?</li>
+                        <li>How does an electric motor convert electrical energy to kinetic energy?</li>
+                        <li>How does a generator produce electricity by rotating a coil in a magnetic field?</li>
+                        <li>How do charged particles from the Sun create the aurora borealis?</li>
+                    </ul>
+                </div>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.0: Magnetic field patterns around magnets and current-carrying wires</p>
+                    </div>
+                </div>
+                
+                <p>All these phenomena share one fundamental principle: <strong>magnetic fields are created by moving electric charges</strong>. Let's discover the laws that govern them.</p>
+                
+                <div class="exam-alert">
+                    <strong>Key Insight:</strong> This unit contains some of the most important concepts in A-Level Physics. Lenz's Law and electromagnetic induction are frequently examined in Paper 2 and Paper 4.
+                </div>
+            </div>
+            
+            <div id="field-basics" class="section-card">
+                <h2 id="h2-field-basics" style="margin-top: 0; scroll-margin-top: 120px;">1. Magnetic Field Basics</h2>
+                
+                <h3 id="h3-1-1-magnetic-field" style="scroll-margin-top: 120px;">1.1 What is a Magnetic Field?</h3>
+                <p>A <strong>magnetic field</strong> is a region of space in which a magnetic force is experienced by:</p>
+                <ul>
+                    <li>A current-carrying conductor</li>
+                    <li>A moving charge</li>
+                    <li>A permanent magnet</li>
+                </ul>
+                
+                <div class="concept-box">
+                    <strong>Key Properties:</strong>
+                    <ul style="margin-top: 12px;">
+                        <li>Magnetic fields are invisible and intangible</li>
+                        <li>Similar to electric fields - an objective existence of matter without our direct sense</li>
+                        <li>Can be detected using a compass needle or iron filings</li>
+                    </ul>
+                </div>
+                
+                <p><strong>Direction of Magnetic Field:</strong> The direction at a point is defined as the direction of the N pole of a small magnetic needle when stationary at that point.</p>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.1.1: Bar Magnet and Magnetic Field Pattern detected by iron filings</p>
+                    </div>
+                </div>
+                
+                <h3 id="h3-1-2-magnetic-field-lines" style="scroll-margin-top: 120px;">1.2 Magnetic Field Lines</h3>
+                <p>Magnetic field lines provide a visual representation of magnetic fields.</p>
+                
+                <div class="concept-box">
+                    <strong>Rules for Magnetic Field Lines:</strong>
+                    <ol style="margin-top: 12px;">
+                        <li>Field lines <strong>emerge from N pole</strong> and <strong>enter S pole</strong></li>
+                        <li>Field is <strong>strongest where lines are closest together</strong></li>
+                        <li>Field lines <strong>never cross</strong> each other</li>
+                        <li>The direction of a field line shows the direction of force on a "free" N pole</li>
+                    </ol>
+                </div>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.1.2: Uniform vs Non-uniform Magnetic Fields</p>
+                    </div>
+                </div>
+                
+                <h3 id="h3-1-3-conductors" style="scroll-margin-top: 120px;">1.3 Magnetic Field from Current-Carrying Conductors</h3>
+                <p>Andre-Marie Ampere discovered that electric currents create magnetic fields.</p>
+                
+                <h4>Straight Current-Carrying Wire - Right-Hand Grip Rule</h4>
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.1.3: Right-Hand Rule for Magnetic Field around a Straight Wire</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 4px 0 0 0;">Thumb = current direction, Fingers = magnetic field direction</p>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>Memory Tip:</strong> The right-hand grip rule: Thumb points in direction of conventional current, fingers curl in direction of magnetic field.
+                </div>
+                
+                <h4>Solenoid</h4>
+                <p>A solenoid is a coil of wire that concentrates the magnetic field, creating a field similar to a bar magnet.</p>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.1.4: Solenoid Magnetic Field Pattern</p>
+                    </div>
+                </div>
+                
+                <h3 id="h3-1-4-flux-density" style="scroll-margin-top: 120px;">1.4 Magnetic Flux Density (B)</h3>
+                <div class="definition-box">
+                    <div class="def-title">Definition - Magnetic Flux Density (B):</div>
+                    The force per unit current per unit length acting on a conductor placed <strong>perpendicularly</strong> to the field.
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Formula:</strong><br>
+                    \[B = \frac{F}{Il}\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;">
+                    <strong>Unit:</strong> Tesla (T) = N m<sup>-1</sup> A<sup>-1</sup><br>
+                    Earth's field: approximately 5 x 10<sup>-5</sup> T
+                    </p>
+                </div>
+                
+                <h3 id="h3-1-5-amperes-force" style="scroll-margin-top: 120px;">1.5 Ampere's Force</h3>
+                <p>When a current-carrying wire is placed in a magnetic field, it experiences a <strong>force</strong>.</p>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.1.5: Fleming's Left-Hand Rule - Force on Current-Carrying Wire</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 4px 0 0 0;">First finger = Field (N to S), ThUmb = Motion/Force, SeCond finger = Current</p>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Force Magnitude:</strong><br>
+                    \[F = BIl \sin \theta\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;">When wire is <strong>perpendicular</strong> to field (theta = 90 deg): F = BIl (maximum)</p>
+                </div>
+                
+                <h4>Why Does a Current-Carrying Wire Experience Force?</h4>
+                <div class="concept-box">
+                    <strong>Deep Explanation - Field Interaction:</strong>
+                    <ol style="margin-top: 12px;">
+                        <li>When current flows, the wire produces its own magnetic field</li>
+                        <li>This field interacts with the external magnetic field</li>
+                        <li>On one side of the wire: fields <strong>add up</strong> (stronger)</li>
+                        <li>On the other side: fields <strong>cancel</strong> (weaker)</li>
+                        <li>The wire is pushed toward the <strong>weaker field</strong> side</li>
+                    </ol>
+                </div>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.1.6: Microscopic Explanation - Wire Force due to Field Superposition</p>
+                    </div>
+                </div>
+                
+                <h3 id="h3-1-6-parallel-wires" style="scroll-margin-top: 120px;">1.6 Two Parallel Current-Carrying Wires</h3>
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.1.7: Two Parallel Wires - Same Direction Currents (Attraction)</p>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <strong>Why Do Parallel Wires Attract or Repel?</strong>
+                    <ol style="margin-top: 12px;">
+                        <li><strong>Same direction currents attract:</strong> Fields add up between wires, denser in middle = Attract</li>
+                        <li><strong>Opposite direction currents repel:</strong> Fields cancel between wires, weaker in middle = Repel</li>
+                    </ol>
+                </div>
+                
+                <div class="highlight-box">
+                    <strong>Memory Tip:</strong><br>
+                    Same direction - field "squeezed" in between - <strong>Attract</strong><br>
+                    Opposite direction - field "canceled" in between - <strong>Repel</strong>
+                </div>
+            </div>
+
+            <div id="lorentz" class="section-card">
+                <h2 id="h2-lorentz" style="margin-top: 0; scroll-margin-top: 120px;">2. Lorentz Force - Force on Moving Charges</h2>
+                
+                <h3 id="h3-2-1-lorentz-force" style="scroll-margin-top: 120px;">2.1 What is Lorentz Force?</h3>
+                <p>The <strong>Lorentz force</strong> is the force exerted by a magnetic field on a <strong>moving charge</strong>.</p>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.2.1: Lorentz Force on a Moving Positive Charge</p>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Magnitude:</strong><br>
+                    \[F = Bqv \sin \theta\]
+                </div>
+                
+                <div class="concept-box">
+                    <strong>Direction: Left-Hand Rule (Modified)</strong>
+                    <ul style="margin-top: 12px;">
+                        <li><strong>First finger:</strong> Velocity (direction of positive charge movement)</li>
+                        <li><strong>ThUmb:</strong> Force</li>
+                        <li><strong>SeCond finger:</strong> Magnetic field</li>
+                    </ul>
+                </div>
+                
+                <div class="exam-alert">
+                    <strong>Important Distinction:</strong>
+                    <table class="star-table" style="margin-top: 12px;">
+                        <tr><th>Left-Hand Rule Type</th><th>Used For</th></tr>
+                        <tr><td>Standard Fleming's</td><td>Force on current-carrying wire (Ampere's force)</td></tr>
+                        <tr><td>Modified (for velocity)</td><td>Force on moving charge (Lorentz force)</td></tr>
+                    </table>
+                </div>
+                
+                <p>For <strong>negative charges (electrons)</strong>: Direction is <strong>opposite</strong> to that for positive charges.</p>
+                
+                <div class="exam-alert">
+                    <strong>Key Property:</strong> Lorentz force does <strong>no work</strong> (always perpendicular to velocity). It only changes direction, not speed. The motion is <strong>circular</strong>.
+                </div>
+                
+                <h3 id="h3-2-2-charged-particles" style="scroll-margin-top: 120px;">2.2 Charged Particles in Uniform Magnetic Field</h3>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.2.2: Circular Motion of Charged Particle in Uniform Magnetic Field</p>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <strong>Why is the motion circular?</strong>
+                    <ol style="margin-top: 12px;">
+                        <li>Lorentz force F = Bqv is always perpendicular to velocity</li>
+                        <li>Perpendicular force only changes direction, not speed</li>
+                        <li>Constant speed + perpendicular force = <strong>uniform circular motion</strong></li>
+                    </ol>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Centripetal Force = Lorentz Force:</strong><br>
+                    \[Bqv = \frac{mv^2}{r}\]
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Radius of Path:</strong><br>
+                    \[r = \frac{mv}{Bq} = \frac{p}{Bq}\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;">r is proportional to momentum (mv) and inversely proportional to B and q</p>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Time Period:</strong><br>
+                    \[T = \frac{2\pi m}{Bq}\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;"><strong>Independent of velocity!</strong> All particles of same q/m complete one circle in the same time</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <strong>Key Insight:</strong> Since T is independent of velocity, faster particles have larger radius but complete the circle in the same time. This is the principle behind <strong>cyclotrons</strong> (particle accelerators).
+                </div>
+                
+                <h3 id="h3-2-3-velocity-selector" style="scroll-margin-top: 120px;">2.3 Velocity Selector</h3>
+                <p>A device that selects particles of a <strong>specific velocity</strong> using perpendicular electric and magnetic fields.</p>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.2.3: Velocity Selector - E and B fields are perpendicular to each other</p>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <strong>How it works:</strong>
+                    <ul style="margin-top: 12px;">
+                        <li>Electric force: F<sub>E</sub> = E q (acts upward)</li>
+                        <li>Magnetic force: F<sub>B</sub> = B q v (acts downward for positive charge)</li>
+                        <li>When balanced: E q = B q v</li>
+                        <li>Selected velocity: v = E / B</li>
+                    </ul>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Balanced (Selected) Condition:</strong><br>
+                    \[v = \frac{E}{B}\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;">Only particles with v = E/B pass through undeflected</p>
+                </div>
+                
+                <h3 id="h3-2-4-hall-effect" style="scroll-margin-top: 120px;">2.4 The Hall Effect</h3>
+                <p>When a current-carrying conductor is placed in a magnetic field, a <strong>voltage develops perpendicular to both current and field</strong> - this is the Hall effect.</p>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.2.4: Hall Effect - Voltage develops across width of conductor</p>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Hall Voltage:</strong><br>
+                    \[V_H = \frac{IB}{nqd}\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;">Where n = carrier density, d = thickness of conductor</p>
+                </div>
+                
+                <div class="concept-box">
+                    <strong>Applications of Hall Effect:</strong>
+                    <ul style="margin-top: 12px;">
+                        <li>Measuring magnetic field strength B</li>
+                        <li>Determining the sign of charge carriers (positive or negative)</li>
+                        <li>Gaussmeters (magnetic field measuring devices)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="emi" class="section-card">
+                <h2 id="h2-emi" style="margin-top: 0; scroll-margin-top: 120px;">3. Electromagnetic Induction</h2>
+                
+                <h3 id="h3-3-1-magnetic-flux" style="scroll-margin-top: 120px;">3.1 Magnetic Flux and Flux Linkage</h3>
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.1: Magnetic Flux - BA cos theta</p>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Magnetic Flux:</strong><br>
+                    \[\Phi = BA \cos \theta\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;"><strong>Unit:</strong> Weber (Wb = T m<sup>2</sup>)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Magnetic Flux Linkage:</strong><br>
+                    \[N\Phi = NBA \cos \theta\]
+                </div>
+                
+                <div class="concept-box">
+                    <strong>Key Difference:</strong>
+                    <ul style="margin-top: 12px;">
+                        <li>Flux Phi is independent of coil turns N</li>
+                        <li>Flux linkage NPhi depends on number of turns N</li>
+                    </ul>
+                </div>
+                
+                <h3 id="h3-3-2-lenz-law" style="scroll-margin-top: 120px;">3.2 Lenz's Law - Deep Dive</h3>
+                
+                <div class="definition-box">
+                    <div class="def-title">Lenz's Law:</div>
+                    <em>"The direction of an induced current (or e.m.f.) is such that it opposes the change producing it."</em>
+                </div>
+                
+                <div class="exam-alert">
+                    <strong>This is one of the most frequently examined laws in A-Level Physics!</strong>
+                </div>
+                
+                <h3 id="h3-3-3-three-questions" style="scroll-margin-top: 120px;">3.3 Three Questions for Lenz's Law</h3>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.2: Lenz's Law Three-Question Analysis</p>
+                    </div>
+                </div>
+                
+                <table class="star-table">
+                    <tr><th>Question</th><th>Answer</th></tr>
+                    <tr><td><strong>1. Who is opposing?</strong></td><td>The induced current's magnetic field</td></tr>
+                    <tr><td><strong>2. What is being opposed?</strong></td><td>The <em>change</em> in magnetic flux (increase or decrease)</td></tr>
+                    <tr><td><strong>3. How does it oppose?</strong></td><td>By creating a field in the <em>opposite direction</em></td></tr>
+                </table>
+                
+                <h3 id="h3-3-4-opposition" style="scroll-margin-top: 120px;">3.4 Opposition is NOT Prevention</h3>
+                
+                <div class="highlight-box">
+                    <strong>This is the MOST COMMON MISTAKE in exams!</strong>
+                </div>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.3: Opposition is NOT Prevention - flux still changes, just more slowly</p>
+                    </div>
+                </div>
+                
+                <table class="star-table">
+                    <tr><th>Situation</th><th>What Happens</th><th>Result</th></tr>
+                    <tr><td>Flux <strong>increasing</strong></td><td>Induced field <em>opposes</em> increase</td><td>Increase is <em>slower</em> (but still increases!)</td></tr>
+                    <tr><td>Flux <strong>decreasing</strong></td><td>Induced field <em>opposes</em> decrease</td><td>Decrease is <em>slower</em> (but still decreases!)</td></tr>
+                </table>
+                
+                <div class="tip-box">
+                    <strong>Analogy:</strong> Like pushing two N poles together - you feel repulsion, but the magnets still move closer if you push hard enough.
+                </div>
+                
+                <h3 id="h3-3-5-energy-conservation" style="scroll-margin-top: 120px;">3.5 Lenz's Law = Energy Conservation</h3>
+                
+                <div class="concept-box">
+                    <strong>Why does Lenz's Law exist?</strong> It is a direct consequence of energy conservation!
+                </div>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.4: Lenz's Law and Energy Conservation</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <strong>Wrong assumption (would violate energy conservation):</strong><br><br>
+                    If induced current <em>attracted</em> the approaching magnet:<br>
+                    Magnet accelerates + Energy generated = <strong>Energy created from nothing!</strong>
+                </div>
+                
+                <div class="concept-box">
+                    <strong>Correct explanation:</strong><br>
+                    When magnet approaches, induced current <em>repels</em> it:<br>
+                    External work must be done to overcome repulsion<br>
+                    This work becomes electrical energy<br>
+                    <strong>Energy conserved!</strong>
+                </div>
+                
+                <div class="exam-alert">
+                    <strong>Key Insight:</strong> Lenz's Law is NOT an arbitrary rule - it is a <strong>direct consequence of energy conservation</strong>.
+                </div>
+                
+                <h3 id="h3-3-6-four-cases" style="scroll-margin-top: 120px;">3.6 Lenz's Law - Four Cases</h3>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.5: Four Cases of Magnet Approaching/Leaving Coil</p>
+                    </div>
+                </div>
+                
+                <table class="star-table">
+                    <tr><th>Case</th><th>Magnet Motion</th><th>Flux Change</th><th>Induced Field</th><th>Polarity at Face</th></tr>
+                    <tr><td>1</td><td>N pole <strong>approaching</strong></td><td>Increasing</td><td>Opposes (repels)</td><td>N pole</td></tr>
+                    <tr><td>2</td><td>N pole <strong>leaving</strong></td><td>Decreasing</td><td>Opposes (attracts)</td><td>S pole</td></tr>
+                    <tr><td>3</td><td>S pole <strong>approaching</strong></td><td>Increasing</td><td>Opposes (repels)</td><td>S pole</td></tr>
+                    <tr><td>4</td><td>S pole <strong>leaving</strong></td><td>Decreasing</td><td>Opposes (attracts)</td><td>N pole</td></tr>
+                </table>
+                
+                <div class="highlight-box">
+                    <strong>Memory Tip:</strong><br>
+                    "N approaching: N at face (repulsion)"<br>
+                    "N leaving: S at face (attraction)"
+                </div>
+                
+                <h3 id="h3-3-7-faradays-law" style="scroll-margin-top: 120px;">3.7 Faraday's Law</h3>
+                <div class="definition-box">
+                    <div class="def-title">Definition:</div>
+                    The magnitude of induced EMF is proportional to the <strong>rate of change of magnetic flux linkage</strong>.
+                </div>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.6: Faraday's Law - EMF from changing flux</p>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    \[\mathcal{E} = -N\frac{\Delta \Phi}{\Delta t}\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;"><strong>Negative sign</strong> reflects Lenz's Law (opposition)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>EMF from Moving Wire:</strong><br>
+                    \[\mathcal{E} = Blv\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;">For wire moving perpendicular to field</p>
+                </div>
+                
+                <h3 id="h3-3-8-bicycle-dynamo" style="scroll-margin-top: 120px;">3.8 Bicycle Dynamo Analysis</h3>
+                
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.7: Bicycle Dynamo - Mechanical to Electrical Energy Conversion</p>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <strong>Why is it harder to pedal when the light is ON?</strong>
+                    <ol style="margin-top: 12px;">
+                        <li>Turning generator causes coil to cut magnetic field</li>
+                        <li>Induced e.m.f. generated</li>
+                        <li>With circuit closed (light ON): induced current flows</li>
+                        <li>According to Lenz's Law, induced current's magnetic field <em>opposes</em> the rotation</li>
+                        <li>External work must be done to overcome this opposition</li>
+                        <li>Mechanical energy converts to Electrical energy</li>
+                    </ol>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>When light is OFF:</strong> Circuit is open, no current flows, no opposition, easier to pedal!
+                </div>
+                
+                <h3 id="h3-3-9-applications" style="scroll-margin-top: 120px;">3.9 Applications</h3>
+                
+                <h4>1. AC Generator (Alternator)</h4>
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.8: AC Generator - Coil rotating in magnetic field produces alternating EMF</p>
+                    </div>
+                </div>
+                
+                <div class="concept-box">
+                    <strong>How it works:</strong>
+                    <ul style="margin-top: 12px;">
+                        <li>Coil rotates in magnetic field</li>
+                        <li>Angle between coil normal and field changes continuously</li>
+                        <li>Flux Phi = NBA cos(omega t) varies sinusoidally</li>
+                        <li>EMF induced: epsilon = epsilon_0 sin(omega t)</li>
+                    </ul>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Output EMF:</strong><br>
+                    \[arepsilon = \varepsilon_0 \sin(\omega t)\]
+                </div>
+                
+                <h4>2. Transformers</h4>
+                <div class="figure-placeholder">
+                    <div class="figure-placeholder-inner">
+                        <p style="color: #059669; font-size: 14px; margin: 0;">[IMAGE PLACEHOLDER]</p>
+                        <p style="color: #64748b; font-size: 13px; margin: 8px 0 0 0;">Fig 20.3.9: Transformer - Step up or step down voltage using electromagnetic induction</p>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Transformer Equation:</strong><br>
+                    \[rac{V_p}{V_s} = rac{N_p}{N_s}\]
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #64748b;">AC only - DC doesn't work (flux must change)</p>
+                </div>
+                
+                <div class="exam-alert">
+                    <strong>Important:</strong> Transformers only work with AC because the flux must be changing to induce EMF in the secondary coil.
+                </div>
+            </div>
+
+            <div id="checklist" class="section-card">
+                <h2 id="h2-checklist" style="margin-top: 0; scroll-margin-top: 120px;">P4 Checklist: Key Definitions and Formulas</h2>
+                
+                <div class="checklist-box">
+                    <h3 style="margin-top: 0; color: #166534;">Definitions</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c1">
+                        <label for="c1"><strong>Magnetic field:</strong> region where force is experienced by current/charge/magnet</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c2">
+                        <label for="c2"><strong>Magnetic flux density (B):</strong> B = F/(Il), force per unit current per unit length</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c3">
+                        <label for="c3"><strong>Magnetic flux (Phi):</strong> Phi = BA cos theta, Weber (Wb)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c4">
+                        <label for="c4"><strong>Flux linkage (NPhi):</strong> NBA cos theta</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c5">
+                        <label for="c5"><strong>Lenz's Law:</strong> induced current opposes the change producing it</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c6">
+                        <label for="c6"><strong>Faraday's Law:</strong> induced EMF proportional to rate of change of flux linkage</label>
+                    </div>
+                    
+                    <h3 style="color: #166534;">Electromagnetic Forces</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c7">
+                        <label for="c7"><strong>Ampere's force:</strong> F = BIl sin theta</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c8">
+                        <label for="c8"><strong>Lorentz force:</strong> F = Bqv sin theta</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c9">
+                        <label for="c9"><strong>Left-hand rule:</strong> Fleming's rule for wire/charge force</label>
+                    </div>
+                    
+                    <h3 style="color: #166534;">Particle Motion</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c10">
+                        <label for="c10"><strong>Radius:</strong> r = mv/(Bq) = p/(Bq)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c11">
+                        <label for="c11"><strong>Period:</strong> T = 2pim/(Bq) (independent of velocity!)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c12">
+                        <label for="c12"><strong>Velocity selector:</strong> v = E/B</label>
+                    </div>
+                    
+                    <h3 style="color: #166534;">Electromagnetic Induction</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c13">
+                        <label for="c13"><strong>Lenz's Law:</strong> EMF = -N(dPhi/dt)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c14">
+                        <label for="c14"><strong>EMF from wire:</strong> EMF = Blv</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c15">
+                        <label for="c15"><strong>Transformer:</strong> Vp/Vs = Np/Ns</label>
+                    </div>
+                    
+                    <h3 style="color: #166534;">Key Concepts</h3>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c16">
+                        <label for="c16">Same currents attract, opposite currents repel</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c17">
+                        <label for="c17"><strong>Lorentz force does no work</strong> (always perpendicular to v)</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c18">
+                        <label for="c18"><strong>Lenz's Law = Energy conservation</strong></label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c19">
+                        <label for="c19"><strong>Opposition is NOT Prevention</strong></label>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>Exam Tips:</strong>
+                    <ul style="margin-top: 8px;">
+                        <li><strong>Left-Hand vs Right-Hand Rule:</strong> Force on wire uses left-hand; Field from current uses right-hand</li>
+                        <li><strong>Angle in Force Formulas:</strong> F = BIl <strong>sin theta</strong> (not tan!)</li>
+                        <li><strong>Lenz's Law:</strong> Always apply the three questions (who/what/how)</li>
+                        <li><strong>Opposition is NOT Prevention:</strong> Flux still changes, just more slowly!</li>
+                    </ul>
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+
+    
+    <script>
+        function toggleMobileNav() {
+            const nav = document.getElementById('mobileNav');
+            nav.classList.toggle('show');
+        }
+
+        function closeMobileNav() {
+            const nav = document.getElementById('mobileNav');
+            nav.classList.remove('show');
+        }
+
+        function updateReadingProgress() {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / docHeight) * 100;
+            document.getElementById('readingProgress').style.width = progress + '%';
+
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        }
+
+        window.addEventListener('scroll', updateReadingProgress);
+
+        function scrollTo(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 120;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            closeMobileNav();
+        }
+        
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 120;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            closeMobileNav();
+        }
+
+        async function updateProgress(unitId, status) {
+            if (!Auth.isLoggedIn()) {
+                AuthModal.open();
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${Auth.getToken()}`
+                    },
+                    body: JSON.stringify({ status })
+                });
+
+                if (response.ok) {
+                    document.querySelectorAll(`[id^="progress-btn-"]`).forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.getElementById(`progress-btn-${status}`).classList.add('active');
+                }
+            } catch (error) {
+                console.error('Update progress error:', error);
+            }
+        }
+
+        async function loadProgress(unitId) {
+            if (!Auth.isLoggedIn()) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${Auth.getToken()}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.progress) {
+                        document.querySelectorAll(`[id^="progress-btn-"]`).forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        document.getElementById(`progress-btn-${data.progress.status}`).classList.add('active');
+                    }
+                }
+            } catch (error) {
+                console.error('Load progress error:', error);
+            }
+        }
+
+        function updateActiveNav() {
+            const headings = document.querySelectorAll('h2[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            
+            if (headings.length === 0 || navLinks.length === 0) return;
+            
+            let activeId = null;
+            let bestTop = Infinity;
+            
+            headings.forEach(h => {
+                const rect = h.getBoundingClientRect();
+                if (rect.top >= 80 && rect.top < bestTop) {
+                    bestTop = rect.top;
+                    activeId = h.id;
+                }
+            });
+            
+            if (!activeId) return;
+            
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.nav-section-header').forEach(h => h.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav [data-section="${activeId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+        
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('resize', updateActiveNav, { passive: true });
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgress('ch20');
+        });
+    </script>
+
+    <script>
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('[onclick="toggleUnitNav()"]');
+            const dropdown = document.getElementById('unitNavDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+                container.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+    
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

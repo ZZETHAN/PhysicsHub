@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 03: Dynamics | Coming Soon - PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc; color: #1e293b; line-height: 1.6;
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        header {
+            background: white; border-bottom: 1px solid #e2e8f0;
+            padding: 16px 0; position: sticky; top: 0; z-index: 100;
+        }
+        .header-content {
+            max-width: 1100px; margin: 0 auto; padding: 0 16px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 18px; font-weight: 700; color: #1d4ed8; text-decoration: none;
+        }
+        .logo span { font-weight: 400; color: #64748b; font-size: 13px; margin-left: 6px; }
+        .level-badge {
+            font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px;
+        }
+        .level-badge.as { color: #059669; background: #dcfce7; }
+        .level-badge.a2 { color: #7c3aed; background: #f3e8ff; }
+        main {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            padding: 40px 16px;
+        }
+        .coming-soon-card {
+            background: white; border-radius: 16px; padding: 48px 32px;
+            max-width: 500px; width: 100%; text-align: center;
+            border: 2px dashed #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .icon { font-size: 64px; margin-bottom: 24px; }
+        .unit-label {
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; color: #64748b; margin-bottom: 8px;
+        }
+        .unit-number-display {
+            font-size: 14px; font-weight: 600; color: #059669; margin-bottom: 12px;
+        }
+        h1 { font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px; line-height: 1.3; }
+        .topics { font-size: 15px; color: #64748b; margin-bottom: 32px; line-height: 1.6; }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #fef3c7; color: #92400e;
+            padding: 10px 20px; border-radius: 9999px;
+            font-size: 14px; font-weight: 500; margin-bottom: 24px;
+        }
+        .status-badge::before {
+            content: ''; width: 8px; height: 8px;
+            background: #f59e0b; border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .description {
+            font-size: 14px; color: #64748b; margin-bottom: 32px; line-height: 1.7;
+        }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #059669; color: white; text-decoration: none;
+            padding: 12px 24px; border-radius: 8px;
+            font-size: 14px; font-weight: 500; transition: all 0.2s;
+        }
+        .back-link:hover { opacity: 0.9; transform: translateY(-1px); }
+        .completed-section { margin-top: 32px; padding-top: 32px; border-top: 1px solid #e2e8f0; }
+        .completed-title {
+            font-size: 12px; font-weight: 600; color: #64748b;
+            text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;
+        }
+        .completed-links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .completed-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #f0fdf4; color: #166534; text-decoration: none;
+            padding: 8px 14px; border-radius: 6px;
+            font-size: 13px; font-weight: 500; border: 1px solid #bbf7d0;
+            transition: all 0.2s;
+        }
+        .completed-link:hover { background: #dcfce7; }
+        .completed-link::before { content: '✓'; font-weight: 700; }
+        footer {
+            background: white; border-top: 1px solid #e2e8f0;
+            padding: 20px; text-align: center;
+        }
+        footer p { font-size: 13px; color: #64748b; }
+        @media (max-width: 640px) {
+            /* Prevent text alignment issues */
+            p, .topics, .description {
+                text-align: left;
+                word-spacing: normal;
+                hyphens: none;
+            }
+            .coming-soon-card { padding: 32px 24px; }
+            h1 { font-size: 22px; }
+            .icon { font-size: 48px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="../../index.html" class="logo">PhysicsHub<span>A-Level Physics</span></a>
+            <span class="level-badge as">AS Level</span>
+        </div>
+    </header>
+    
+    <main>
+        <div class="coming-soon-card">
+            <div class="icon">🚧</div>
+            <div class="unit-label">Coming Soon</div>
+            <div class="unit-number-display">Unit 03</div>
+            <h1>Dynamics</h1>
+            <p class="topics">Newton's laws, linear momentum, impulse</p>
+            <div class="status-badge">Content in Development</div>
+            <p class="description">
+                This unit is currently being prepared. Check back soon for comprehensive learning materials 
+                including theory, worked examples, practice questions, and P4 exam preparation.
+            </p>
+            <a href="../../index.html" class="back-link">← Back to All Units</a>
+            
+            <div class="completed-section">
+                <div class="completed-title">Available Units</div>
+                <div class="completed-links">
+                    <a href="../ch12/index.html" class="completed-link">Unit 12</a>
+                    <a href="../ch13/index.html" class="completed-link">Unit 13</a>
+                    <a href="../ch14/index.html" class="completed-link">Unit 14</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>PhysicsHub - CIE A-Level Physics 9702 Revision Resource</p>
+    </footer>
+</body>
+</html>

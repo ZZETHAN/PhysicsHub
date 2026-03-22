@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 13: Gravitational Field | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        :root {
+            --mechanics-primary: #1e40af;
+            --mechanics-dark: #1e3a5f;
+            --mechanics-light: #dbeafe;
+        }
+
+        * { box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        /* ==================== 页面结构 ==================== */
+        .unit-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+            color: white;
+            padding: 48px 0;
+            margin-bottom: 32px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .sidebar-nav {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 8px 0;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--mechanics-light); border-radius: 4px; }
+
+        /* ==================== 侧边栏导航 ==================== */
+        .nav-section-title {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ca3af;
+            padding: 16px 16px 6px;
+        }
+        
+        .nav-section { padding: 0 8px; }
+        
+        .nav-section-header {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            padding: 8px 12px;
+            margin-top: 4px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        
+        .nav-section-header:hover {
+            background: var(--mechanics-light);
+            color: var(--mechanics-primary);
+        }
+        
+        .nav-section-header.active {
+            background: var(--mechanics-light);
+            color: var(--mechanics-dark);
+            font-weight: 600;
+        }
+        
+        .nav-list { list-style: none; padding: 0; margin: 0 0 8px 0; }
+        
+        .nav-link {
+            display: block;
+            padding: 6px 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover { 
+            background: var(--mechanics-light); 
+            color: var(--mechanics-primary);
+        }
+        
+        .nav-link.active { 
+            background: var(--mechanics-light); 
+            color: var(--mechanics-dark);
+            font-weight: 500;
+        }
+
+        .main-content { max-width: 100%; min-width: 0; }
+
+        /* ==================== 内容卡片 ==================== */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            scroll-margin-top: 140px;
+        }
+
+        /* ==================== 标题层级 ==================== */
+        .section-card h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #111827;
+            margin: 0 0 20px 0;
+            padding: 0 0 12px 0;
+            border: none;
+            border-bottom: 2px solid var(--mechanics-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .section-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 32px 0 14px 0;
+        }
+
+        .section-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin: 20px 0 10px 0;
+        }
+
+        /* ==================== 段落 ==================== */
+        .section-card p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #374151;
+            margin: 0 0 14px 0;
+        }
+
+        /* ==================== 列表 ==================== */
+        .section-card ul, .section-card ol {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+
+        .section-card li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .section-card li::marker { color: var(--mechanics-primary); }
+        .section-card li strong { color: #1f2937; font-weight: 600; }
+
+        /* ==================== 内联 ==================== */
+        .section-card strong { font-weight: 600; color: #1f2937; }
+        .section-card em { font-style: italic; }
+
+        /* ==================== 提问框 ==================== */
+        .intro-box {
+            background: var(--mechanics-light);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+        
+        .intro-box::before {
+            content: 'Think About It';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--mechanics-dark);
+            margin-bottom: 10px;
+        }
+        
+        .intro-box strong { color: var(--mechanics-dark); }
+        .intro-box li { color: var(--mechanics-dark); font-size: 14px; }
+
+        /* ==================== 概念框 ==================== */
+        .concept-box {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin: 20px 0;
+        }
+        
+        .concept-box::before {
+            content: 'Concept';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        .concept-box strong { color: #1f2937; }
+
+        /* ==================== 定义框 ==================== */
+        .definition-box {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+
+        .definition-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .definition-box p { color: #4b5563; font-size: 14px; margin: 0; }
+        .definition-box strong { color: #1f2937; }
+
+        /* ==================== 公式框 ==================== */
+        .formula-box {
+            background: var(--mechanics-light);
+            border: 1px solid var(--mechanics-primary);
+            border-radius: 8px;
+            padding: 24px 32px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .formula-box strong { color: var(--mechanics-dark); font-size: 16px; }
+        .formula-box p { color: var(--mechanics-dark); font-size: 14px; margin-top: 12px; }
+
+        /* ==================== 考试提示框 ==================== */
+        .exam-alert {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+        
+        .exam-alert::before {
+            content: 'Exam Tip';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b45309;
+            margin-bottom: 8px;
+        }
+        
+        .exam-alert strong { color: #b45309; }
+        .exam-alert p { color: #92400e; font-size: 14px; margin-top: 8px; }
+        .exam-alert li { color: #92400e; font-size: 14px; }
+
+        /* ==================== 清单框 ==================== */
+        .checklist-box {
+            background: var(--mechanics-light);
+            border: 1px solid var(--mechanics-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-box::before {
+            content: 'Checklist';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--mechanics-primary);
+            margin-bottom: 12px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--mechanics-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--mechanics-dark); }
+
+        /* ==================== 图片占位符 ==================== */
+        .image-placeholder {
+            background: var(--mechanics-light);
+            border: 2px dashed var(--mechanics-primary);
+            border-radius: 8px;
+            padding: 40px 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .image-placeholder::before {
+            content: 'Figure';
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--mechanics-primary);
+            margin-bottom: 8px;
+        }
+
+        .image-placeholder p { color: var(--mechanics-dark); font-size: 13px; margin: 0; }
+
+        /* ==================== 表格 ==================== */
+        .case-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .case-table th, .case-table td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .case-table th {
+            background: var(--mechanics-light);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--mechanics-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .case-table td { color: #4b5563; }
+        .case-table td strong { color: #1f2937; }
+        .case-table tr:last-child td { border-bottom: none; }
+        .case-table tr:hover td { background: #f9fafb; }
+
+        /* ==================== 对比卡片 ==================== */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .comparison-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--mechanics-dark);
+            margin: 0 0 10px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--mechanics-light);
+        }
+
+        .comparison-card p { font-size: 13px; color: #6b7280; margin: 0; line-height: 1.5; }
+
+        /* ==================== 数学公式 ==================== */
+        mjx-container { font-size: 106% !important; }
+
+        /* ==================== 进度按钮 ==================== */
+        .progress-btn.active {
+            background: var(--mechanics-primary) !important;
+            color: white !important;
+            border-color: var(--mechanics-primary) !important;
+        }
+        
+        .progress-btn:hover:not(.active) { background: var(--mechanics-light); }
+
+        /* ==================== 回到顶部按钮 ==================== */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--mechanics-primary);
+            border: none;
+            box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 101;
+            text-decoration: none;
+        }
+        
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--mechanics-dark); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+
+        /* ==================== 移动端导航 ==================== */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--mechanics-primary);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
+            z-index: 1003;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 260px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 1002;
+        }
+        
+        .mobile-nav.show { display: block; }
+
+        .login-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            background: var(--mechanics-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .login-link:hover { background: var(--mechanics-dark); }
+
+        /* ==================== 响应式 ==================== */
+        @media (max-width: 968px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .sidebar-nav { display: none; }
+            .section-card { padding: 24px; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+            .back-to-top { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .section-card { padding: 16px; }
+            .section-card h2 { font-size: 20px; }
+            .section-card h3 { font-size: 17px; margin-top: 24px; }
+            .section-card p, .section-card li { font-size: 14px; }
+            mjx-container { overflow-x: auto; max-width: 100%; }
+        }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: var(--mechanics-light); }
+.unit-nav-link.active { background: var(--mechanics-light); color: var(--mechanics-primary); }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: var(--mechanics-primary); }
+</style>
+
+</head>
+<body>
+
+        <header style="background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">←</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            
+            
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #1e40af22 0%, white 100%); border: 1px solid #1e40af; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #1e40af; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1d4ed822'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+<a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='transparent'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #7c3aed;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span><span style="width: 8px; height: 8px; background: #7c3aed; border-radius: 50%;"></span></a>
+<a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##ea580c22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+<a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##16a34a22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+<a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##dc262622'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+<a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+<a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1e40af22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+<a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+<a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0f766e22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##be185d22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    <!-- Reading Progress Bar -->
+    <div id="reading-progress" style="position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #1e3a5f, #1e40af, #3b82f6); z-index: 1001; transition: width 0.1s;"></div>
+
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </a>
+    
+    <div class="unit-header" style="color: white; padding: 48px 0; margin-bottom: 32px;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+            <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">A2 Level > Unit 13</div>
+            <h1 style="margin: 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">Gravitational Field</h1>
+            <p style="margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">From Newton's apple to satellite orbits</p>
+        </div>
+    </div>    
+    
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+    
+    
+    <div class="mobile-nav" id="mobileNav">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+            <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 4px;"><a href="#intro" onclick="scrollTo('intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">1. Newton's Law of Gravitation</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-grav-1-1" onclick="scrollTo('h3-grav-1-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1 Inverse-Square Law</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-grav-1-2" onclick="scrollTo('h3-grav-1-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.2 Gravitational Constant G</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">2. Gravitational Field Strength</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-grav-2-1" onclick="scrollTo('h3-grav-2-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1 Variation with Distance</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">3. Gravitational Potential</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-grav-3-1" onclick="scrollTo('h3-grav-3-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1 Why Negative?</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-grav-3-2" onclick="scrollTo('h3-grav-3-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.2 Potential Well</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-grav-3-3" onclick="scrollTo('h3-grav-3-3')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.3 Potential Difference</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">4. Orbital Motion</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-grav-4-1" onclick="scrollTo('h3-grav-4-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.1 Kepler's Third Law</a></li>
+            <li style="margin-bottom: 4px;"><a href="#escape" onclick="scrollTo('escape')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">5. Escape Velocity</a></li>
+            <li style="margin-bottom: 4px;"><a href="#checklist" onclick="scrollTo('checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">P4 Checklist</a></li>
+        </ul>
+    </div>
+
+    
+    <div class="content-grid">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#intro" class="nav-link" data-section="intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#newtons-law" class="nav-section-header" data-section="newtons-law">1. Newton's Law of Gravitation</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-grav-1-1" class="nav-link" data-section="h3-grav-1-1">1.1 Inverse-Square Law</a></li>
+                    <li class="nav-item"><a href="#h3-grav-1-2" class="nav-link" data-section="h3-grav-1-2">1.2 Gravitational Constant G</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#field-strength" class="nav-section-header" data-section="field-strength">2. Gravitational Field Strength</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-grav-2-1" class="nav-link" data-section="h3-grav-2-1">2.1 Variation with Distance</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#potential" class="nav-section-header" data-section="potential">3. Gravitational Potential</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-grav-3-1" class="nav-link" data-section="h3-grav-3-1">3.1 Why Negative?</a></li>
+                    <li class="nav-item"><a href="#h3-grav-3-2" class="nav-link" data-section="h3-grav-3-2">3.2 Potential Well</a></li>
+                    <li class="nav-item"><a href="#h3-grav-3-3" class="nav-link" data-section="h3-grav-3-3">3.3 Potential Difference</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#orbits" class="nav-section-header" data-section="orbits">4. Orbital Motion</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-grav-4-1" class="nav-link" data-section="h3-grav-4-1">4.1 Kepler's Third Law</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#escape" class="nav-link" data-section="escape" style="margin-top:8px;">5. Escape Velocity</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#checklist" class="nav-link" data-section="checklist" style="margin-top:8px;">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="structured-questions.html" class="nav-link">Practice Questions</a></li>
+                <li class="nav-item"><a href="../../homework/ch13/" class="nav-link" style="color: #16a34a;">📚 Homework</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 12px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch13', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch13', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch13', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+        
+        <main class="main-content">
+            
+            
+            <div id="intro" class="section-card">
+                <h2 id="intro" style="scroll-margin-top: 120px;">Introduction: The Invisible Force</h2>
+                
+                <div class="intro-box">
+                    <strong>Think about these questions:</strong>
+                    <ul style="margin-top: 10px; margin-bottom: 0;">
+                        <li>Why doesn't the Moon fall down to Earth?</li>
+                        <li>How do satellites stay in orbit without engines?</li>
+                        <li>Why do you weigh less on the Moon than on Earth?</li>
+                        <li>How fast must a rocket travel to escape Earth's gravity?</li>
+                    </ul>
+                </div>
+                
+                <p>All these phenomena are governed by one of the fundamental forces of nature: <strong>gravity</strong>. The same force that makes an apple fall from a tree also keeps planets in orbit around the Sun.</p>
+                
+                <div class="concept-box">
+                    <strong>Connection to Unit 12:</strong> In circular motion, we learned that centripetal force is required for circular motion. For planets and satellites, this force is provided by <strong>gravity</strong>. Combining these two concepts allows us to understand orbital mechanics.
+                </div>
+                
+                <div class="exam-alert">
+                    <strong>Paper 4 Examination Focus:</strong> This unit frequently combines with Unit 12 (Circular Motion) in questions about satellite orbits. Expect calculations involving gravitational potential, orbital velocity, and escape velocity.
+                </div>
+            </div>
+
+            
+            <div id="newtons-law" class="section-card">
+                <h2 id="newtons-law" style="scroll-margin-top: 120px;">1. Newton's Law of Gravitation</h2>
+                
+                <div class="concept-box">
+                    <strong>The Key Question:</strong> Newton famously asked: "Does the same force that makes an apple fall also keep the Moon in orbit around Earth?"
+                </div>
+                
+                <p>Through brilliant insight and mathematical analysis, Newton discovered that <strong>every particle attracts every other particle</strong> with a force that follows a precise mathematical relationship.</p>
+                
+                <div class="definition-box">
+                    <div class="definition-title">1. Newton's Law of Gravitation</div>
+                    <p>Any two point masses attract each other with a force that is proportional to the product of their masses and inversely proportional to the square of the distance between them.</p>
+                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[F = \frac{Gm_1m_2}{r^2}\]
+                    </div>
+                    
+                    <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
+                        where \(G = 6.67 \times 10^{-11} \text{ N m}^2 \text{ kg}^{-2}\) (universal gravitational constant)
+                    </p>
+                </div>
+                
+                <div class="image-placeholder">
+                    <p>[Image Placeholder - Two particles gravitational attraction diagram]</p>
+                </div>
+                
+                <h3 id="h3-grav-1-1" style="scroll-margin-top: 120px;">1.1 Understanding the Inverse-Square Law</h3>
+                
+                <p>The \(\frac{1}{r^2}\) relationship is crucial. It means:</p>
+                
+                <ul>
+                    <li>If distance doubles, force becomes \(\frac{1}{4}\)</li>
+                    <li>If distance triples, force becomes \(\frac{1}{9}\)</li>
+                    <li>If distance halves, force becomes \(4\) times stronger</li>
+                </ul>
+                
+                <h3 id="h3-grav-1-2" style="scroll-margin-top: 120px;">1.2 The Gravitational Constant G</h3>
+                
+                <p>The value \(G = 6.67 \times 10^{-11} \text{ N m}^2 \text{ kg}^{-2}\) was first accurately measured by Henry Cavendish in 1789, more than 100 years after Newton proposed the law of gravitation.</p>
+                
+                <p><strong>The Cavendish Experiment:</strong> Using a delicate torsion balance, Cavendish measured the tiny gravitational force between two lead spheres in a laboratory. The apparatus consisted of:</p>
+                
+                <ul>
+                    <li>Two small lead spheres attached to a T-shaped frame suspended by a thin wire</li>
+                    <li>Two large lead spheres that could be moved close to the small spheres</li>
+                    <li>A mirror attached to the wire to detect tiny twists using a light beam</li>
+                    <li>The gravitational attraction between masses caused a measurable twist in the wire</li>
+                </ul>
+                
+                <p><strong>Significance:</strong> This experiment:</p>
+                
+                <ul>
+                    <li>Provided the first laboratory measurement of gravitational force between masses</li>
+                    <li>Allowed calculation of Earth's mass for the first time (the "weighing the Earth" experiment)</li>
+                    <li>Gave practical value to Newton's law for astronomical calculations</li>
+                    <li>Confirmed that gravity acts between any two masses, not just celestial bodies</li>
+                </ul>
+                
+                <div class="exam-alert">
+                    <strong>Common Exam Mistake:</strong> Students often forget that \(r\) is the distance between <strong>centers</strong> of mass, not surfaces. For two spheres, measure from center to center.
+                </div>
+            </div>
+
+            
+            <div id="field-strength" class="section-card">
+                <h2 id="field-strength" style="scroll-margin-top: 120px;">2. Gravitational Field Strength</h2>
+                
+                <div class="concept-box">
+                    <strong>The Key Question:</strong> Why do astronauts weigh less on the Moon? Is it because there's "no gravity" in space?
+                </div>
+                
+                <p>The answer lies in understanding that gravitational field strength varies with distance from a massive object. We define:</p>
+                
+                <div class="definition-box">
+                    <div class="definition-title">Definition: Gravitational Field Strength (g)</div>
+                    <p>The gravitational force exerted per unit mass on a small object placed at that point.</p>
+                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[g = \frac{F}{m} = \frac{GM}{r^2}\]
+                    </div>
+                    
+                    <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
+                        <strong>Unit:</strong> N kg⁻¹ or m s⁻²
+                    </p>
+                </div>
+                
+                <p><strong>Critical Insight:</strong> Notice that \(g\) is independent of the test mass. This means all objects fall with the same acceleration at a given location (Galileo's observation).</p>
+                
+                <h3 id="h3-grav-2-1" style="scroll-margin-top: 120px;">2.1 Variation with Distance</h3>
+                
+                <p>At Earth's surface: \(g_0 \approx 9.81 \text{ m s}^{-2}\)</p>
+                <p>At height \(h\) above surface: \(g = \frac{GM}{(R + h)^2}\)</p>
+                
+                <div class="image-placeholder">
+                    <p>[Image Placeholder - Graph of g vs distance]</p>
+                </div>
+            </div>
+
+            
+            <div id="potential" class="section-card">
+                <h2 id="potential" style="scroll-margin-top: 120px;">3. Gravitational Potential</h2>
+                
+                <div class="concept-box">
+                    <strong>The Key Question:</strong> How much work is needed to move a mass from Earth's surface to infinity? And why is this concept useful?
+                </div>
+                
+                <p>Gravitational potential helps us calculate energy changes in gravitational fields without doing integration every time.</p>
+                
+                <div class="definition-box">
+                    <div class="definition-title">Definition: Gravitational Potential (φ)</div>
+                    <p>The work done in bringing unit mass from infinity to the point.</p>
+                    
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[\phi = -\frac{GM}{r}\]
+                    </div>
+                    
+                    <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
+                        <strong>Unit:</strong> J kg⁻¹ | <strong>Negative by convention</strong> (zero at infinity)
+                    </p>
+                </div>
+                
+                <h3 id="h3-grav-3-1" style="scroll-margin-top: 120px;">3.1 Why Negative?</h3>
+                
+                <p>The negative sign indicates that:</p>
+                <ul>
+                    <li>Work must be done <strong>by</strong> the field to bring a mass from infinity (attraction)</li>
+                    <li>Work must be done <strong>against</strong> the field to move a mass to infinity</li>
+                    <li>3. Potential <strong>increases</strong> (becomes less negative) as \(r\) increases</li>
+                </ul>
+                
+                <div class="image-placeholder">
+                    <p>[Image Placeholder - Graph of potential φ vs distance]</p>
+                </div>
+                
+                <h3 id="h3-grav-3-2" style="scroll-margin-top: 120px;">3.2 The Gravitational Potential Well</h3>
+                
+                <p>The concept of gravitational potential helps us visualize how objects move in gravitational fields. Imagine a spacecraft approaching Earth from a distant star:</p>
+                
+                <ul>
+                    <li><strong>At infinity:</strong> \(\phi = 0\) (our reference point), the spacecraft has maximum potential energy</li>
+                    <li><strong>As it approaches Earth:</strong> It is attracted by Earth's gravity, losing potential energy (becoming more negative)</li>
+                    <li><strong>At Earth's surface:</strong> Deepest in the "potential well" with \(\phi = -\frac{GM}{R}\)</li>
+                </ul>
+                
+                <p><strong>The Potential Well Analogy:</strong> Think of a ball rolling into a bowl. At the rim (infinity), it has highest potential. Rolling down, it loses potential energy and gains kinetic energy. At the bottom (Earth's surface), it's at lowest potential and hardest to escape.</p>
+                
+                <p><strong>Different Bodies, Different Wells:</strong> The Sun creates a much deeper well than Earth due to its greater mass. Jupiter's well is intermediate. We live at the bottom of Earth's gravitational potential well.</p>
+                
+                <h3 id="h3-grav-3-3" style="scroll-margin-top: 120px;">3.3 Gravitational Potential Difference</h3>
+                
+                <p>The energy needed to move a mass between two points in a gravitational field depends on the potential difference:</p>
+                
+                <div class="formula-box">
+                    \[\Delta E_p = m \Delta \phi = m(\phi_2 - \phi_1)\]
+                </div>
+                
+                <p><strong>Practical Application:</strong> This is crucial for calculating the energy required to lift a satellite from Earth's surface to orbit, the work done by gravity as an object falls, and the escape energy needed to leave a planet's gravitational field.</p>
+                
+                <p><strong>Key Point:</strong> Since potential is always negative, moving to a higher (less negative) potential requires positive work by an external force, while falling to a lower (more negative) potential releases energy.</p>
+            </div>
+
+            
+            <div id="orbits" class="section-card">
+                <h2 id="orbits" style="scroll-margin-top: 120px;">4. Orbital Motion</h2>
+                
+                <div class="concept-box">
+                    <strong>The Key Question:</strong> How do satellites stay in orbit? Why don't they fall back to Earth?
+                </div>
+                
+                <p>The answer combines Newton's law of gravitation with circular motion. For a satellite in circular orbit:</p>
+                
+                <div class="formula-box">
+                    \[\text{Gravitational force} = \text{Centripetal force}\]
+                    \[\frac{GMm}{r^2} = \frac{mv^2}{r}\]
+                </div>
+                
+                <p>Solving for orbital velocity:</p>
+                
+                <div class="formula-box">
+                    \[v = \sqrt{\frac{GM}{r}}\]
+                </div>
+                
+                <h3 id="h3-grav-4-1" style="scroll-margin-top: 120px;">4.1 Kepler's Third Law</h3>
+                
+                <p>The period of orbit can be derived:</p>
+                
+                <div class="formula-box">
+                    \[T = \frac{2\pi r}{v} = 2\pi\sqrt{\frac{r^3}{GM}}\]
+                </div>
+                
+                <p>Squaring both sides gives <strong>Kepler's Third Law</strong>:</p>
+                
+                <div class="formula-box">
+                    \[T^2 = \frac{4\pi^2}{GM}r^3 \quad \Rightarrow \quad T^2 \propto r^3\]
+                </div>
+                
+                <div class="exam-alert">
+                    <strong>Key Insight:</strong> Satellites closer to Earth (smaller \(r\)) have:
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li>Higher orbital speed \(v\)</li>
+                        <li>Shorter period \(T\)</li>
+                        <li>Greater centripetal acceleration</li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <div id="escape" class="section-card">
+                <h2 id="escape" style="scroll-margin-top: 120px;">5. Escape Velocity</h2>
+                
+                <div class="concept-box">
+                    <strong>The Key Question:</strong> How fast must a rocket travel to completely escape Earth's gravity and never return?
+                </div>
+                
+                <p>Using conservation of energy, we equate kinetic energy at launch to gravitational potential energy at infinity:</p>
+                
+                <div class="formula-box">
+                    \[\frac{1}{2}mv_{escape}^2 + \left(-\frac{GMm}{r}\right) = 0 + 0\]
+                </div>
+                
+                <p>Solving for escape velocity:</p>
+                
+                <div class="formula-box">
+                    \[v_{escape} = \sqrt{\frac{2GM}{r}} = \sqrt{2gr}\]
+                </div>
+                
+                <p>For Earth: \(v_{escape} \approx 11.2 \text{ km s}^{-1}\)</p>
+                
+                <div class="exam-alert">
+                    <strong>Key Relationship:</strong> Escape velocity is exactly \(\sqrt{2}\) times the orbital velocity at that radius:
+                    \[v_{escape} = \sqrt{2} \times v_{orbit}\]
+                </div>
+            </div>
+
+            
+            <div id="checklist" class="section-card">
+                <h2 id="checklist" style="scroll-margin-top: 120px;">P4 Checklist: Key Definitions & Formulas</h2>
+                
+                <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--mechanics-primary); margin-bottom: 12px;">Essential Definitions</div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="def1">
+                        <label for="def1"><strong>Newton's law of gravitation:</strong> Every particle attracts every other particle with a force \(F = \frac{Gm_1m_2}{r^2}\)</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="def2">
+                        <label for="def2"><strong>Gravitational field strength \(g\):</strong> Force per unit mass, \(g = \frac{F}{m} = \frac{GM}{r^2}\)</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="def3">
+                        <label for="def3"><strong>Gravitational potential \(\phi\):\</strong> Work done per unit mass bringing from infinity, \(\phi = -\frac{GM}{r}\)</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="def4">
+                        <label for="def4"><strong>Kepler's third law:</strong> \(T^2 \propto r^3\) for orbital period and radius</label>
+                    </div>
+                </div>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--mechanics-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eq1">
+                        <label for="eq1">\(F = \frac{Gm_1m_2}{r^2}\)</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eq2">
+                        <label for="eq2">\(g = \frac{GM}{r^2}\)</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eq3">
+                        <label for="eq3">\(\phi = -\frac{GM}{r}\)</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eq4">
+                        <label for="eq4">\(v = \sqrt{GM}\) (orbital velocity)</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eq5">
+                        <label for="eq5">\(T^2 = \frac{4\pi^2r^3}{GM}\) (Kepler's law)</label>
+                    </div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="eq6">
+                        <label for="eq6">\(v_{escape} = \sqrt{2GM}\)</label>
+                    </div>
+                </div>
+                
+                <div class="exam-alert">
+                    <strong>Common Structured Question Pattern:</strong>
+                    <br><br>
+                    "Derive an expression for the orbital speed of a satellite..."
+                    <br><br>
+                    <strong>Model Answer Structure:</strong>
+                    <ol style="margin-top: 8px;">
+                        <li>State that gravitational force provides centripetal force</li>
+                        <li>Write: \(\frac{GMm}{r^2} = \frac{mv^2}{r}\)</li>
+                        <li>Cancel \(m\) and one \(r\): \(\frac{GM}{r} = v^2\)</li>
+                        <li>Rearrange: \(v = \sqrt{\frac{GM}{r}}\)</li>
+                    </ol>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.05,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    
+    <script>
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('[onclick="toggleUnitNav()"]');
+            const dropdown = document.getElementById('unitNavDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+                container.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+    
+    <script>
+        // Mobile Navigation
+        function toggleMobileNav() {
+            const nav = document.getElementById("mobileNav");
+            nav.classList.toggle("show");
+        }
+        function closeMobileNav() {
+            const nav = document.getElementById("mobileNav");
+            nav.classList.remove("show");
+        }
+
+        function scrollTo(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 100;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Smooth scroll with offset for fixed header
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 100; // offset 100px to make heading visible
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            closeMobileNav();
+        }
+        
+        function updateActiveNav() {
+            const headings = document.querySelectorAll('h2[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            
+            if (headings.length === 0 || navLinks.length === 0) return;
+            
+            let activeId = null;
+            let bestTop = Infinity;
+            
+            headings.forEach(h => {
+                const rect = h.getBoundingClientRect();
+                if (rect.top >= 80 && rect.top < bestTop) {
+                    bestTop = rect.top;
+                    activeId = h.id;
+                }
+            });
+            
+            if (!activeId) return;
+            
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav [data-section="${activeId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+        
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('resize', updateActiveNav, { passive: true });
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
+        
+        function loadProgress(unitId) {
+            if (!Auth.isLoggedIn()) return;
+            fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.unit) {
+                    updateProgressButtons(data.unit.status);
+                }
+            })
+            .catch(err => console.error('Load progress error:', err));
+        }
+        
+        function updateProgress(unitId, status) {
+            if (!Auth.isLoggedIn()) {
+                AuthModal.open();
+                return;
+            }
+            fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Auth.getToken()}`
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    updateProgressButtons(status);
+                }
+            })
+            .catch(err => console.error('Update progress error:', err));
+        }
+        
+        function updateProgressButtons(status) {
+            ['not_started', 'in_progress', 'completed'].forEach(s => {
+                const btn = document.getElementById(`progress-btn-${s}`);
+                if (btn) btn.classList.toggle('active', s === status);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgress('ch13');
+            
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            // Reading Progress Bar & Back to top visibility
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (scrollTop / docHeight) * 100;
+                document.getElementById('reading-progress').style.width = progress + '%';
+                
+                // Back to top button visibility
+                if (backToTopBtn) {
+                    if (scrollTop > 400) {
+                        backToTopBtn.classList.add('show');
+                    } else {
+                        backToTopBtn.classList.remove('show');
+                    }
+                }
+            }, { passive: true });
+        });
+    </script>
+
+
+<script src="../../auth/auth.js"></script>
+</body>
+</html>

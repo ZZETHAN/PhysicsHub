@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>理论讲解 - Ch 13: Gravitational Field | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        .formula-box {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: var(--space-4) var(--space-6);
+            margin: var(--space-4) 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        mjx-container {
+            font-size: 115% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../../index.html" style="text-decoration: none;"><div class="logo">PhysicsHub</div></a>
+                <div class="logo-sub">Ch 13 · Gravitational Field</div>
+            </div>
+            
+            <nav class="nav-section">
+                <div class="nav-title">本单元导航</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><span class="nav-icon">📋</span>单元概览</a></li>
+                    <li class="nav-item"><a href="theory.html" class="nav-link active"><span class="nav-icon">📖</span>理论讲解</a></li>
+                    <li class="nav-item"><a href="formulas.html" class="nav-link"><span class="nav-icon">📝</span>公式汇总</a></li>
+                    <li class="nav-item"><a href="examples.html" class="nav-link"><span class="nav-icon">💡</span>典型例题</a></li>
+                    <li class="nav-item"><a href="mistakes.html" class="nav-link"><span class="nav-icon">⚠️</span>常见错误</a></li>
+                    <li class="nav-item"><a href="quiz.html" class="nav-link"><span class="nav-icon">✏️</span>单元测试</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main">
+            <div class="content-card">
+                <h1>引力场理论讲解</h1>
+                
+                <h2>13.1 牛顿万有引力定律</h2>
+                
+                <p>宇宙中任意两个有质量的物体之间都存在相互吸引的力，这个力称为<strong>万有引力</strong>。</p>
+                
+                <div class="formula-box">
+                    \[
+                    F = \frac{Gm_1m_2}{r^2}
+                    \]
+                </div>
+                
+                <ul>
+                    <li>\(F\): 万有引力，单位 N</li>
+                    <li>\(G\): 万有引力常量，\(G = 6.67 \times 10^{-11} \text{ N·m}^2\text{/kg}^2\)</li>
+                    <li>\(m_1, m_2\): 两物体质量，单位 kg</li>
+                    <li>\(r\): 两物体质心距离，单位 m</li>
+                </ul>
+                
+                <div class="box box-info">
+                    <div class="box-title">💡 关键理解</div>
+                    <ul>
+                        <li>万有引力与两物体质量的乘积成正比</li>
+                        <li>万有引力与距离平方成反比（平方反比定律）</li>
+                        <li>力的方向沿两质点连线，相互吸引</li>
+                    </ul>
+                </div>
+                
+                <h2>13.2 引力场强度</h2>
+                
+                <p>引力场是描述引力作用的空间场。某点的<strong>引力场强度\(g\)</strong>定义为：单位质量在该点受到的引力。</p>
+                
+                <div class="formula-box">
+                    \[
+                    g = \frac{F}{m} = \frac{GM}{r^2}
+                    \]
+                </div>
+                
+                <p>对于地球表面附近（忽略地球自转影响）：</p>
+                
+                <div class="formula-box">
+                    \[
+                    g_0 = \frac{GM_E}{R_E^2} \approx 9.81 \text{ m/s}^2
+                    \]
+                </div>
+                
+                <div class="box box-warning">
+                    <div class="box-title">⚠️ 注意区分</div>
+                    <p>\(g\)（引力场强度）和 \(G\)（万有引力常量）是完全不同的概念：</p>
+                    <ul>
+                        <li>\(G\) 是普适常量，处处相同</li>
+                        <li>\(g\) 取决于场源质量 \(M\) 和距离 \(r\)，不同位置不同</li>
+                    </ul>
+                </div>
+                
+                <h2>13.3 引力势</h2>
+                
+                <p><strong>引力势\(\phi\)</strong>定义为：单位质量从无穷远处移到该点时，引力所做的功（或势能的变化）。</p>
+                
+                <div class="formula-box">
+                    \[
+                    \phi = -\frac{GM}{r}
+                    \]
+                </div>
+                
+                <div class="box box-danger">
+                    <div class="box-title">❗ 关键特征</div>
+                    <ul>
+                        <li>引力势为<strong>负值</strong>（无穷远处规定为零势能点）</li>
+                        <li>越靠近质量中心，引力势越小（越负）</li>
+                        <li>单位：J/kg</li>
+                    </ul>
+                </div>
+                
+                <h3>引力势能</h3>
+                
+                <p>质量 \(m\) 在引力场中某点的势能：</p>
+                
+                <div class="formula-box">
+                    \[
+                    E_p = m\phi = -\frac{GMm}{r}
+                    \]
+                </div>
+                
+                <h2>13.4 卫星轨道运动</h2>
+                
+                <p>卫星绕行星做圆周运动时，万有引力提供向心力。</p>
+                
+                <div class="formula-box">
+                    \[
+                    \frac{GMm}{r^2} = \frac{mv^2}{r} = m\omega^2 r
+                    \]
+                </div>
+                
+                <h3>轨道速度</h3>
+                
+                <div class="formula-box">
+                    \[
+                    v = \sqrt{\frac{GM}{r}}
+                    \]
+                </div>
+                
+                <h3>轨道周期</h3>
+                
+                <div class="formula-box">
+                    \[
+                    T = \frac{2\pi r}{v} = 2\pi\sqrt{\frac{r^3}{GM}}
+                    \]
+                </div>
+                
+                <div class="box box-success">
+                    <div class="box-title">✅ 开普勒第三定律</div>
+                    <p>由上式可得：</p>
+                    <div class="formula-box">
+                        \[
+                        T^2 = \frac{4\pi^2}{GM} \cdot r^3 \quad \text{即} \quad T^2 \propto r^3
+                        \]
+                    </div>
+                    <p>卫星轨道周期的平方与轨道半径的立方成正比。</p>
+                </div>
+                
+                <h3>轨道总能量</h3>
+                
+                <div class="formula-box">
+                    \[
+                    E = E_k + E_p = \frac{1}{2}mv^2 - \frac{GMm}{r} = -\frac{GMm}{2r}
+                    \]
+                </div>
+                
+                <div class="box box-info">
+                    <div class="box-title">💡 重要关系</div>
+                    <ul>
+                        <li>\(E = \dfrac{1}{2}E_p = -E_k\)</li>
+                        <li>总能量为负，表示卫星处于束缚态</li>
+                        <li>轨道半径越大，总能量越大（越接近零）</li>
+                    </ul>
+                </div>
+                
+                <h2>13.5 逃逸速度</h2>
+                
+                <p><strong>逃逸速度\(v_{esc}\)</strong>：物体从星球表面出发，完全脱离星球引力场所需的最小初速度。</p>
+                
+                <p>由能量守恒：初始动能 + 势能 = 0（无穷远处）</p>
+                
+                <div class="formula-box">
+                    \[
+                    \frac{1}{2}mv_{esc}^2 - \frac{GMm}{R} = 0
+                    \]
+                </div>
+                
+                <div class="formula-box">
+                    \[
+                    v_{esc} = \sqrt{\frac{2GM}{R}} = \sqrt{2gR}
+                    \]
+                </div>
+                
+                <div class="box box-success">
+                    <div class="box-title">✅ 地球逃逸速度</div>
+                    \[
+                    v_{esc} = \sqrt{\frac{2 \times 6.67 \times 10^{-11} \times 5.97 \times 10^{24}}{6.37 \times 10^6}} \approx 11.2 \text{ km/s}
+                    \]
+                    <p>约为 \(\sqrt{2}\) 倍的第一宇宙速度（环绕速度）。</p>
+                </div>
+                
+                <h2>13.6 等效原理</h2>
+                
+                <p>爱因斯坦等效原理指出：在局部区域内，引力效应与加速度效应不可区分。</p>
+                
+                <div class="box box-info">
+                    <div class="box-title">💡 理解</div>
+                    <ul>
+                        <li>在自由下落的电梯中，物体会失重</li>
+                        <li>在加速上升的电梯中，物体会感受到"超重"</li>
+                        <li>这为广义相对论奠定了基础</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- MathJax 本地配置 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.1,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 16: Structured Questions | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; line-height: 1.6; }
+        
+        .header {
+            background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0;
+            position: sticky; top: 0; z-index: 100;
+        }
+        
+        .unit-header {
+            background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+            color: white; padding: 40px 0;
+        }
+        
+        .container {
+            max-width: 900px; margin: 0 auto; padding: 0 24px;
+        }
+        
+        .back-link {
+            color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px;
+        }
+        
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        
+        .content {
+            max-width: 900px; margin: 0 auto; padding: 32px 24px;
+        }
+        
+        .question-card {
+            background: white; border-radius: 12px; padding: 28px;
+            margin-bottom: 24px; border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px; padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .question-meta {
+            display: flex; gap: 12px; align-items: center;
+        }
+        
+        .exam-badge {
+            background: #1e293b; color: white;
+            padding: 6px 12px; border-radius: 6px;
+            font-size: 13px; font-weight: 600;
+        }
+        
+        .topic-tag {
+            background: #fee2e2; color: #dc2626;
+            padding: 4px 12px; border-radius: 4px;
+            font-size: 12px; font-weight: 500;
+        }
+        
+        .marks {
+            font-size: 14px; color: #64748b; font-weight: 600;
+        }
+        
+        .question-content {
+            color: #1e293b; font-size: 15px; line-height: 1.7;
+        }
+        
+        .question-content p {
+            margin: 12px 0;
+        }
+        
+        .part-label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .mark-scheme {
+            margin-top: 24px; padding-top: 20px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        
+        .mark-scheme-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .mark-scheme-title {
+            font-weight: 600; color: #1e293b; font-size: 16px;
+        }
+        
+        .toggle-btn {
+            background: #eff6ff; color: #1d4ed8;
+            border: 1px solid #3b82f6; padding: 8px 16px;
+            border-radius: 6px; font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        
+        .toggle-btn:hover {
+            background: #3b82f6; color: white;
+        }
+        
+        .mark-scheme-content {
+            display: none;
+            background: #f8fafc; padding: 20px;
+            border-radius: 8px; border-left: 4px solid #22c55e;
+        }
+        
+        .mark-scheme-content.show {
+            display: block;
+        }
+        
+        .mark-type-legend {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #166534;
+        }
+        
+        .mark-subsection {
+            margin: 16px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #22c55e;
+        }
+        
+        .mark-subsection-title {
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .mark-point {
+            display: flex; gap: 12px; margin: 8px 0;
+            padding: 8px;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+        
+        .mark-badge {
+            background: #22c55e;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            height: fit-content;
+            font-family: monospace;
+            text-transform: uppercase;
+            min-width: 28px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .mark-badge.b { background: #3b82f6; }
+        .mark-badge.m { background: #f59e0b; }
+        .mark-badge.a { background: #22c55e; }
+        .mark-badge.c { background: #8b5cf6; }
+        
+        .tip-box {
+            background: #eff6ff; border-left: 4px solid #3b82f6;
+            padding: 16px 20px; margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-box strong {
+            color: #1d4ed8;
+        }
+        
+        .pv-placeholder {
+            background: #f8fafc; border: 2px dashed #cbd5e1;
+            border-radius: 8px; padding: 40px; text-align: center;
+            color: #64748b; margin: 16px 0;
+        }
+        
+        @media (max-width: 640px) {
+            .question-card { padding: 20px; }
+            .question-header { flex-direction: column; gap: 12px; }
+            h1 { font-size: 26px; }
+        }
+        
+        mjx-container { font-size: 105% !important; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="../../index.html" style="text-decoration: none; font-size: 18px; font-weight: 700; color: #1d4ed8;">PhysicsHub<span style="font-weight: 400; color: #64748b; font-size: 13px; margin-left: 6px;">by Ethan</span></a>
+            <div style="font-size: 11px; font-weight: 600; color: #dc2626; background: #fee2e2; padding: 4px 10px; border-radius: 4px; margin-right: 12px;">A2 LEVEL</div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    <div class="unit-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to Unit 16</a>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Thermodynamics - Past Exam Questions with Mark Schemes</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        
+        <!-- Question 1: First Law Application -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">First Law</span>
+                </div>
+                <span class="marks">[8 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> A gas is heated by supplying it with 250 kJ of thermal energy; at the same time, it is compressed so that 500 kJ of work is done on the gas. [2]</p>
+                <p style="margin-left: 24px;">Calculate the change in the internal energy of the gas.</p>
+                
+                <p><span class="part-label">(b)</span> The same gas is heated as before with 250 kJ of energy. This time the gas is allowed to expand so that it does 200 kJ of work on its surroundings. [2]</p>
+                <p style="margin-left: 24px;">Calculate the change in the internal energy of the gas.</p>
+                
+                <p><span class="part-label">(c)</span> Using the First Law of Thermodynamics, explain what happens to the temperature of the gas in each case. [4]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Internal energy change [2 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Correct application of First Law: ΔU = Q + W = 250 + 500</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>750 kJ (accept positive sign)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b) - Internal energy change [2 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Correct application: ΔU = Q - W = 250 - 200</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>50 kJ</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c) - Temperature explanation [4 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>For case (a): internal energy increases (so temperature increases)</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>For case (b): internal energy increases (so temperature increases)</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>For ideal gas: U ∝ T, so ΔU positive means temperature increases</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Temperature increase is greater in (a) because both heating and compression add to internal energy</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Remember the sign convention! Work done ON the gas is positive (compression), work done BY the gas is positive (expansion) when using ΔU = Q - W. For ideal gases, internal energy is directly proportional to absolute temperature.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 2: P-V Diagram Analysis -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">P-V Diagram</span>
+                </div>
+                <span class="marks">[12 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <div class="pv-placeholder">
+                    [P-V Diagram: State A to B - insert from past paper]
+                </div>
+                
+                <p>An ideal gas undergoes a change from state A to state B as shown on the P-V diagram above. The pressure and volume at the two states are:</p>
+                <p style="margin-left: 24px;">State A: P<sub>A</sub> = 2.0 × 10⁵ Pa, V<sub>A</sub> = 1.0 × 10⁻³ m³<br>
+                State B: P<sub>B</sub> = 1.0 × 10⁵ Pa, V<sub>B</sub> = 3.0 × 10⁻³ m³</p>
+                
+                <p><span class="part-label">(a)</span> In the process of change from state A to state B, is the gas doing work on the surroundings or are the surroundings doing work on the gas? Explain your answer. [2]</p>
+                
+                <p><span class="part-label">(b)</span> Is the work done on the gas positive or negative? What is the magnitude of the work? [3]</p>
+                
+                <p><span class="part-label">(c)</span> Calculate the work done by the gas during this process. You may assume that the average pressure during the expansion is (P<sub>A</sub> + P<sub>B</sub>)/2. [4]</p>
+                
+                <p><span class="part-label">(d)</span> If the internal energy of the gas at state A is 450 J and at state B is 600 J, calculate the heat transferred during the process and state whether it is absorbed or released. [3]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Work direction [2 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Gas does work on surroundings (or work done by gas)</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Volume increases / gas expands / pushes piston out</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b) - Sign and magnitude [3 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Work done on gas is negative</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Magnitude equals area under curve</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Acceptable range given for calculation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c) - Work calculation [4 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Average pressure: P<sub>avg</sub> = (2.0 + 1.0) × 10⁵ / 2 = 1.5 × 10⁵ Pa</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Volume change: ΔV = (3.0 - 1.0) × 10⁻³ = 2.0 × 10⁻³ m³</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Work formula: W = P<sub>avg</sub> × ΔV</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>300 J (accept 290-310 J)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(d) - Heat transfer [3 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>ΔU = 600 - 450 = 150 J</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Q = ΔU + W = 150 + 300 = 450 J</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>Heat is absorbed (by gas) / enters system</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> The area under a P-V curve represents work done. For expansion, work is done BY the gas (W<sub>by</sub> positive, W<sub>on</sub> negative). Remember Q = ΔU + W<sub>by</sub> or Q = ΔU - W<sub>on</sub> depending on your sign convention.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 3: Cyclic Process -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">Cyclic Process</span>
+                </div>
+                <span class="marks">[10 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <div class="pv-placeholder">
+                    [P-V Diagram: Cycle A→B→C→A - insert from past paper]
+                </div>
+                
+                <p>An ideal gas undergoes a cyclic process A → B → C → A as shown on the P-V diagram. The process consists of:</p>
+                <ul>
+                    <li>A → B: Isobaric expansion at pressure P₁</li>
+                    <li>B → C: Isochoric cooling at volume V₂</li>
+                    <li>C → A: Compression back to the initial state</li>
+                </ul>
+                
+                <p><span class="part-label">(a)</span> State what is meant by a cyclic process and explain why the change in internal energy for a complete cycle is zero. [2]</p>
+                
+                <p><span class="part-label">(b)</span> For the process B → C:</p>
+                <ul>
+                    <li>state the name of this type of process (1 mark)</li>
+                    <li>calculate the work done during this process (1 mark)</li>
+                    <li>explain how the internal energy of the gas changes (2 marks)</li>
+                </ul>
+                
+                <p><span class="part-label">(c)</span> If the internal energies at states A and C are equal, explain why the pressure at C must be lower than at B. [4]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Cyclic process [2 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>System returns to initial state / start and end at same state</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Internal energy is a state function / depends only on state / same state means same U</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b) - Process B→C [4 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Isochoric / isovolumetric / constant volume</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>Zero (no work done)</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Temperature decreases (pressure decreases at constant volume)</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Internal energy decreases (U ∝ T for ideal gas)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c) - Pressure explanation [4 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>U<sub>A</sub> = U<sub>C</sub> means T<sub>A</sub> = T<sub>C</sub> (as U ∝ T)</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>From B to C: volume is constant, pressure decreases</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Using pV = nRT: at constant V, p ∝ T</div>
+                        </div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>As T decreases from B to C, p must decrease / p<sub>C</sub> < p<sub>B</sub></div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> For cyclic processes, ΔU = 0 for complete cycle, so Q<sub>net</sub> = W<sub>net</sub>. The area enclosed by the cycle on a P-V diagram represents the net work done. Isochoric means constant volume (vertical line on P-V diagram), isobaric means constant pressure (horizontal line).
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tip-box">
+            <strong>💡 Exam Tips:</strong>
+            <ul style="margin-top: 8px; margin-bottom: 0;">
+                <li>Always use the correct sign convention for work and heat</li>
+                <li>Remember: work = area under P-V curve</li>
+                <li>For ideal gases, U ∝ T only (internal energy depends only on temperature)</li>
+                <li>In isochoric processes, W = 0 and Q = ΔU</li>
+                <li>In isothermal processes, ΔU = 0 and Q = W</li>
+                <li>In adiabatic processes, Q = 0 and ΔU = -W</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <script>
+        function toggleScheme(btn) {
+            const content = btn.parentElement.nextElementSibling;
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Hide' : 'Show';
+        }
+    </script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

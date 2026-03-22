@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structured Questions - Unit 12 | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 40px 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .question-block {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 24px 0;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .question-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        .question-number {
+            background: #1d4ed8;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .question-meta { flex: 1; }
+        .question-year {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .question-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-top: 4px;
+        }
+        .exam-board {
+            background: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+        }
+        .question-content {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #334155;
+        }
+        .question-content p { margin-bottom: 16px; }
+        .sub-question {
+            margin: 16px 0 16px 24px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 3px solid #1d4ed8;
+        }
+        .sub-question-label {
+            font-weight: 600;
+            color: #1d4ed8;
+            margin-bottom: 8px;
+        }
+        .mark-scheme {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            margin-top: 24px;
+            overflow: hidden;
+        }
+        .mark-scheme-header {
+            background: #dcfce7;
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .mark-scheme-header:hover {
+            background: #bbf7d0;
+        }
+        .mark-scheme-title {
+            font-weight: 600;
+            color: #166534;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .mark-scheme-toggle {
+            font-size: 12px;
+            color: #166534;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+        .mark-scheme-content {
+            display: none;
+            padding: 20px;
+        }
+        .mark-scheme-content.show {
+            display: block;
+        }
+        .mark-subsection {
+            margin: 16px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #22c55e;
+        }
+        .mark-subsection-title {
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .mark-item {
+            display: flex;
+            gap: 12px;
+            margin: 8px 0;
+            font-size: 14px;
+            padding: 8px;
+            background: #f8fafc;
+            border-radius: 4px;
+        }
+        .mark-badge {
+            background: #22c55e;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            height: fit-content;
+            font-family: monospace;
+            text-transform: uppercase;
+            min-width: 28px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .mark-badge.b { background: #3b82f6; }
+        .mark-badge.m { background: #f59e0b; }
+        .mark-badge.a { background: #22c55e; }
+        .mark-badge.c { background: #8b5cf6; }
+        .mark-badge.e { background: #ec4899; }
+        .mark-type-legend {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #166534;
+        }
+        .tip-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        mjx-container { font-size: 110% !important; }
+    </style>
+</head>
+<body style="background: #f8fafc;">
+    <header style="background: white; border-bottom: 1px solid #e2e8f0; padding: 16px 0;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="../../index.html" style="text-decoration: none;">
+                <div style="font-size: 20px; font-weight: 700; color: #1d4ed8;">PhysicsHub<span style="font-weight: 400; color: #64748b; font-size: 14px; margin-left: 8px;">by Ethan</span></div>
+            </a>
+            <a href="index.html" style="color: #64748b; text-decoration: none; font-size: 14px; margin-right: 12px;">← Back to Unit 12</a>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    <div class="page-header">
+        <div class="container">
+            <div style="font-size: 14px; opacity: 0.7; margin-bottom: 8px;">Unit 12: Motion in a Circle</div>
+            <h1 style="margin: 0; font-size: 32px;">Structured Questions</h1>
+            <p style="margin: 12px 0 0 0; opacity: 0.8;">Paper 4 style questions with detailed mark schemes and examiner tips</p>
+        </div>
+    </div>
+    
+    <div class="container" style="padding: 32px 24px;">
+        
+        <!-- Question 1 -->
+        <div class="question-block">
+            <div class="question-header">
+                <div class="question-number">1</div>
+                <div class="question-meta">
+                    <div class="question-year">CIE 9702/42/M/J/2023</div>
+                    <div class="question-title">Conical Pendulum Analysis</div>
+                </div>
+                <span class="exam-board">[8 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <!-- [Image Placeholder: Conical Pendulum Diagram] -->
+                <div style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; text-align: center; margin: 16px 0;">
+                    <div style="font-size: 48px; margin-bottom: 12px;">📐</div>
+                    <div style="color: #64748b; font-size: 14px;">
+                        [Image Placeholder]<br>
+                        <strong>图 Q1</strong> 圆锥摆示意图<br>
+                        展示小球在水平面内做圆周运动，细线与竖直方向成θ角
+                    </div>
+                </div>
+                
+                <p>A small sphere of mass \(m\) is suspended from a fixed point by a string of length \(L\). The sphere moves with constant speed \(v\) in a horizontal circle of radius \(r\), with the string making a constant angle \(\theta\) with the vertical.</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(a)</span> On the diagram, draw and label the forces acting on the sphere. [2]</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(b)</span> Show that the period \(T\) of the rotation is given by:
+                    \[T = 2\pi\sqrt{\frac{L\cos\theta}{g}}\]
+                    where \(g\) is the acceleration of free fall. [4]</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(c)</span> The sphere completes 20 revolutions in 16 seconds. The length of the string is 1.2 m. Calculate the angle \(\theta\). [2]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header" onclick="toggleMarkScheme(this)">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <span class="mark-scheme-toggle">Click to show</span>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (a) - Force Diagram [2 marks]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Tension correctly labelled along string towards suspension point</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Weight correctly labelled vertically downwards</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (b) - Derivation [4 marks]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Vertical resolution: \(T\cos\theta = mg\)</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Horizontal resolution: \(T\sin\theta = mr\omega^2\) or equivalent</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Elimination of \(T\) to obtain \(\tan\theta = \dfrac{r\omega^2}{g}\) or equivalent</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Use of \(r = L\sin\theta\) and \(\omega = \dfrac{2\pi}{T}\) with correct algebra leading to final expression</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (c) - Calculation [2 marks]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Correct substitution: \(T = \dfrac{16}{20} = 0.80\) s and \(L = 1.2\) m</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Correct answer: \(\theta = 50°\) (accept 48°–52°)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Examiner Tip:</strong> In conical pendulum problems, always resolve forces vertically (equilibrium) and horizontally (centripetal). The most common error is using the string length \(L\) instead of the radius \(r = L\sin\theta\) in the centripetal force equation. Remember: the radius of the circular path is the horizontal distance from the vertical axis, not the length of the string.
+            </div>
+        </div>
+        
+        <!-- Question 2 -->
+        <div class="question-block">
+            <div class="question-header">
+                <div class="question-number">2</div>
+                <div class="question-meta">
+                    <div class="question-year">CIE 9702/42/O/N/2022</div>
+                    <div class="question-title">Vehicle on Banked Curve</div>
+                </div>
+                <span class="exam-board">[6 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p>A car travels at speed \(v\) around a curve of radius \(r\) banked at an angle \(\theta\) to the horizontal. For a particular design of road, there is no sideways friction force on the car when it travels at the design speed.</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(a)</span> Explain why there is no sideways friction force at the design speed. [2]</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(b)</span> Show that the design speed is given by:
+                    \[v = \sqrt{gr\tan\theta}\]
+                    where \(g\) is the acceleration of free fall. [4]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header" onclick="toggleMarkScheme(this)">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <span class="mark-scheme-toggle">Click to show</span>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (a) - Explanation [2 marks]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>The horizontal component of the normal reaction provides the centripetal force OR the resultant of normal reaction and weight is horizontal (towards centre)</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>No other horizontal force is needed / no component of forces parallel to the surface</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (b) - Derivation [4 marks]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Vertical resolution: \(R\cos\theta = mg\)</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Horizontal resolution: \(R\sin\theta = \dfrac{mv^2}{r}\)</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Division to eliminate \(R\): \(\tan\theta = \dfrac{v^2}{gr}\)</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Rearrangement to give required expression: \(v = \sqrt{gr\tan\theta}\)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Examiner Tip:</strong> For banked curves without friction, the normal reaction is the only force with a horizontal component. Always draw a clear force diagram showing the normal reaction perpendicular to the surface. Remember: the vertical component of normal reaction balances the weight, and the horizontal component provides the centripetal force.
+            </div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="question-block">
+            <div class="question-header">
+                <div class="question-number">3</div>
+                <div class="question-meta">
+                    <div class="question-year">CIE 9702/42/M/J/2022</div>
+                    <div class="question-title">Vertical Circular Motion</div>
+                </div>
+                <span class="exam-board">[7 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p>A bucket of water is attached to a string and rotated in a vertical circle of radius \(r\).</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(i)</span> State the condition for the water to remain in the bucket when it is at the highest point of the circle. [1]</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(a)(ii) [2 marks]</span> Hence show that the minimum speed \(v_{min}\) at the highest point is given by:
+                    \[v_{min} = \sqrt{gr}\]</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(b)</span> The bucket is rotated with a constant angular velocity \(\omega\). The mass of water is \(m\). Derive an expression, in terms of \(m\), \(r\), \(\omega\), and \(g\), for the tension \(T\) in the string when the bucket is at the lowest point of the circle. [3]</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(c)</span> Explain why the tension in the string varies as the bucket moves around the circle, even though the angular velocity is constant. [1]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header" onclick="toggleMarkScheme(this)">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <span class="mark-scheme-toggle">Click to show</span>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (a)(i) - Condition [1 mark]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>The contact force/normal reaction on water (from bucket) must be greater than or equal to zero OR water must not lose contact with bucket</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (a)(ii) - Derivation [2 marks]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>At minimum speed: \(mg = \dfrac{mv_{min}^2}{r}\) (tension/contact force = 0)</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Cancelling \(m\) and rearranging to give \(v_{min} = \sqrt{gr}\)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (b) - Derivation [3 marks]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Force equation at lowest point: \(T - mg = mr\omega^2\) (or with \(v\))</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Correct direction: \(T\) upwards, \(mg\) downwards, resultant towards centre</div>
+                        </div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>Correct expression: \(T = mr\omega^2 + mg\) or \(T = \dfrac{mv^2}{r} + mg\)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">Part (c) - Explanation [1 mark]</div>
+                        
+                        <div class="mark-item">
+                            <div class="mark-badge b">B1</div>
+                            <div>The weight of the water has a component towards/tangential to the centre which varies with position OR the resultant force required varies with position (as direction of weight relative to centre changes)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Examiner Tip:</strong> At the highest point of vertical circular motion, the critical condition is when the normal reaction becomes zero. Students often forget that at the lowest point, tension must overcome weight AND provide centripetal force, making it the point of maximum tension. Remember to always identify which forces point towards the centre at each position.
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.1,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            }
+        };
+        
+        // Toggle Mark Scheme visibility
+        function toggleMarkScheme(header) {
+            const content = header.nextElementSibling;
+            const toggle = header.querySelector('.mark-scheme-toggle');
+            
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                toggle.textContent = 'Click to show';
+            } else {
+                content.classList.add('show');
+                toggle.textContent = 'Click to hide';
+            }
+        }
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

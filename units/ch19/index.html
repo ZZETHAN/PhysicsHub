@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 19: Capacitance | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    <style>
+        :root {
+            --fields-primary: #059669;
+            --fields-dark: #047857;
+            --fields-light: #d1fae5;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #047857 0%, #059669 100%); color: white; padding: 48px 0; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        h1 { margin: 12px 0 0 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; }
+        .subtitle { margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; }
+        
+        .content-grid { display: grid; grid-template-columns: 220px 1fr; gap: 24px; max-width: 1100px; margin: 32px auto; padding: 0 16px; }
+        
+        .sidebar-nav { position: sticky; top: 80px; height: fit-content; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; max-height: calc(100vh - 120px); overflow-y: auto; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; border-radius: 3px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--fields-light); border-radius: 3px; }
+        .sidebar-nav::-webkit-scrollbar-thumb:hover { background: var(--fields-primary); }
+        .nav-section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 12px; }
+        .nav-section-header {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            padding: 10px 12px;
+            margin-top: 8px;
+            margin-bottom: 2px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        
+        .nav-section-header:hover {
+            background: var(--fields-light);
+            color: var(--fields-primary);
+        }
+        
+        .nav-section-header.active {
+            background: var(--fields-light);
+            color: var(--fields-dark);
+        }
+        .nav-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .nav-item { margin-bottom: 4px; }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        a.nav-link {
+            display: block;
+        }
+        
+        .nav-link::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--fields-light);
+            margin-right: 10px;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        
+        .nav-link:hover { 
+            background: var(--fields-light); 
+            color: var(--fields-primary);
+        }
+        
+        .nav-link:hover::before {
+            background: var(--fields-primary);
+        }
+        
+        .nav-link.active { 
+            background: var(--fields-light); 
+            color: var(--fields-dark);
+            font-weight: 500;
+        }
+        
+        .nav-link.active::before {
+            background: var(--fields-primary);
+        }
+        
+        .main-content { max-width: 100%; min-width: 0; }
+        .section-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #e2e8f0; scroll-margin-top: 140px; }
+        .section-card h2 { margin-top: 0; color: #1e293b; font-size: 22px; font-weight: 700; }
+        .section-card h3 { color: #1e293b; font-size: 18px; font-weight: 600; margin-top: 24px; }
+        .section-card h4 { color: #334155; font-size: 16px; font-weight: 600; margin-top: 20px; }
+        
+        .concept-box { background: var(--fields-light); border-left: 4px solid var(--fields-primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .concept-box strong { color: var(--fields-primary); }
+        .definition-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .definition-box .def-title { font-weight: 600; color: #92400e; margin-bottom: 8px; }
+        .formula-box { background: #f0fdf4; border: 1px solid #86efac; padding: 16px; margin: 16px 0; border-radius: 8px; text-align: center; }
+        .formula-box strong { color: #166534; }
+        .exam-alert { background: var(--fields-light); border: 1px solid var(--fields-primary); padding: 14px 18px; margin: 16px 0; border-radius: 8px; }
+        .exam-alert strong { color: var(--fields-primary); }
+        .tip-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: #1d4ed8; }
+        .key-points { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+        .key-points li { margin-bottom: 8px; }
+        
+        .checklist-box {
+            background: var(--fields-light);
+            border: 1px solid var(--fields-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--fields-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--fields-dark); }
+        
+        .mobile-menu-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--fields-primary); color: white; border: none; font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .mobile-nav { display: none; position: fixed; bottom: 80px; right: 20px; width: 260px; max-height: 70vh; overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 999; }
+        .mobile-nav.show { display: block; }
+        .reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #059669, #34d399); z-index: 1001; transition: width 0.1s ease; }
+        .back-to-top { position: fixed; bottom: 90px; right: 24px; width: 40px; height: 40px; border-radius: 50%; background: var(--fields-primary); border: none; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 101; text-decoration: none; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--fields-dark); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+        
+        .progress-btn.active {
+            background: #059669 !important;
+            color: white;
+            border-color: #059669 !important;
+        }
+        
+        .progress-btn:hover:not(.active) {
+            background: #f1f5f9;
+        }
+        
+        @media (max-width: 968px) { .content-grid { grid-template-columns: 1fr; } .sidebar-nav { display: none; } .mobile-menu-btn { display: flex; align-items: center; justify-content: center; } }
+        mjx-container { font-size: 105% !important; }
+        
+        .checklist-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+        .exam-tip-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .exam-tip-item:last-child { border-bottom: none; }
+        .tip-number { width: 24px; height: 24px; background: var(--fields-light); color: var(--fields-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+        
+        .figure { margin: 20px 0; text-align: center; }
+        .figure img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .figure-caption { font-size: 13px; color: #64748b; margin-top: 8px; font-style: italic; }
+        .figure-placeholder { background: #fafafa; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 30px; margin: 20px 0; text-align: center; }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: #f1f5f9; }
+.unit-nav-link.active { background: #05966922; color: #059669; }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: #059669; }
+</style>
+
+</head>
+<body>
+
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">&#8592;</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #05966922 0%, white 100%); border: 1px solid #059669; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #059669; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1d4ed822'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+<a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##05966922'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+<a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##ea580c22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+<a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##16a34a22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+<a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##dc262622'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+<a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+<a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1e40af22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+<a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='transparent'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #059669;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span><span style="width: 8px; height: 8px; background: #059669; border-radius: 50%;"></span></a>
+<a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0891b222'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0f766e22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##be185d22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">A2 Level > Unit 19</div>
+            <h1>Capacitance</h1>
+            <p class="subtitle">Electric charge storage, capacitor combinations, exponential decay, and applications</p>
+        </div>
+    </div>
+    
+    <div class="reading-progress" id="readingProgress"></div>
+    <a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+            <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 4px;"><a href="#h2-intro" onclick="scrollTo('h2-intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">1. Capacitors and Capacitance</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-capacitors" onclick="scrollTo('h2-capacitors')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1-1.6 Capacitors</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">2. Combination of Capacitors</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-combination" onclick="scrollTo('h2-combination')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1-2.3 Combinations</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">3. Discharging a Capacitor</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-discharging" onclick="scrollTo('h2-discharging')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1-3.5 Discharging</a></li>
+            <li style="margin-bottom: 4px;"><a href="#h2-checklist" onclick="scrollTo('h2-checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">P4 Checklist</a></li>
+        </ul>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch19', 'not_started')" id="progress-btn-not_started-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch19', 'in_progress')" id="progress-btn-in_progress-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch19', 'completed')" id="progress-btn-completed-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-grid">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#h2-intro" class="nav-link" data-section="h2-intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-capacitors" class="nav-section-header" data-section="h2-capacitors">1. Capacitors and Capacitance</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-capacitors-1-1" class="nav-link" data-section="h3-capacitors-1-1">1.1 What is a Capacitor?</a></li>
+                    <li class="nav-item"><a href="#h3-capacitors-1-2" class="nav-link" data-section="h3-capacitors-1-2">1.2 How Capacitors Store Charge</a></li>
+                    <li class="nav-item"><a href="#h3-capacitors-1-3" class="nav-link" data-section="h3-capacitors-1-3">1.3 Capacitance: Definition</a></li>
+                    <li class="nav-item"><a href="#h3-capacitors-1-4" class="nav-link" data-section="h3-capacitors-1-4">1.4 Parallel Plate Capacitor</a></li>
+                    <li class="nav-item"><a href="#h3-capacitors-1-5" class="nav-link" data-section="h3-capacitors-1-5">1.5 Energy Stored</a></li>
+                    <li class="nav-item"><a href="#h3-capacitors-1-6" class="nav-link" data-section="h3-capacitors-1-6">1.6 Capacitance of a Sphere</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-combination" class="nav-section-header" data-section="h2-combination">2. Combination of Capacitors</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-combination-2-1" class="nav-link" data-section="h3-combination-2-1">2.1 Capacitors in Parallel</a></li>
+                    <li class="nav-item"><a href="#h3-combination-2-2" class="nav-link" data-section="h3-combination-2-2">2.2 Capacitors in Series</a></li>
+                    <li class="nav-item"><a href="#h3-combination-2-3" class="nav-link" data-section="h3-combination-2-3">2.3 Charge and Energy Sharing</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-discharging" class="nav-section-header" data-section="h2-discharging">3. Discharging a Capacitor</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-discharging-3-1" class="nav-link" data-section="h3-discharging-3-1">3.1 The Discharge Process</a></li>
+                    <li class="nav-item"><a href="#h3-discharging-3-2" class="nav-link" data-section="h3-discharging-3-2">3.2 Comparison with Radioactive Decay</a></li>
+                    <li class="nav-item"><a href="#h3-discharging-3-3" class="nav-link" data-section="h3-discharging-3-3">3.3 Time Constant (τ = RC)</a></li>
+                    <li class="nav-item"><a href="#h3-discharging-3-4" class="nav-link" data-section="h3-discharging-3-4">3.4 Exponential Decay Equations</a></li>
+                    <li class="nav-item"><a href="#h3-discharging-3-5" class="nav-link" data-section="h3-discharging-3-5">3.5 Applications of Capacitors</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-checklist" class="nav-link" data-section="h2-checklist" style="margin-top:8px;">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../../homework/ch19/" class="nav-link" style="color: #16a34a;">📚 Homework (Exercises)</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch19', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch19', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch19', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+        
+        <main class="main-content">
+            
+            
+            <div id="intro" class="section-card">
+                <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: What is Capacitance?</h2>
+                
+                <div class="concept-box">
+                    <strong>Real-World Example — Phone Flash:</strong>
+                    <p style="margin: 12px 0 0 0;">A phone's flashlight needs instant high power. The battery can't provide this safely. Instead, it slowly charges a capacitor, which releases all energy in milliseconds when the flash fires.</p>
+                </div>
+                
+                <p>In this unit, you will learn:</p>
+                <ul style="margin: 12px 0;">
+                    <li>What capacitance is and how capacitors store energy</li>
+                    <li>How capacitors combine in series and parallel circuits</li>
+                    <li>Why capacitor discharge follows an exponential pattern</li>
+                    <li>Applications from camera flashes to computer motherboards</li>
+                </ul>
+            </div>
+            
+            
+            <div id="capacitors" class="section-card">
+                <h2 id="h2-capacitors" style="scroll-margin-top: 120px;">1. Capacitors and Capacitance</h2>
+                
+                <h3 id="h3-capacitors-1-1">1.1 What is a Capacitor?</h3>
+                <p>A <strong>capacitor</strong> is a device that stores electric charge and electrical energy. It consists of two conducting plates separated by an insulating material called a <strong>dielectric</strong>.</p>
+                
+                <div class="key-points">
+                    <strong>Key Structure:</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>Two metal plates (electrodes)</li>
+                        <li>An insulating dielectric between the plates (air, paper, ceramic, etc.)</li>
+                        <li>When connected to a voltage source, one plate gains +Q and the other −Q</li>
+                    </ul>
+                </div>
+                
+                <div class="figure-placeholder">
+                    <div style="font-family: monospace; font-size: 12px; color: #64748b; white-space: pre; text-align: left; display: inline-block;">
+ Fig 19.1.1: Basic Capacitor Structure
+-----------------------------------------------
+ |                                             |
+ |     ++++++++++++++++++++++++++++     (+)   |
+ |     +        dielectric         +           |
+ |     +      (insulator)         +           |
+ |     ++++++++++++++++++++++++++++     (-)   |
+ |           ^ plate A    plate B ^            |
+ |           |                        |        |
+ |           |      leads/terminals   |        |
+ -----------------------------------------------
+ Two parallel conducting plates separated by an insulating dielectric material.</div>
+                </div>
+                
+                <h3 id="h3-capacitors-1-2">1.2 How Capacitors Store Charge</h3>
+                <p>When a capacitor is connected to a battery:</p>
+                <ol style="margin: 12px 0; padding-left: 20px;">
+                    <li><strong>Electron Transfer:</strong> The negative terminal pushes electrons onto one plate (making it negative)</li>
+                    <li><strong>No Charge Through Dielectric:</strong> Crucially, no charge passes through the insulator — it just polarizes</li>
+                    <li><strong>Current Flow:</strong> Electrons flow only in the external circuit during charging/discharging</li>
+                    <li><strong>Equilibrium:</strong> When PD equals battery e.m.f., charging stops — capacitor holds stored energy</li>
+                </ol>
+                
+                <div class="exam-alert">
+                    <strong>Important Clarification:</strong> When we say "charge stored Q", we mean the <strong>magnitude</strong> of charge on <strong>either plate</strong>. The total charge on a capacitor is zero (equal +Q and −Q cancel).
+                </div>
+                
+                <div class="figure-placeholder">
+                    <div style="font-family: monospace; font-size: 12px; color: #64748b; white-space: pre; text-align: left; display: inline-block;">
+ Fig 19.1.2: Charging Circuit Diagram
+-----------------------------------------------
+         +----------------+
+         |                |
+         |    Battery     |
+    +----+---(-)(+)------+----+
+    |    |    e.m.f. V   |    |
+    |    +----------------+    |
+    |                          |
+    |    +-----------+         |
+    |    |           |         |
+    |    |  C        |         |
+    |    |  ___      |         |
+    |    | | |       |         |
+    |    | |_|       |         |
+    |    +--|--+-----+         |
+    |       |  |               |
+    +-------+--+---------------+
+            A   (ammeter showing current I)
+            
+    Direction of electron flow: clockwise
+    Plate A: negative charge accumulating
+    Plate B: positive charge accumulating
+ -----------------------------------------------
+ Electrons flow from negative terminal, through external circuit, onto plate A.</div>
+                </div>
+                
+                <h3 id="h3-capacitors-1-3">1.3 Capacitance: Definition and Formula</h3>
+                
+                <div class="figure-placeholder">
+                    <div style="font-family: monospace; font-size: 12px; color: #64748b; white-space: pre; text-align: left; display: inline-block;">
+ Fig 19.1.7: Q-V Graph (Charge vs Voltage)
+ -----------------------------------------------
+ Q (μC)
+ |
+ |           *
+ |         *
+ |       *
+ |     *
+ |   *
+ | *
+ +------------------------ V (V)
+ 0    2    4    6    8   10
+ 
+ Gradient = C = Q/V = constant
+ -----------------------------------------------
+ For a capacitor, charge Q is directly proportional to voltage V.
+ The gradient of this graph equals the capacitance C.</div>
+                </div>
+                
+                <div class="definition-box">
+                    <div class="def-title">Definition</div>
+                    <strong>Capacitance (C)</strong> is defined as the ratio of charge stored to the potential difference across the plates:
+                    \[ C = \frac{Q}{V} \]
+                    <p style="margin: 8px 0 0 0; font-size: 14px;">Where: C = capacitance (Farads, F), Q = charge (Coulombs, C), V = potential difference (Volts, V)</p>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>From \(C = Q/V\), we can rearrange:</strong><br>
+                    \[ Q = CV \qquad V = \frac{Q}{C} \]
+                </div>
+                
+                <div class="key-points">
+                    <strong>Important Points:</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>1 Farad is very large; typical capacitors have values in <strong>μF, nF, or pF</strong></li>
+                        <li>\(1 \, \mu\text{F} = 10^{-6} \, \text{F}\)</li>
+                        <li>\(1 \, \text{nF} = 10^{-9} \, \text{F}\)</li>
+                        <li>\(1 \, \text{pF} = 10^{-12} \, \text{F}\)</li>
+                    </ul>
+                </div>
+                
+                <h3 id="h3-capacitors-1-4">1.4 Capacitance of a Parallel Plate Capacitor</h3>
+                <p>For a parallel plate capacitor with plate area A and plate separation d:</p>
+                
+                <div class="figure-placeholder">
+                    <div style="font-family: monospace; font-size: 12px; color: #64748b; white-space: pre; text-align: left; display: inline-block;">
+ Fig 19.1.8: Parallel Plate Capacitor Dimensions
+ -----------------------------------------------
+         Plate A  (area = A)
+ |==========================|
+ |                          |  <-- dielectric (thickness = d)
+ |==========================|
+         Plate B  (area = A)
+         
+         ^ d ^
+         |   |
+         |   +-- plate separation
+         +------ plate area
+         
+ Formula: C = ε₀A/d
+ -----------------------------------------------
+ Key dimensions for a parallel plate capacitor.
+ Plate area A and plate separation d are the key physical parameters.</div>
+                </div>
+                
+                <div class="formula-box">
+                    \[ C = \frac{\varepsilon_0 A}{d} \]
+                    <p style="margin: 8px 0 0 0; font-size: 14px;">Where: ε₀ = permittivity of free space = \(8.85 \times 10^{-12} \, \text{F m}^{-1}\)</p>
+                </div>
+                
+                <div class="key-points">
+                    <strong>Factors Affecting Capacitance:</strong>
+                    <ol style="margin: 8px 0 0 0;">
+                        <li><strong>Plate Area (A):</strong> Larger area → larger capacitance</li>
+                        <li><strong>Plate Separation (d):</strong> Smaller separation → larger capacitance</li>
+                        <li><strong>Dielectric Material:</strong> Different permittivities affect capacitance</li>
+                    </ol>
+                </div>
+                
+                <h3 id="h3-capacitors-1-5">1.5 Energy Stored in a Capacitor</h3>
+                <p>When charging, the power supply does work to separate charges. This work is stored as <strong>Electrical Potential Energy</strong>.</p>
+                
+                <div class="concept-box">
+                    <strong>Key Insight — Capacitors Store Energy, NOT Charge:</strong>
+                    <p style="margin: 8px 0 0 0;">A capacitor has equal +Q and −Q (total charge = zero). What makes it useful is the <strong>separation</strong> of charges, which requires work and stores energy.</p>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Derivation:</strong> Work done is variable (voltage goes from 0 to V, average = V/2)<br><br>
+                    \[ W = \frac{1}{2}QV = \frac{1}{2}CV^2 = \frac{Q^2}{2C} \]
+                </div>
+                
+                <h3 id="h3-capacitors-1-6">1.6 Capacitance of a Sphere</h3>
+                <p>Surprisingly, all conducting bodies have capacitance! For an isolated conducting sphere of radius r:</p>
+                <div class="formula-box">
+                    \[ C = 4\pi\varepsilon_0 r \]
+                    <p style="margin: 8px 0 0 0; font-size: 14px;">Example: Earth's capacitance ≈ 710 μF</p>
+                </div>
+                
+                <h3 id="h3-capacitors-1-7">1.7 Quick Reference — Key Formulas</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                    <tr style="background: #f1f5f9;"><th style="padding: 10px; text-align: left; border: 1px solid #e2e8f0;">Formula</th><th style="padding: 10px; text-align: left; border: 1px solid #e2e8f0;">Description</th></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">\(C = \frac{Q}{V}\)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">Definition of capacitance</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">\(Q = CV\)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">Charge from capacitance and voltage</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">\(W = \frac{1}{2}CV^2\)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">Energy stored in capacitor</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">\(C = \frac{\varepsilon_0 A}{d}\)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">Parallel plate capacitor</td></tr>
+                </table>
+            </div>
+            
+            
+            <div id="combination" class="section-card">
+                <h2 id="h2-combination" style="scroll-margin-top: 120px;">2. Combination of Capacitors</h2>
+                
+                <h3 id="h3-combination-2-1">2.1 Capacitors in Parallel</h3>
+                <p>When capacitors are connected <strong>across the same two points</strong> (same voltage), they are in parallel.</p>
+                
+                <div class="figure-placeholder">
+                    <div style="font-family: monospace; font-size: 12px; color: #64748b; white-space: pre; text-align: left; display: inline-block;">
+ Fig 19.2.1: Capacitors in Parallel - Circuit Diagram
+ -----------------------------------------------
+            +------------C1-----------+
+            |                           |
+     +------+------+                    |
+     |    Battery   |                   |
+     |    e.m.f. V  |                   |
+     +------+------+                    |
+            |                           |
+            +-----------C2-------------+
+            
+ Same voltage V across each capacitor
+ Different charges: Q₁ = C₁V, Q₂ = C₂V
+ Total charge: Q = Q₁ + Q₂
+ -----------------------------------------------
+ Parallel connection showing same voltage across each capacitor.</div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Total Capacitance:</strong><br>
+                    \[ C_{total} = C_1 + C_2 + C_3 + ... \]
+                </div>
+                
+                <div class="key-points">
+                    <strong>Key Characteristics:</strong>
+                    <ol style="margin: 8px 0 0 0;">
+                        <li><strong>Same Voltage:</strong> All capacitors in parallel have the same PD</li>
+                        <li><strong>Charge Adds:</strong> \(Q_{total} = Q_1 + Q_2 + ... = C_1V + C_2V + ...\)</li>
+                        <li><strong>Larger Equivalent:</strong> \(C_{total} > C_1\) and \(C_{total} > C_2\)</li>
+                    </ol>
+                </div>
+                
+                <h3 id="h3-combination-2-2">2.2 Capacitors in Series</h3>
+                <p>When capacitors are connected <strong>end-to-end</strong> (same charge), they are in series.</p>
+                
+                <div class="formula-box">
+                    <strong>Total Capacitance:</strong><br>
+                    \[ \frac{1}{C_{total}} = \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3} + ... \]
+                    <p style="margin: 8px 0 0 0; font-size: 14px;">For two capacitors: \(C_{total} = \frac{C_1 C_2}{C_1 + C_2}\)</p>
+                </div>
+                
+                <div class="key-points">
+                    <strong>Key Characteristics:</strong>
+                    <ol style="margin: 8px 0 0 0;">
+                        <li><strong>Same Charge:</strong> All capacitors in series store the same charge Q</li>
+                        <li><strong>Voltage Adds:</strong> \(V_{total} = V_1 + V_2 + ...\)</li>
+                        <li><strong>Smaller Equivalent:</strong> \(C_{total} < C_1\) and \(C_{total} < C_2\)</li>
+                    </ol>
+                </div>
+                
+                <h3 id="h3-combination-2-3">2.3 Charge and Energy Sharing</h3>
+                <p>When a <strong>charged capacitor</strong> is connected to an <strong>uncharged capacitor</strong>:</p>
+                
+                <div class="concept-box">
+                    <strong>What Happens?</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>Total charge is <strong>conserved</strong> (no charge leaves the system)</li>
+                        <li>Charge redistributes until both capacitors have the <strong>same voltage</strong></li>
+                        <li><strong>Energy is LOST!</strong> Half the stored energy is dissipated as heat</li>
+                    </ul>
+                </div>
+                
+                <div class="exam-alert">
+                    <strong>Key Result:</strong> When two capacitors share charge, exactly <strong>half of the stored energy is lost</strong> (dissipated as heat), regardless of capacitance values.
+                </div>
+            </div>
+            
+            
+            <div id="discharging" class="section-card">
+                <h2 id="h2-discharging" style="scroll-margin-top: 120px;">3. Discharging a Capacitor</h2>
+                
+                <h3 id="h3-discharging-3-1">3.1 The Discharge Process</h3>
+                
+                <div class="figure-placeholder">
+                    <div style="font-family: monospace; font-size: 12px; color: #64748b; white-space: pre; text-align: left; display: inline-block;">
+ Fig 19.3.1: Discharge Circuit Diagram
+ -----------------------------------------------
+            +--------C--------+
+            |                |
+            |    +--+         |
+            |    |  | = Q     |
+            |    +--+         |
+            |      |          |
+     +------+------+----------+------+
+     |                             |
+     |         R                  |
+     |      +--+--+               |
+     |      |    |                |
+     +------+----+----------------+
+            |
+         (switch to discharge position)
+         
+ Electron flow: negative plate → R → positive plate
+ Charge decreases: Q → Q - ΔQ → Q - 2ΔQ → ... → 0
+ -----------------------------------------------
+ Capacitor discharging through a resistor.
+ Electrons flow through resistor, neutralizing the charge on both plates.</div>
+                </div>
+                <p>When a charged capacitor is connected across a resistor, it <strong>discharges</strong>.</p>
+                
+                <div class="key-points">
+                    <strong>Step-by-Step Process:</strong>
+                    <ol style="margin: 8px 0 0 0;">
+                        <li>Electrons flow from negative plate, through resistor, to positive plate</li>
+                        <li>This neutralizes charge on both plates</li>
+                        <li>As charge decreases, PD decreases, current decreases</li>
+                        <li>Eventually: Q = 0, V = 0, current = 0 — capacitor is fully discharged</li>
+                    </ol>
+                </div>
+                
+                <h3 id="h3-discharging-3-2">3.2 Comparison with Radioactive Decay</h3>
+                <p>The discharge of a capacitor is mathematically similar to radioactive decay — both exhibit <strong>exponential decay</strong>!</p>
+                
+                <div class="formula-box">
+                    <strong>Radioactive Decay:</strong> \(N = N_0 e^{-\lambda t}\)<br>
+                    <strong>Capacitor Discharge:</strong> \(Q = Q_0 e^{-t/RC}\)
+                </div>
+                
+<h3 id="h3-discharging-3-3">3.3 Time Constant (τ = RC)</h3>
+                
+                <div class="figure-placeholder">
+                    <div style="font-family: monospace; font-size: 12px; color: #64748b; white-space: pre; text-align: left; display: inline-block;">
+ Fig 19.3.4: Time Constant Meaning
+ -----------------------------------------------
+ Q
+  ↑
+ Q₀|*** τ=RC ***
+    |    *         *
+    |      *       *
+    |        *     *
+ 0.37Q₀|         *   *  ← Q = Q₀/e at t = τ
+    |           * *
+    |             *
+ 0.14Q₀|              *
+    |                *
+    |                  *
+ 0 |________________________> t
+    0   τ   2τ   3τ   4τ   5τ
+ -----------------------------------------------
+ The time constant τ is the time for charge to fall to 37% of its initial value.
+ After 5τ, the capacitor is essentially fully discharged (&lt;1% remaining).</div>
+                </div>
+                
+                <div class="definition-box">
+                    <div class="def-title">Definition — Time Constant</div>
+                    \[ \tau = RC \]
+                    <p style="margin: 8px 0 0 0; font-size: 14px;">Where: τ = time constant (seconds, s), R = resistance (Ohms, Ω), C = capacitance (Farads, F)</p>
+                </div>
+                
+                <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                    <tr style="background: #f1f5f9;"><th style="padding: 10px; border: 1px solid #e2e8f0;">Time</th><th style="padding: 10px; border: 1px solid #e2e8f0;">Fraction Remaining</th><th style="padding: 10px; border: 1px solid #e2e8f0;">Fraction Discharged</th></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">0</td><td style="padding: 10px; border: 1px solid #e2e8f0;">100% (Q₀)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">0%</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">τ</td><td style="padding: 10px; border: 1px solid #e2e8f0;">37% (Q₀/e)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">63%</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">2τ</td><td style="padding: 10px; border: 1px solid #e2e8f0;">13.5%</td><td style="padding: 10px; border: 1px solid #e2e8f0;">86.5%</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">3τ</td><td style="padding: 10px; border: 1px solid #e2e8f0;">5.0%</td><td style="padding: 10px; border: 1px solid #e2e8f0;">95%</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">5τ</td><td style="padding: 10px; border: 1px solid #e2e8f0;">0.67%</td><td style="padding: 10px; border: 1px solid #e2e8f0;">99.33%</td></tr>
+                </table>
+                
+                <div class="exam-alert">
+                    <strong>After 5 time constants, the capacitor is considered fully discharged</strong> (less than 1% of original charge remains).
+                </div>
+                
+                <h3 id="h3-discharging-3-4">3.4 Exponential Decay Equations</h3>
+                <p>The charge, voltage, and current on a discharging capacitor all follow <strong>exponential decay</strong>:</p>
+                
+                <div class="formula-box">
+                    <strong>Charge vs Time:</strong> \( Q = Q_0 e^{-t/RC} = Q_0 e^{-t/\tau} \)<br><br>
+                    <strong>Voltage vs Time:</strong> \( V = V_0 e^{-t/RC} = V_0 e^{-t/\tau} \)<br><br>
+                    <strong>Current vs Time:</strong> \( I = I_0 e^{-t/RC} = I_0 e^{-t/\tau} \)
+                </div>
+                
+                <h3 id="h3-discharging-3-5">3.5 Applications of Capacitors</h3>
+                
+                <div class="figure-placeholder">
+                    <div style="font-family: monospace; font-size: 12px; color: #64748b; white-space: pre; text-align: left; display: inline-block;">
+ Fig 19.3.9: Camera Flash Circuit
+ -----------------------------------------------
+ Charging phase:              Flash phase:
+                              
+ Battery ──→ Capacitor      Capacitor ──→ Flash
+ (5 seconds)                 (0.001 seconds)
+ Low current                 High current
+ Charging                    Discharging
+                              
+ High voltage transformer      Trigger circuit
+     ↑                            ↓
+ Battery ──────────────────→ Xenon tube
+ (3V)                           (300V pulse)
+ -----------------------------------------------
+ Camera flash uses capacitor to store energy slowly,
+ then release it almost instantaneously as a bright flash.</div>
+                </div>
+                
+                <div class="key-points">
+                    <strong>1. Camera Flash</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>Battery slowly charges capacitor (low current over seconds)</li>
+                        <li>When flash triggers, capacitor releases ALL energy in milliseconds</li>
+                        <li>Produces extremely high-power flash impossible directly from battery</li>
+                    </ul>
+                </div>
+                
+                <div class="key-points">
+                    <strong>2. Computer Motherboards</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>Large electrolytic capacitors store charge</li>
+                        <li>Smooth out power supply fluctuations</li>
+                        <li>Provide extra current during sudden power demands</li>
+                    </ul>
+                </div>
+                
+                <div class="key-points">
+                    <strong>3. Radio Tuning (Variable Capacitors)</strong>
+                    <ul style="margin: 8px 0 0 0;">
+                        <li>Plates can rotate to change effective plate area</li>
+                        <li>This changes capacitance, selecting different frequencies</li>
+                        <li>Resonance frequency: \( f = \frac{1}{2\pi\sqrt{LC}} \)</li>
+                    </ul>
+                </div>
+                
+                <h3 id="h3-discharging-3-6">3.6 Quick Reference — Key Formulas</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                    <tr style="background: #f1f5f9;"><th style="padding: 10px; text-align: left; border: 1px solid #e2e8f0;">Formula</th><th style="padding: 10px; text-align: left; border: 1px solid #e2e8f0;">Description</th></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">\(\tau = RC\)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">Time constant definition</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">\(Q = Q_0 e^{-t/RC}\)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">Charge during discharge</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">\(V = V_0 e^{-t/RC}\)</td><td style="padding: 10px; border: 1px solid #e2e8f0;">Voltage during discharge</td></tr>
+                    <tr><td style="padding: 10px; border: 1px solid #e2e8f0;">After 5τ, Q ≈ Q₀/100</td><td style="padding: 10px; border: 1px solid #e2e8f0;">Fully discharged criterion</td></tr>
+                </table>
+            </div>
+            
+            
+            <div id="checklist" class="section-card">
+                <h2 id="h2-checklist" style="scroll-margin-top: 120px;">P4 Checklist: Key Definitions & Formulas</h2>
+                
+                <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--fields-primary); margin-bottom: 12px;">Essential Definitions</div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d1">
+                        <label for="d1"><strong>Capacitance:</strong> $C = Q/V$ — ability to store charge per unit voltage</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d2">
+                        <label for="d2"><strong>Time constant:</strong> $\tau = RC$ — time for charge to fall to 37% of initial</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d3">
+                        <label for="d3"><strong>Exponential decay:</strong> $Q = Q_0 e^{-t/RC}$</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d4">
+                        <label for="d4"><strong>Parallel plate capacitor:</strong> $C = \varepsilon_0 A/d$</label>
+                    </div>
+                </div>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--fields-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f1">
+                        <label for="f1">$C = Q/V$ — capacitance definition</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f2">
+                        <label for="f2">$Q = CV$ — charge calculation</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f3">
+                        <label for="f3">$W = \frac{1}{2}CV^2$ — energy stored</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f4">
+                        <label for="f4">Parallel: $C_{total} = C_1 + C_2 + ...$</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f5">
+                        <label for="f5">Series: $\frac{1}{C_{total}} = \frac{1}{C_1} + \frac{1}{C_2} + ...$</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f6">
+                        <label for="f6">$\tau = RC$ — time constant</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f7">
+                        <label for="f7">$Q = Q_0 e^{-t/\tau}$ — charge decay</label>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="f8">
+                        <label for="f8">After 5τ, capacitor is fully discharged</label>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div id="exam-tips" class="section-card">
+                <h2 id="h2-exam-tips" style="scroll-margin-top: 120px;">Exam Tips and Common Mistakes</h2>
+                
+                <h3 id="h3-exam-tips-mistakes">Common Mistakes to Avoid</h3>
+                
+                <div class="exam-tip-item">
+                    <div class="tip-number">1</div>
+                    <div><strong>Confusing Charge and Energy:</strong> Total charge on a capacitor is zero (equal +Q and −Q). What matters for energy is the separation of charges.</div>
+                </div>
+                <div class="exam-tip-item">
+                    <div class="tip-number">2</div>
+                    <div><strong>Series vs Parallel Confusion:</strong> Series — same charge, voltage divides. Parallel — same voltage, charge adds. Draw the circuit to visualize before calculating.</div>
+                </div>
+                <div class="exam-tip-item">
+                    <div class="tip-number">3</div>
+                    <div><strong>Unit Conversion Errors:</strong> \(1 \, \mu\text{F} = 10^{-6} \, \text{F}\), \(1 \, \text{nF} = 10^{-9} \, \text{F}\), \(1 \, \text{k}\Omega = 1000 \, \Omega\)</div>
+                </div>
+                <div class="exam-tip-item">
+                    <div class="tip-number">4</div>
+                    <div><strong>Energy Loss in Charge Sharing:</strong> Many think energy is conserved — <strong>Wrong!</strong> Half the energy is always lost (dissipated as heat).</div>
+                </div>
+                <div class="exam-tip-item">
+                    <div class="tip-number">5</div>
+                    <div><strong>Time Constant Misunderstanding:</strong> τ = RC is NOT the time to fully discharge. After τ, 37% remains. After 5τ, less than 1% remains.</div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <script>
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('[onclick="toggleUnitNav()"]');
+            const dropdown = document.getElementById('unitNavDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+                container.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        });
+        
+        function loadProgress(unitId) {
+            if (!Auth.isLoggedIn()) return;
+            fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.unit) {
+                    updateProgressButtons(data.unit.status);
+                }
+            })
+            .catch(err => console.error('Load progress error:', err));
+        }
+        
+        function updateProgress(unitId, status) {
+            if (!Auth.isLoggedIn()) {
+                AuthModal.open();
+                return;
+            }
+            fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Auth.getToken()}`
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    updateProgressButtons(status);
+                }
+            })
+            .catch(err => console.error('Update progress error:', err));
+        }
+        
+        function updateProgressButtons(status) {
+            ['not_started', 'in_progress', 'completed'].forEach(s => {
+                const btn = document.getElementById(`progress-btn-${s}`);
+                if (btn) btn.classList.toggle('active', s === status);
+                const mobileBtn = document.getElementById(`progress-btn-${s}-mobile`);
+                if (mobileBtn) mobileBtn.classList.toggle('active', s === status);
+            });
+        }
+        
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('show');
+        }
+        
+        function closeMobileNav() {
+            document.getElementById('mobileNav').classList.remove('show');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateReadingProgress() {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / docHeight) * 100;
+            document.getElementById('readingProgress').style.width = progress + '%';
+
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        }
+
+        window.addEventListener('scroll', updateReadingProgress);
+        
+        function scrollTo(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 140;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            closeMobileNav();
+        }
+        
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 140;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            closeMobileNav();
+        }
+        
+        function updateActiveNav() {
+            const headings = document.querySelectorAll('h2[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            let activeId = null;
+            
+            headings.forEach(heading => {
+                const rect = heading.getBoundingClientRect();
+                if (rect.top < 150) {
+                    activeId = heading.id;
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === activeId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgress('ch19');
+        });
+    </script>
+
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+# PhysicsHub 多机器人共享记忆配置
+# 基于 OpenViking AGFS
+
+# 共享存储路径
+shared_memory:
+  base_path: /Volumes/大硬盘/OpenViking-Agent-Memory/PhysicsHub/
+  
+  # 层级结构
+  structure:
+    L0_sessions:      # 原始对话记录
+      path: L0_sessions/
+      description: 各机器人的工作日志
+      
+    L1_documents:     # 工作文档
+      path: L1_documents/
+      description: 生成的内容、代码、设计稿
+      
+    L2_knowledge:     # 结构化知识
+      path: L2_knowledge/
+      description: 知识点、规范、标准
+      
+    L3_projects:      # 项目管理层
+      path: L3_projects/
+      description: 项目进度、任务、里程碑
+
+# 4个机器人配置
+agents:
+  doc_engineer:
+    name: 文档工程师
+    emoji: "📚"
+    role: content_creator
+    
+    # 共享记忆（所有机器人可见）
+    shared_memory:
+      - project_progress      # 项目整体进度
+      - task_assignments      # 任务分配
+      - content_outline       # 内容大纲
+      - unit_status          # 单元完成状态
+      
+    # 私有记忆（仅自己可见）
+    private_memory:
+      - physics_knowledge     # 物理专业知识
+      - writing_style        # 写作风格偏好
+      - draft_notes          # 草稿笔记
+      
+    # 工作目录
+    workspace: units/
+    
+  project_manager:
+    name: 项目助理
+    emoji: "📊"
+    role: coordinator
+    
+    shared_memory:
+      - project_progress
+      - task_assignments
+      - milestones           # 里程碑
+      - deadlines            # 截止日期
+      - team_workload        # 团队工作量
+      
+    private_memory:
+      - planning_methods     # 规划方法论
+      - risk_assessment      # 风险评估
+      
+    workspace: config/
+    
+  ui_designer:
+    name: UI工程师
+    emoji: "🎨"
+    role: designer
+    
+    shared_memory:
+      - project_progress
+      - task_assignments
+      - design_system        # 设计规范
+      - component_library    # 组件库
+      - color_palette        # 配色方案
+      
+    private_memory:
+      - design_inspiration   # 设计灵感
+      - personal_style       # 个人设计风格
+      
+    workspace: assets/css/
+    
+  frontend_dev:
+    name: 前端工程师
+    emoji: "💻"
+    role: developer
+    
+    shared_memory:
+      - project_progress
+      - task_assignments
+      - code_standards       # 代码规范
+      - component_api        # 组件接口
+      - tech_stack           # 技术栈
+      
+    private_memory:
+      - coding_snippets      # 代码片段收藏
+      - debug_notes          # 调试笔记
+      
+    workspace: assets/js/
+
+# 记忆同步规则
+sync_rules:
+  # 自动同步（实时更新）
+  auto_sync:
+    - project_progress
+    - task_assignments
+    - unit_status
+    
+  # 定时同步（每小时）
+  hourly_sync:
+    - team_workload
+    - milestones
+    
+  # 手动同步（按需）
+  manual_sync:
+    - design_system
+    - code_standards
+    - component_library
+
+# 访问权限
+permissions:
+  # 谁可以修改共享记忆
+  write_access:
+    project_progress: [project_manager]
+    task_assignments: [project_manager]
+    design_system: [ui_designer]
+    code_standards: [frontend_dev]
+    content_outline: [doc_engineer]
+    
+  # 谁可以读取
+  read_access:
+    all_shared: [doc_engineer, project_manager, ui_designer, frontend_dev]
+    
+  # 管理员（可以修改任何共享记忆）
+  admin: project_manager
+
+# 同步触发器
+triggers:
+  # 当文档工程师完成单元内容时
+  on_content_complete:
+    action: update_unit_status
+    notify: [project_manager, ui_designer, frontend_dev]
+    
+  # 当项目助理更新任务时
+  on_task_update:
+    action: sync_task_assignments
+    notify: [doc_engineer, ui_designer, frontend_dev]
+    
+  # 当UI工程师更新设计规范时
+  on_design_update:
+    action: update_design_system
+    notify: [doc_engineer, frontend_dev]
+    
+  # 当前端工程师更新代码规范时
+  on_code_update:
+    action: update_code_standards
+    notify: [doc_engineer, ui_designer]

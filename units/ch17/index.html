@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 17: Oscillations | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    <style>
+        :root {
+            --waves-primary: #7c3aed;
+            --waves-dark: #5b21b6;
+            --waves-light: #ede9fe;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        
+        .header {
+            background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0;
+            position: sticky; top: 0; z-index: 100;
+        }
+        
+        .unit-header {
+            background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+            color: white; padding: 48px 0;
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        
+        .content-grid {
+            display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+            max-width: 1100px; margin: 32px auto; padding: 0 16px;
+        }
+        
+        .sidebar-nav {
+            position: sticky; top: 80px; height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            background: white; border-radius: 12px; padding: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 3px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: var(--waves-light);
+            border-radius: 3px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: var(--waves-primary);
+        }
+        
+        .nav-section-title {
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px; color: #64748b; margin-bottom: 12px;
+        }
+        
+        .nav-section-header {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            padding: 10px 12px;
+            margin-top: 8px;
+            margin-bottom: 2px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        
+        .nav-section-header:hover {
+            background: var(--waves-light);
+            color: var(--waves-primary);
+        }
+        
+        .nav-section-header.active {
+            background: var(--waves-light);
+            color: var(--waves-dark);
+        }
+        
+        .nav-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .nav-item { margin-bottom: 4px; }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        a.nav-link {
+            display: block;
+        }
+        
+        .nav-link::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--waves-light);
+            margin-right: 10px;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        
+        .nav-link:hover { 
+            background: var(--waves-light); 
+            color: var(--waves-primary);
+        }
+        
+        .nav-link:hover::before {
+            background: var(--waves-primary);
+        }
+        
+        .nav-link.active { 
+            background: var(--waves-light); 
+            color: var(--waves-dark);
+            font-weight: 500;
+        }
+        
+        .nav-link.active::before {
+            background: var(--waves-primary);
+        }
+        
+        .main-content { max-width: 100%; min-width: 0; }
+        
+        .section-card {
+            background: white; border-radius: 12px; padding: 24px;
+            margin-bottom: 20px; border: 1px solid #e2e8f0;
+            scroll-margin-top: 140px;
+        }
+        
+        .section-card h2 { margin-top: 0; color: #1e293b; font-size: 22px; font-weight: 700; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        .section-card h3 { color: #1e293b; font-size: 18px; font-weight: 600; margin-top: 24px; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        .section-card h4 { color: #334155; font-size: 16px; font-weight: 600; margin-top: 20px; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; }
+        
+        .concept-box { background: var(--waves-light); border-left: 4px solid var(--waves-primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .definition-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .formula-box { background: #f5f3ff; border: 1px solid #a78bfa; padding: 16px; margin: 16px 0; border-radius: 8px; text-align: center; }
+        .exam-alert { background: var(--waves-light); border: 1px solid var(--waves-primary); padding: 14px 18px; margin: 16px 0; border-radius: 8px; }
+        .exam-alert strong { color: #5b21b6; }
+        
+        .tip-box { background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: #1d4ed8; }
+        
+        .key-points { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+        .key-points li { margin-bottom: 8px; }
+        
+        .checklist-box {
+            background: var(--waves-light);
+            border: 1px solid var(--waves-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--waves-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--waves-dark); }
+        
+        .graph-placeholder { 
+            background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; 
+            padding: 20px; margin: 16px 0; text-align: center; 
+        }
+        
+        .graph-placeholder-placeholder {
+            border: 2px dashed #cbd5e1; border-radius: 8px;
+            padding: 40px; color: #64748b; margin: 16px 0;
+            background: #f8fafc;
+        }
+        
+        .mobile-menu-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--waves-primary); color: white; border: none; font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .mobile-nav { display: none; position: fixed; bottom: 80px; right: 20px; width: 260px; max-height: 70vh; overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 999; }
+        .mobile-nav.show { display: block; }
+        .reading-progress { position: fixed; top: 61px; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #7c3aed, #a78bfa); z-index: 99; transition: width 0.1s ease; }
+        .back-to-top { display: none; position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; background: var(--waves-primary); color: white; border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3); z-index: 1000; transition: opacity 0.2s, transform 0.2s; opacity: 0; visibility: hidden; }
+        .back-to-top.show { display: inline-flex; align-items: center; justify-content: center; opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--waves-dark); transform: translateY(-2px); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+        
+        @media (max-width: 968px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .sidebar-nav { display: none; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+        }
+        
+        .progress-btn.active {
+            background: #8b5cf6 !important;
+            color: white;
+            border-color: #8b5cf6 !important;
+        }
+        
+        .progress-btn:hover:not(.active) {
+            background: #f1f5f9;
+        }
+        
+        mjx-container { font-size: 105% !important; }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: #f1f5f9; }
+.unit-nav-link.active { background: #7c3aed22; color: #7c3aed; }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: #7c3aed; }
+</style>
+
+</head>
+<body>
+
+    <header style="background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">←</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            
+            
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #7c3aed22 0%, white 100%); border: 1px solid #7c3aed; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #7c3aed; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1d4ed822'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+<a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+<a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##ea580c22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+<a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##16a34a22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+<a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##dc262622'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+<a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='transparent'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #7c3aed;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span><span style="width: 8px; height: 8px; background: #7c3aed; border-radius: 50%;"></span></a>
+<a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##1e40af22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+<a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+<a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##7c3aed22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##0f766e22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='##be185d22'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+<div class="unit-header" style="background: linear-gradient(135deg, #8b5cf6 0%, #8b5cf6dd 100%); color: white; padding: 48px 0; margin-bottom: 32px;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+        <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">A2 Level > Unit 17</div>
+        <h1 style="margin: 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">Oscillations</h1>
+        <p style="margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">From simple harmonic motion to resonance phenomena</p>
+    </div>
+</div>
+
+<div class="reading-progress" id="readingProgress"></div>
+<a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+<button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+
+<div class="mobile-nav" id="mobileNav">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+        <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+    </div>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="margin-bottom: 4px;"><a href="#h2-intro" onclick="scrollTo('h2-intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">1. Observing Oscillations</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-observing" onclick="scrollTo('h2-observing')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1 Examples</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">2. Describing SHM</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-describing" onclick="scrollTo('h2-describing')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1 Key Quantities</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">3. SHM Equations</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-equations" onclick="scrollTo('h2-equations')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1-3.4 Equations</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">4. Energy in SHM</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-energy" onclick="scrollTo('h2-energy')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.1-4.4 Energy</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">5. Damped Oscillations</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-damped" onclick="scrollTo('h2-damped')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">5.1-5.3 Damping</a></li>
+        <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">6. Resonance</li>
+        <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-resonance" onclick="scrollTo('h2-resonance')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">6.1-6.4 Resonance</a></li>
+        <li style="margin-bottom: 4px;"><a href="#h2-checklist" onclick="scrollTo('h2-checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">P4 Checklist</a></li>
+    </ul>
+    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+        <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+            <button onclick="updateProgress('ch17', 'not_started')" id="progress-btn-not_started-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+            <button onclick="updateProgress('ch17', 'in_progress')" id="progress-btn-in_progress-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+            <button onclick="updateProgress('ch17', 'completed')" id="progress-btn-completed-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+        </div>
+    </div>
+</div>
+
+<div class="content-grid">
+    <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#h2-intro" class="nav-link" data-section="h2-intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-observing" class="nav-section-header" data-section="h2-observing">1. Observing Oscillations</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-observing-1-1" class="nav-link" data-section="h3-observing-1-1">1.1 Examples of Oscillating Systems</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-describing" class="nav-section-header" data-section="h2-describing">2. Describing SHM</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-describing-2-1" class="nav-link" data-section="h3-describing-2-1">2.1 Key Quantities in SHM</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-equations" class="nav-section-header" data-section="h2-equations">3. SHM Equations</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-equations-3-1" class="nav-link" data-section="h3-equations-3-1">3.1 Displacement Equation</a></li>
+                    <li class="nav-item"><a href="#h3-equations-3-2" class="nav-link" data-section="h3-equations-3-2">3.2 Velocity Equation</a></li>
+                    <li class="nav-item"><a href="#h3-equations-3-3" class="nav-link" data-section="h3-equations-3-3">3.3 Acceleration Equation</a></li>
+                    <li class="nav-item"><a href="#h3-equations-3-4" class="nav-link" data-section="h3-equations-3-4">3.4 Period Formulas</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-energy" class="nav-section-header" data-section="h2-energy">4. Energy in SHM</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-energy-4-1" class="nav-link" data-section="h3-energy-4-1">4.1 Energy Transformations</a></li>
+                    <li class="nav-item"><a href="#h3-energy-4-2" class="nav-link" data-section="h3-energy-4-2">4.2 Kinetic Energy</a></li>
+                    <li class="nav-item"><a href="#h3-energy-4-3" class="nav-link" data-section="h3-energy-4-3">4.3 Potential Energy</a></li>
+                    <li class="nav-item"><a href="#h3-energy-4-4" class="nav-link" data-section="h3-energy-4-4">4.4 Total Mechanical Energy</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-damped" class="nav-section-header" data-section="h2-damped">5. Damped Oscillations</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-damped-5-1" class="nav-link" data-section="h3-damped-5-1">5.1 Free vs Damped</a></li>
+                    <li class="nav-item"><a href="#h3-damped-5-2" class="nav-link" data-section="h3-damped-5-2">5.2 Types of Damping</a></li>
+                    <li class="nav-item"><a href="#h3-damped-5-3" class="nav-link" data-section="h3-damped-5-3">5.3 Practical Examples</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-resonance" class="nav-section-header" data-section="h2-resonance">6. Resonance</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-resonance-6-1" class="nav-link" data-section="h3-resonance-6-1">6.1 Forced Oscillations</a></li>
+                    <li class="nav-item"><a href="#h3-resonance-6-2" class="nav-link" data-section="h3-resonance-6-2">6.2 Resonance</a></li>
+                    <li class="nav-item"><a href="#h3-resonance-6-3" class="nav-link" data-section="h3-resonance-6-3">6.3 Examples</a></li>
+                    <li class="nav-item"><a href="#h3-resonance-6-4" class="nav-link" data-section="h3-resonance-6-4">6.4 Reducing Effects</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-checklist" class="nav-link" data-section="h2-checklist" style="margin-top:8px;">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../../homework/ch17/" class="nav-link" style="color: #16a34a;">📚 Homework (Exercises)</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch17', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch17', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch17', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+
+    <main class="main-content">
+        
+        
+        <div id="intro" class="section-card">
+            <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: What is Wave?</h2>
+            
+            <div class="concept-box">
+                <strong>Think about these motions:</strong>
+                <ul style="margin-top: 12px;">
+                    <li>🕐 The back-and-forth motion of a clock pendulum</li>
+                    <li>🎵 The vibration of a guitar string when plucked</li>
+                    <li>🌳 The swaying of tree branches in the wind</li>
+                    <li>🐝 The fluttering of a bee's wings</li>
+                </ul>
+            </div>
+            
+            <p><strong>Oscillation</strong> is a repeating back-and-forth motion between two limits. It's one of the most common types of mechanical motion in nature.</p>
+            
+            <p>In this unit, we will study a special type of oscillation called <strong>Simple Harmonic Motion (SHM)</strong>, where the motion follows a precise mathematical pattern.</p>
+        </div>
+        
+        
+        <div id="observing" class="section-card">
+            <h2 id="h2-observing" style="scroll-margin-top: 120px;">1. Observing Oscillations</h2>
+            
+            <div class="concept-box">
+                <strong>Common Features of Oscillations:</strong>
+                <ul style="margin-top: 12px;">
+                    <li><strong>Periodicity:</strong> The motion repeats in a regular cycle</li>
+                    <li><strong>Symmetry:</strong> Motion is symmetric about a central equilibrium position</li>
+                    <li><strong>Restoring force:</strong> A force always acts to return the object to equilibrium</li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-observing-1-1" style="font-weight: 600;">1.1 Examples of Oscillating Systems</h3>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">a) A Simple Pendulum</h4>
+            <p>A mass on a string swinging back and forth about a fixed point. At the bottom of the swing, the mass is at its equilibrium position.</p>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">b) A Mass-Spring System</h4>
+            <p>A mass attached to a spring oscillates back and forth when displaced from its equilibrium position. When the spring is not deformed, the net force on the mass is zero.</p>
+            
+            <div class="definition-box">
+                <strong>Equilibrium Position (O):</strong> The position where the oscillating object rests when not disturbed. At this point:
+                <ul style="margin-top: 8px;">
+                    <li>The net force on the object is zero</li>
+                    <li>The object is often moving at maximum speed</li>
+                </ul>
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">c) A Loudspeaker Cone</h4>
+            <p>The cone of a loudspeaker vibrates back and forth when driven by an electrical signal, creating sound waves.</p>
+        </div>
+        
+        
+        <div id="describing" class="section-card">
+            <h2 id="h2-describing" style="scroll-margin-top: 120px;">2. Describing Simple Harmonic Motion</h2>
+            
+            <div class="definition-box">
+                <strong>Definition of Simple Harmonic Motion (SHM):</strong><br><br>
+                A body executes simple harmonic motion if:
+                <ol style="margin-top: 8px;">
+                    <li>Its <strong>acceleration is directly proportional to its displacement</strong> from its equilibrium position</li>
+                    <li>Its <strong>acceleration is in the opposite direction</strong> to its displacement (acceleration is always towards the equilibrium position)</li>
+                </ol>
+            </div>
+            
+            <div class="definition-box">
+                <strong>Restoring Force:</strong><br><br>
+                A restoring force acts to return the mass to its equilibrium position. The restoring force <em>F</em> is directly proportional to the displacement <em>x</em> of the mass from its equilibrium position and is directed towards that point.
+            </div>
+            
+            <h3 id="h3-describing-2-1" style="font-weight: 600;">2.1 Key Quantities in SHM</h3>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">a) Amplitude (A)</h4>
+            <p><strong>Amplitude for s.h.m.:</strong> The maximum displacement from the equilibrium position. Amplitude is a scalar quantity and remains constant in undamped SHM.</p>
+            
+            <div class="formula-box">
+                <strong>Amplitude:</strong> \(A = x_{\text{max}}\)<br>
+                Unit: metres (m)
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">b) Displacement (x)</h4>
+            <p><strong>Displacement for s.h.m.:</strong> The distance moved by object in a given direction from the equilibrium position.</p>
+            
+            <div class="tip-box">
+                <strong>Key Distinction:</strong>
+                <ul style="margin-top: 8px; margin-bottom: 0;">
+                    <li>Displacement is a <strong>vector</strong>, while amplitude is a <strong>scalar</strong></li>
+                    <li>The maximum displacement equals the amplitude</li>
+                    <li>In a given oscillation, the oscillator's displacement varies with time, but the amplitude remains constant</li>
+                </ul>
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">c) Period (T) and Frequency (f)</h4>
+            <p><strong>Period for s.h.m.:</strong> Time taken for one complete oscillation.</p>
+            <div class="formula-box">
+                <strong>Period:</strong> \(T = \frac{1}{f}\)<br><br>
+                <strong>Frequency:</strong> \(f = \frac{1}{T}\)<br><br>
+                <strong>Angular Frequency:</strong> \(\omega = 2\pi f = \frac{2\pi}{T}\)<br><br>
+                Units: \(T\) in seconds (s), \(f\) in hertz (Hz), \(\omega\) in rad s⁻¹
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">d) Phase Difference</h4>
+            <p>In SHM, displacement, velocity, and acceleration all vary sinusoidally but are out of phase with each other:</p>
+            <ul>
+                <li>Velocity leads displacement by \(90°\) or \(\frac{\pi}{2}\) rad</li>
+                <li>Acceleration is \(180°\) or \(\pi\) rad out of phase with displacement</li>
+            </ul>
+        </div>
+        
+        
+        <div id="equations" class="section-card">
+            <h2 id="h2-equations" style="scroll-margin-top: 120px;">3. Equations of Simple Harmonic Motion</h2>
+            
+            <h3 id="h3-equations-3-1" style="font-weight: 600;">3.1 Displacement Equation</h3>
+            <p>The displacement of an object in SHM varies sinusoidally with time:</p>
+            
+            <div class="formula-box">
+                <strong>Displacement:</strong><br><br>
+                \(x = A \cos(\omega t)\) or \(x = A \sin(\omega t)\)<br><br>
+                Where:
+                <ul style="text-align: left; margin-top: 8px;">
+                    <li>\(x\) = displacement at time \(t\)</li>
+                    <li>\(A\) = amplitude</li>
+                    <li>\(\omega\) = angular frequency</li>
+                    <li>\(t\) = time</li>
+                </ul>
+            </div>
+            
+            <h3 id="h3-equations-3-2" style="font-weight: 600;">3.2 Velocity Equation</h3>
+            <p>Velocity is the rate of change of displacement:</p>
+            
+            <div class="formula-box">
+                <strong>Velocity:</strong><br><br>
+                \(v = \pm \omega \sqrt{A^2 - x^2}\)<br><br>
+                Or in terms of time:<br>
+                \(v = -A\omega \sin(\omega t)\)<br><br>
+                Maximum velocity occurs at equilibrium (\(x = 0\)):<br>
+                \(v_{\text{max}} = A\omega\)
+            </div>
+            
+            <h3 id="h3-equations-3-3" style="font-weight: 600;">3.3 Acceleration Equation</h3>
+            <p>Acceleration is proportional to displacement but in the opposite direction:</p>
+            
+            <div class="formula-box">
+                <strong>Acceleration:</strong><br><br>
+                \(a = -\omega^2 x\)<br><br>
+                Or in terms of time:<br>
+                \(a = -A\omega^2 \cos(\omega t)\)<br><br>
+                Maximum acceleration occurs at maximum displacement:<br>
+                \(a_{\text{max}} = A\omega^2\)
+            </div>
+            
+            <h3 id="h3-equations-3-4" style="font-weight: 600;">3.4 Period Formulas for Specific Systems</h3>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">a) Mass-Spring System</h4>
+            <div class="formula-box">
+                <strong>Period of mass-spring system:</strong><br><br>
+                \[T = 2\pi \sqrt{\frac{m}{k}}\]<br><br>
+                Where:
+                <ul style="text-align: left; margin-top: 8px;">
+                    <li>\(m\) = mass (kg)</li>
+                    <li>\(k\) = spring constant (N m⁻¹)</li>
+                </ul>
+            </div>
+            
+            <h4 style="font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #334155; font-weight: 600;">b) Simple Pendulum (small angles)</h4>
+            <div class="formula-box">
+                <strong>Period of simple pendulum:</strong><br><br>
+                \[T = 2\pi \sqrt{\frac{L}{g}}\]<br><br>
+                Where:
+                <ul style="text-align: left; margin-top: 8px;">
+                    <li>\(L\) = length of pendulum (m)</li>
+                    <li>\(g\) = acceleration due to gravity (m s⁻²)</li>
+                </ul>
+                <p style="margin-top: 12px; font-size: 13px;"><strong>Note:</strong> This formula is valid only for small angles (\(\theta < 10°\))</p>
+            </div>
+        </div>
+        
+        
+        <div id="energy" class="section-card">
+            <h2 id="h2-energy" style="scroll-margin-top: 120px;">4. Energy in Simple Harmonic Motion</h2>
+            
+            <h3 id="h3-energy-4-1" style="font-weight: 600;">4.1 Energy Transformations</h3>
+            <p>In SHM, energy continuously transforms between kinetic and potential forms:</p>
+            <ul>
+                <li><strong>At maximum displacement (A or -A):</strong> All energy is potential, kinetic energy is zero</li>
+                <li><strong>At equilibrium (x = 0):</strong> All energy is kinetic, potential energy is zero</li>
+                <li><strong>Between extremes:</strong> Energy is a mixture of both forms</li>
+            </ul>
+            
+            <h3 id="h3-energy-4-2" style="font-weight: 600;">4.2 Kinetic Energy</h3>
+            <div class="formula-box">
+                <strong>Kinetic Energy:</strong><br><br>
+                \[E_k = \frac{1}{2}m\omega^2(A^2 - x^2)\]<br><br>
+                Maximum KE (at \(x = 0\)):<br>
+                \(E_{k,\text{max}} = \frac{1}{2}m\omega^2 A^2 = \frac{1}{2}m v_{\text{max}}^2\)
+            </div>
+            
+            <h3 id="h3-energy-4-3" style="font-weight: 600;">4.3 Potential Energy</h3>
+            <div class="formula-box">
+                <strong>Potential Energy:</strong><br><br>
+                \[E_p = \frac{1}{2}m\omega^2 x^2\]<br><br>
+                Maximum PE (at \(x = A\)):<br>
+                \(E_{p,\text{max}} = \frac{1}{2}m\omega^2 A^2\)
+            </div>
+            
+            <h3 id="h3-energy-4-4" style="font-weight: 600;">4.4 Total Mechanical Energy</h3>
+            <div class="formula-box">
+                <strong>Total Energy:</strong><br><br>
+                \[E_{\text{total}} = E_k + E_p = \frac{1}{2}m\omega^2 A^2\]<br><br>
+                <strong>Key Point:</strong> Total mechanical energy is constant (assuming no damping)
+            </div>
+            
+            <div class="exam-alert">
+                <strong>Important Relationship:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Total energy is proportional to amplitude squared: \(E \propto A^2\)</li>
+                    <li>If amplitude doubles, total energy increases by factor of 4</li>
+                </ul>
+            </div>
+        </div>
+        
+        
+        <div id="damped" class="section-card">
+            <h2 id="h2-damped" style="scroll-margin-top: 120px;">5. Damped Oscillations</h2>
+            
+            <div class="definition-box">
+                <strong>Damping:</strong> The reduction of the amplitude of an oscillating system due to loss of energy caused by dissipative forces.
+            </div>
+            
+            <h3 id="h3-damped-5-1" style="font-weight: 600;">5.1 Free vs. Damped Oscillations</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                <tr style="background: #f1f5f9;">
+                    <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Feature</th>
+                    <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Free Oscillation (Ideal)</th>
+                    <th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Damped Oscillation (Real)</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Amplitude</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Constant</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Decreases over time</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Total Energy</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Conserved</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Decreases over time</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Period/Frequency</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Constant</td>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Slightly increased period</td>
+                </tr>
+            </table>
+            
+            <h3 id="h3-damped-5-2" style="font-weight: 600;">5.2 Types of Damping</h3>
+            <ul>
+                <li><strong>Light damping:</strong> System oscillates with gradually decreasing amplitude</li>
+                <li><strong>Critical damping:</strong> System returns to equilibrium in shortest possible time without oscillating</li>
+                <li><strong>Heavy damping:</strong> System returns to equilibrium slowly without oscillating</li>
+            </ul>
+            
+            <h3 id="h3-damped-5-3" style="font-weight: 600;">5.3 Practical Examples of Damping</h3>
+            <ul>
+                <li>Shock absorbers in cars</li>
+                <li>Door closers</li>
+                <li>Swings in air</li>
+            </ul>
+        </div>
+        
+        
+        <div id="resonance" class="section-card">
+            <h2 id="h2-resonance" style="scroll-margin-top: 120px;">6. Resonance</h2>
+            
+            <h3 id="h3-resonance-6-1" style="font-weight: 600;">6.1 Forced Oscillations</h3>
+            <p>When a periodic external force is applied to an oscillating system:</p>
+            <ul>
+                <li>The system vibrates at the <strong>driving frequency</strong> (not its natural frequency)</li>
+                <li>The steady-state frequency equals the forcing frequency</li>
+                <li>Examples: Bus engine vibrations, washing machine drums, bridges with rhythmic marching</li>
+            </ul>
+            
+            <div class="definition-box">
+                <strong>Natural Frequency (\(f_0\)):</strong> The frequency at which body will vibrate when there is no resultant external resistive force acting on it.<br><br>
+                <strong>Forcing Frequency (\(f\)):</strong> The frequency at which object is made to vibrate/oscillate.
+            </div>
+            
+            <h3 id="h3-resonance-6-2" style="font-weight: 600;">6.2 Resonance</h3>
+            <div class="definition-box">
+                <strong>Resonance:</strong> Occurs when the driving frequency equals the natural frequency of the system, resulting in maximum amplitude of oscillation.
+            </div>
+            
+            <div class="formula-box">
+                <strong>Condition for Resonance:</strong><br><br>
+                \(f = f_0\) or \(\omega = \omega_0\)<br><br>
+                At resonance, the amplitude reaches its maximum value.
+            </div>
+            
+            <h3 id="h3-resonance-6-3" style="font-weight: 600;">6.3 Examples of Resonance</h3>
+            <ul>
+                <li><strong>Bridge collapse:</strong> Soldiers marching in step can cause resonance in bridges</li>
+                <li><strong>Breaking a wine glass:</strong> Sound waves at the right frequency</li>
+                <li><strong>Microwave ovens:</strong> Radiation frequency matches water molecule natural frequency</li>
+                <li><strong>Radio/TV tuning:</strong> Circuit resonant frequency matches broadcast frequency</li>
+                <li><strong>MRI machines:</strong> Nuclear magnetic resonance</li>
+            </ul>
+            
+            <h3 id="h3-resonance-6-4" style="font-weight: 600;">6.4 Reducing Resonance Effects</h3>
+            <ul>
+                <li>Add damping to absorb energy</li>
+                <li>Change the natural frequency of the system</li>
+                <li>Avoid operating at resonant frequency</li>
+            </ul>
+        </div>
+        
+        
+        <div id="checklist" class="section-card">
+            <h2 id="h2-checklist" style="scroll-margin-top: 120px;">P4 Checklist: Oscillations</h2>
+
+            <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+            
+            <div class="checklist-box">
+                <div style="font-weight: 600; color: var(--waves-primary); margin-bottom: 12px;">Essential Definitions</div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d1">
+                    <label for="d1">Simple harmonic motion conditions</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d2">
+                    <label for="d2">Amplitude, period, frequency, angular frequency</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d3">
+                    <label for="d3">Displacement, velocity, acceleration equations</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d4">
+                    <label for="d4">Energy in SHM (KE, PE, total energy)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d5">
+                    <label for="d5">Damping and its effects</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d6">
+                    <label for="d6">Natural frequency vs forcing frequency</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="d7">
+                    <label for="d7">Resonance condition and consequences</label>
+                </div>
+            </div>
+
+            <div class="checklist-box">
+                <div style="font-weight: 600; color: var(--waves-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e1">
+                    <label for="e1">\(x = A \cos(\omega t)\)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e2">
+                    <label for="e2">\(v = \pm \omega \sqrt{A^2 - x^2}\)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e3">
+                    <label for="e3">\(a = -\omega^2 x\)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e4">
+                    <label for="e4">\(T = 2\pi/\omega = 1/f\)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e5">
+                    <label for="e5">\(T = 2\pi\sqrt{m/k}\) (spring)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e6">
+                    <label for="e6">\(T = 2\pi\sqrt{L/g}\) (pendulum)</label>
+                </div>
+
+                <div class="checklist-item">
+                    <input type="checkbox" id="e7">
+                    <label for="e7">\(E_{\text{total}} = \frac{1}{2}m\omega^2 A^2\)</label>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <strong>Exam Tips:</strong>
+                <ul style="margin-top: 8px;">
+                    <li>Remember that acceleration is always proportional to displacement but in the opposite direction</li>
+                    <li>Maximum velocity occurs at equilibrium, maximum acceleration occurs at maximum displacement</li>
+                    <li>For pendulums, period is independent of mass but depends on length</li>
+                    <li>Total energy in SHM is proportional to amplitude squared</li>
+                    <li>At resonance, amplitude is maximum when driving frequency equals natural frequency</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    function toggleUnitNav() {
+        const dropdown = document.getElementById('unitNavDropdown');
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    }
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('unitNavDropdown');
+        const btn = document.getElementById('unitNavBtn');
+        if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+
+    function toggleMobileNav() {
+        document.getElementById('mobileNav').classList.toggle('show');
+    }
+    function closeMobileNav() {
+        document.getElementById('mobileNav').classList.remove('show');
+    }
+    
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function updateReadingProgress() {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (window.scrollY / docHeight) * 100;
+        document.getElementById('readingProgress').style.width = progress + '%';
+        
+        const backToTop = document.getElementById('backToTop');
+        if (window.scrollY > 400) {
+            backToTop.classList.add('show');
+        } else {
+            backToTop.classList.remove('show');
+        }
+    }
+    
+    window.addEventListener('scroll', updateReadingProgress);
+    
+    function scrollTo(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+        closeMobileNav();
+    }
+    
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+        closeMobileNav();
+    }
+    
+    function updateActiveNav() {
+        const headings = document.querySelectorAll('h2[id], h3[id]');
+        const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+        let activeId = null;
+        
+        headings.forEach(heading => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top < 150) {
+                activeId = heading.id;
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.dataset.section === activeId) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', updateActiveNav);
+    updateActiveNav();
+    
+    function loadProgress(unitId) {
+        if (!Auth.isLoggedIn()) return;
+        fetch(`${API_BASE_URL}/progress/${unitId}`, {
+            headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.unit) {
+                updateProgressButtons(data.unit.status);
+            }
+        })
+        .catch(err => console.error('Load progress error:', err));
+    }
+    
+    function updateProgress(unitId, status) {
+        if (!Auth.isLoggedIn()) {
+            AuthModal.open();
+            return;
+        }
+        fetch(`${API_BASE_URL}/progress/${unitId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Auth.getToken()}`
+            },
+            body: JSON.stringify({ status })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                updateProgressButtons(status);
+            }
+        })
+        .catch(err => console.error('Update progress error:', err));
+    }
+    
+    function updateProgressButtons(status) {
+        ['not_started', 'in_progress', 'completed'].forEach(s => {
+            const btn = document.getElementById(`progress-btn-${s}`);
+            if (btn) btn.classList.toggle('active', s === status);
+            const mobileBtn = document.getElementById(`progress-btn-${s}-mobile`);
+            if (mobileBtn) mobileBtn.classList.toggle('active', s === status);
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        loadProgress('ch17');
+    });
+</script>
+
+
+<script src="../../auth/auth.js"></script>
+
+</body>
+</html>

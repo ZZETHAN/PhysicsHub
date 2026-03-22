@@ -1,0 +1,14 @@
+{
+  "components": [
+    {
+      "name": "Formula Card",
+      "specs": {
+        "width": "100%",
+        "background": "#f8fafc",
+        "border": "2px solid #cbd5e1"
+      },
+      "css_class": "ph-formula-card",
+      "created_at": "2026-03-17T16:41:19.462846"
+    }
+  ]
+}

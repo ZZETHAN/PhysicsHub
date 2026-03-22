@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 21: Structured Questions | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <style>
+        :root {
+            --ef-primary: #059669;
+            --ef-secondary: #14b8a6;
+            --ef-light: #d1fae5;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; line-height: 1.6; }
+        
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #059669 0%, #14b8a6 100%); color: white; padding: 40px 0; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        .content { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+        
+        .question-card { background: white; border-radius: 12px; padding: 28px; margin-bottom: 24px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .question-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0; }
+        .question-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .exam-badge { background: #1e293b; color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+        .topic-tag { background: var(--ef-light); color: var(--ef-primary); padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .marks { font-size: 14px; color: #64748b; font-weight: 600; }
+        .question-content { color: #1e293b; font-size: 15px; line-height: 1.7; }
+        .question-content p { margin: 12px 0; }
+        .part-label { font-weight: 600; color: #1e293b; }
+        
+        .figure-placeholder { background: #fafafa; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 30px; margin: 20px 0; text-align: center; }
+        
+        .mark-scheme { margin-top: 24px; padding-top: 20px; border-top: 1px dashed #cbd5e1; }
+        .mark-scheme-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .mark-scheme-title { font-weight: 600; color: #1e293b; font-size: 16px; }
+        .toggle-btn { background: var(--ef-light); color: var(--ef-primary); border: 1px solid var(--ef-primary); padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .toggle-btn:hover { background: var(--ef-primary); color: white; }
+        .mark-scheme-content { display: none; background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e; }
+        .mark-scheme-content.show { display: block; }
+        
+        .mark-subsection { margin: 16px 0; padding: 12px; background: white; border-radius: 6px; border-left: 3px solid #22c55e; }
+        .mark-subsection-title { font-weight: 600; color: #166534; margin-bottom: 12px; font-size: 14px; }
+        .mark-point { display: flex; gap: 12px; margin: 8px 0; padding: 8px; background: #fafafa; border-radius: 6px; align-items: flex-start; flex-wrap: wrap; }
+        .mark-badge { background: #22c55e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; flex-shrink: 0; height: fit-content; }
+        
+        .unit-nav-btn { background: white; border: 1px solid #e2e8f0; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+        
+        @media (max-width: 640px) {
+            .question-card { padding: 20px; }
+            .question-header { flex-direction: column; gap: 12px; }
+            .marks { align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="../../index.html" style="color: #64748b; text-decoration: none; font-size: 14px;">← PhysicsHub Home</a>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button onclick="location.href='index.html'" class="unit-nav-btn">← Unit 21</button>
+                <div id="authBtn"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <a href="index.html" style="color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px;">← Unit 21: Alternating Current</a>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Practice Questions with Mark Schemes - AC, CRO, RMS, Rectification, Smoothing</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="question-card" id="q1">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q1</span>
+                    <span class="topic-tag">AC vs DC</span>
+                </div>
+                <span class="marks">[3 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_21.1 Characteristics of alternating currents</strong></p>
+                <p><span class="part-label">(a)</span> State the essential difference between alternating current and direct current. <span style="color:#64748b;">[1]</span></p>
+                <p><span class="part-label">(b)</span> Fig. shows four current waveforms.</p>
+                <div class="figure-placeholder">[Image Placeholder]<br><strong>Fig. 21.1: Four current waveforms</strong></div>
+                <p>Identify which are AC and which are DC. <span style="color:#64748b;">[2]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><span class="part-label">(a)</span> AC changes direction with time; DC flows in one direction only. <span class="mark-badge">1</span></p>
+                    <p><span class="part-label">(b)</span> Correct identification of AC waveforms (any 2) <span class="mark-badge">2</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="q2">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q2</span>
+                    <span class="topic-tag">CRO Measurements</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_21.1 Characteristics of alternating currents</strong></p>
+                <p><span class="part-label">(a)</span> State the function of the Y-plate and X-plate in a cathode-ray oscilloscope. <span style="color:#64748b;">[2]</span></p>
+                <p><span class="part-label">(b)</span> An oscilloscope has Y-gain = 5 mV/cm and time-base = 2 ms/cm.</p>
+                <div class="figure-placeholder">[Image Placeholder]<br><strong>Fig. 21.2: Oscilloscope trace</strong></div>
+                <p>Use Fig. to determine:</p>
+                <p><span class="part-label">(i)</span> The peak voltage <span style="color:#64748b;">[2]</span></p>
+                <p><span class="part-label">(ii)</span> The frequency of the signal <span style="color:#64748b;">[2]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><span class="part-label">(a)</span> Y-plate: vertical deflection (voltage signal); X-plate: horizontal time base (time sweep) <span class="mark-badge">2</span></p>
+                    <p><span class="part-label">(b)(i)</span> Peak voltage = divisions × Y-gain = 2 × 5 mV/cm = 10 mV <span class="mark-badge">2</span></p>
+                    <p><span class="part-label">(ii)</span> Period T = 4 cm × 2 ms/cm = 8 ms; f = 1/T = 125 Hz <span class="mark-badge">2</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="q3">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q3</span>
+                    <span class="topic-tag">RMS Values</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> Define the r.m.s. value of an alternating current. <span style="color:#64748b;">[2]</span></p>
+                <p><span class="part-label">(b)</span> The mains voltage is 230 V AC.</p>
+                <p><span class="part-label">(i)</span> Calculate the peak voltage. <span style="color:#64748b;">[1]</span></p>
+                <p><span class="part-label">(ii)</span> State the relationship between peak and r.m.s. values for sinusoidal AC. <span style="color:#64748b;">[1]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><span class="part-label">(a)</span> r.m.s. = DC value producing same heating effect <span class="mark-badge">2</span></p>
+                    <p><span class="part-label">(b)(i)</span> $V_0 = V_{r.m.s.} \times \sqrt{2} = 325$ V <span class="mark-badge">1</span></p>
+                    <p><span class="part-label">(ii)</span> $V_{r.m.s.} = V_0/\sqrt{2}$ <span class="mark-badge">1</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="q4">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q4</span>
+                    <span class="topic-tag">Power in AC</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> An alternating current of peak value 10 A flows through a 5 Ω resistor.</p>
+                <p>Calculate the average power dissipated. <span style="color:#64748b;">[3]</span></p>
+                <p><span class="part-label">(b)</span> State one advantage of stating voltages as r.m.s. values rather than peak values. <span style="color:#64748b;">[1]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><span class="part-label">(a)</span> $P_{avg} = I_{r.m.s.}^2 R = (I_0/\sqrt{2})^2 \times R = I_0^2 R / 2 = (10^2 \times 5)/2 = 250$ W <span class="mark-badge">3</span></p>
+                    <p><span class="part-label">(b)</span> Allows direct comparison with DC power calculations <span class="mark-badge">1</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="q5">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q5</span>
+                    <span class="topic-tag">Half-Wave Rectification</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_21.2 Rectification and smoothing</strong></p>
+                <p><span class="part-label">(a)</span> Draw a circuit diagram showing a diode used to half-wave rectify an alternating voltage across a resistor R. <span style="color:#64748b;">[2]</span></p>
+                <div class="figure-placeholder">[Image Placeholder]<br><strong>Fig. 21.3: Half-wave rectifier circuit</strong></div>
+                <p><span class="part-label">(b)</span> Sketch the output voltage waveform for one complete cycle of the input AC. Label peak value and period. <span style="color:#64748b;">[2]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><span class="part-label">(a)</span> Diode in series with resistor (with correct diode symbol orientation) <span class="mark-badge">2</span></p>
+                    <p><span class="part-label">(b)</span> Correct waveform showing only positive half-cycles, gaps at zero <span class="mark-badge">2</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="q6">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q6</span>
+                    <span class="topic-tag">Bridge Rectifier</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> State the difference between half-wave and full-wave rectification. <span style="color:#64748b;">[1]</span></p>
+                <p><span class="part-label">(b)</span> In a bridge rectifier circuit, state which diodes conduct during:</p>
+                <p><span class="part-label">(i)</span> The positive half-cycle <span style="color:#64748b;">[1]</span></p>
+                <p><span class="part-label">(ii)</span> The negative half-cycle <span style="color:#64748b;">[1]</span></p>
+                <p><span class="part-label">(c)</span> Explain why bridge rectification is more efficient than half-wave rectification. <span style="color:#64748b;">[1]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><span class="part-label">(a)</span> Full-wave uses both half-cycles; half-wave uses only one <span class="mark-badge">1</span></p>
+                    <p><span class="part-label">(b)(i)/(ii)</span> Diodes 2&3 conduct positive cycle; diodes 1&4 conduct negative cycle <span class="mark-badge">2</span></p>
+                    <p><span class="part-label">(c)</span> Both half-cycles utilized, no gaps <span class="mark-badge">1</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" id="q7">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q7</span>
+                    <span class="topic-tag">Smoothing</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_21.2 Rectification and smoothing</strong></p>
+                <p><span class="part-label">(a)</span> Explain the purpose of a smoothing capacitor in a rectifier circuit. <span style="color:#64748b;">[2]</span></p>
+                <div class="figure-placeholder">[Image Placeholder]<br><strong>Fig. 21.4: Rectified and smoothed waveforms</strong></div>
+                <p>Fig. shows rectified output (dashed) and smoothed output (solid).</p>
+                <p><span class="part-label">(i)</span> Identify which curve represents the smoothed output <span style="color:#64748b;">[1]</span></p>
+                <p><span class="part-label">(ii)</span> State two factors that affect the magnitude of ripple voltage. <span style="color:#64748b;">[2]</span></p>
+                <p><span class="part-label">(c)</span> A larger capacitance is used. State the effect on ripple voltage. <span style="color:#64748b;">[1]</span></p>
+            </div>
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <p><span class="part-label">(a)</span> Capacitor charges at peaks, discharges between peaks to maintain voltage <span class="mark-badge">2</span></p>
+                    <p><span class="part-label">(b)(i)</span> Solid (smooth) curve <span class="mark-badge">1</span></p>
+                    <p><span class="part-label">(ii)</span> Larger C, larger R, smaller ripple <span class="mark-badge">2</span></p>
+                    <p><span class="part-label">(c)</span> Ripple voltage reduced <span class="mark-badge">1</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

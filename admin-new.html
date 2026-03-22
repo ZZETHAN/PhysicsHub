@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - PhysicsHub</title>
+    <link rel="stylesheet" href="../auth/auth.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #0891b2;
+            --primary-light: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            line-height: 1.6; 
+        }
+        
+        /* 顶部导航 */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .navbar-brand a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+        .navbar-brand a:hover { color: white; }
+        
+        /* 侧边栏 */
+        .layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+            padding: 24px;
+        }
+        
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+        .nav-menu {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .nav-item:hover {
+            background: #f1f5f9;
+            color: var(--text);
+        }
+        .nav-item.active {
+            background: #f0f9ff;
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+        .nav-icon { font-size: 18px; }
+        
+        /* 主内容区 */
+        .main {
+            min-width: 0;
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            margin-bottom: 24px;
+        }
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        .stat-card.primary::before { background: var(--primary); }
+        .stat-card.success::before { background: var(--success); }
+        .stat-card.warning::before { background: var(--warning); }
+        .stat-card.danger::before { background: var(--danger); }
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .stat-card.primary .stat-icon { background: #f0f9ff; }
+        .stat-card.success .stat-icon { background: #f0fdf4; }
+        .stat-card.warning .stat-icon { background: #fffbeb; }
+        .stat-card.danger .stat-icon { background: #fef2f2; }
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .stat-change {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .stat-change.up { color: var(--success); }
+        .stat-change.down { color: var(--danger); }
+        
+        /* 图表区域 */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .chart-card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        /* 用户列表工具栏 */
+        .toolbar {
+            background: var(--card);
+            padding: 16px 20px;
+            border-radius: var(--radius) var(--radius) 0 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+        }
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+        }
+        .filter-select {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-warning { background: var(--warning); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+        
+        /* 用户列表 */
+        .user-list-container {
+            background: var(--card);
+            border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .user-table th {
+            background: #f8fafc;
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border);
+        }
+        .user-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        .user-table tr:hover { background: #f8fafc; }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+        .user-details { min-width: 0; }
+        .user-name {
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .user-email {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-approved { background: #d1fae5; color: #065f46; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+        .role-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+        .role-admin {
+            background: #fce7f3;
+            color: #be185d;
+        }
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .action-btn:hover { transform: translateY(-1px); }
+        .action-btn.approve { background: var(--success); color: white; }
+        .action-btn.reject { background: var(--warning); color: white; }
+        .action-btn.delete { background: var(--danger); color: white; }
+        .action-btn.view { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+        
+        /* 空状态 */
+        .empty-state {
+            padding: 60px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        /* 分页 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+        .page-btn {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .page-btn:hover { background: var(--bg); }
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* 用户详情弹窗 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal {
+            background: white;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: all 0.3s;
+        }
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .user-profile {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .user-profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0 auto 16px;
+        }
+        .user-profile-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .user-profile-email {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .info-list {
+            display: grid;
+            gap: 12px;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+        }
+        .info-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .info-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            padding: 20px 24px;
+            border-top: 1px solid var(--border);
+        }
+        .modal-footer .btn { flex: 1; justify-content: center; }
+        
+        /* 移动端适配 */
+        @media (max-width: 968px) {
+            .layout {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+            .sidebar {
+                position: relative;
+                top: 0;
+                order: -1;
+            }
+            .nav-menu {
+                display: flex;
+                overflow-x: auto;
+                gap: 8px;
+                padding: 4px;
+            }
+            .nav-item {
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                padding: 10px 16px;
+            }
+            .nav-item.active {
+                border-bottom-color: var(--primary);
+                border-left-color: transparent;
+            }
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .user-table {
+                display: block;
+            }
+            .user-table thead {
+                display: none;
+            }
+            .user-table tbody,
+            .user-table tr {
+                display: block;
+            }
+            .user-table tr {
+                padding: 16px;
+                border-bottom: 1px solid var(--border);
+            }
+            .user-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 0;
+                border: none;
+            }
+            .user-table td::before {
+                content: attr(data-label);
+                font-size: 12px;
+                color: var(--text-secondary);
+                font-weight: 500;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                min-width: 100%;
+            }
+            .action-btns {
+                justify-content: flex-end;
+            }
+        }
+        
+        /* 加载动画 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e2e8f0;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Toast通知 */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background: white;
+            padding: 14px 20px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            animation: slideIn 0.3s ease;
+            min-width: 280px;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.warning { border-left: 4px solid var(--warning); }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-brand">
+                <span>⚙️</span>
+                <span>PhysicsHub 管理后台</span>
+                <a href="/index.html">← 返回首页</a>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </nav>
+    
+    <!-- 主体布局 -->
+    <div class="layout">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-item active" onclick="switchTab('dashboard')">
+                    <span class="nav-icon">📊</span>
+                    <span>数据概览</span>
+                </a>
+                <a href="#users" class="nav-item" onclick="switchTab('users')">
+                    <span class="nav-icon">👥</span>
+                    <span>用户管理</span>
+                </a>
+                <a href="#logs" class="nav-item" onclick="switchTab('logs')">
+                    <span class="nav-icon">📝</span>
+                    <span>操作日志</span>
+                </a>
+                <a href="#settings" class="nav-item" onclick="switchTab('settings')">
+                    <span class="nav-icon">⚙️</span>
+                    <span>系统设置</span>
+                </a>
+            </nav>
+        </aside>
+        
+        <!-- 主内容 -->
+        <main class="main">
+            <!-- Dashboard 页面 -->
+            <div id="dashboard-page" class="page-content">
+                <div class="page-header">
+                    <h1 class="page-title">数据概览</h1>
+                    <p class="page-subtitle">查看平台整体运营数据</p>
+                </div>
+                
+                <!-- 统计卡片 -->
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-label">总用户数</div>
+                        <div class="stat-value" id="totalUsers">-</div>
+                        <div class="stat-change up">↑ 较上周 +12%</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-label">已审核用户</div>
+                        <div class="stat-value" id="approvedUsers">-</div>
+                        <div class="stat-change up">↑ 较上周 +8%</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-label">待审核用户</div>
+                        <div class="stat-value" id="pendingUsers">-</div>
+                        <div class="stat-change down">↓ 较上周 -5%</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-icon">🚫</div>
+                        <div class="stat-label">被拒绝用户</div>
+                        <div class="stat-value" id="rejectedUsers">-</div>
+                    </div>
+                </div>
+                
+                <!-- 图表 -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-title">📈 用户增长趋势</h3>
+                        <canvas id="growthChart" height="200"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">🥧 用户状态分布</h3>
+                        <canvas id="statusChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 用户管理页面 -->
+            <div id="users-page" class="page-content" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">用户管理</h1>
+                    <p class="page-subtitle">管理平台所有用户账户</p>
+                </div>
+                
+                <!-- 工具栏 -->
+                <div class="toolbar">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="搜索用户名或邮箱..." oninput="filterUsers()">
+                    </div>
+                    <select class="filter-select" id="statusFilter" onchange="filterUsers()">
+                        <option value="">所有状态</option>
+                        <option value="pending">待审核</option>
+                        <option value="approved">已审核</option>
+                        <option value="rejected">已拒绝</option>
+                    </select>
+                    <select class="filter-select" id="roleFilter" onchange="filterUsers()">
+                        <option value="">所有角色</option>
+                        <option value="student">学生</option>
+                        <option value="admin">管理员</option>
+                    </select>
+                    <button class="btn btn-secondary" onclick="exportUsers()">📥 导出</button>
+                    <button class="btn btn-primary" onclick="refreshUsers()">🔄 刷新</button>
+                </div>
+                
+                <!-- 用户列表 -->
+                <div class="user-list-container">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>用户信息</th>
+                                <th>状态</th>
+                                <th>角色</th>
+                                <th>注册时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    <div class="loading"></div>
+                                    <p>加载中...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- 分页 -->
+                    <div class="pagination" id="pagination">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 操作日志页面 -->
+            <div id="logs-page" class="page-content" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">操作日志</h1>
+                    <p class="page-subtitle">查看管理员操作记录</p>
+                </div>
+                <div class="chart-card">
+                    <div class="empty-state">
+                        <div class="empty-icon">📝</div>
+                        <p>操作日志功能开发中...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 系统设置页面 -->
+            <div id="settings-page" class="page-content" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">系统设置</h1>
+                    <p class="page-subtitle">配置平台参数</p>
+                </div>
+                <div class="chart-card">
+                    <div class="empty-state">
+                        <div class="empty-icon">⚙️</div>
+                        <p>系统设置功能开发中...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- 用户详情弹窗 -->
+    <div class="modal-overlay" id="userModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">👤 用户详情</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="user-profile">
+                    <div class="user-profile-avatar" id="modalAvatar">?</div>
+                    <div class="user-profile-name" id="modalName">-</div>
+                    <div class="user-profile-email" id="modalEmail">-</div>
+                </div>
+                <div class="info-list">
+                    <div class="info-item">
+                        <span class="info-label">用户ID</span>
+                        <span class="info-value" id="modalId">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">状态</span>
+                        <span class="info-value" id="modalStatus">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">角色</span>
+                        <span class="info-value" id="modalRole">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">注册时间</span>
+                        <span class="info-value" id="modalCreated">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">最后登录</span>
+                        <span class="info-value" id="modalLogin">-</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">关闭</button>
+                <button class="btn btn-success" id="modalApproveBtn" onclick="approveCurrentUser()">批准</button>
+                <button class="btn btn-danger" id="modalRejectBtn" onclick="rejectCurrentUser()">拒绝</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast容器 -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <script src="../auth/auth.js"></script>
+    <script>
+        // API配置
+        window.API_BASE_URL = 'http://123.207.75.145:3001/api';
+        
+        // 全局状态
+        let allUsers = [];
+        let filteredUsers = [];
+        let currentPage = 1;
+        let pageSize = 10;
+        let currentUserId = null;
+        let growthChart = null;
+        let statusChart = null;
+        
+        // 初始化
+        async function init() {
+            // 等待Auth加载
+            while (typeof Auth === 'undefined') {
+                await new Promise(r => setTimeout(r, 100));
+            }
+            
+            // 检查登录状态
+            if (!Auth.isLoggedIn()) {
+                window.location.href = '/index.html';
+                return;
+            }
+            
+            // 检查是否为管理员
+            const user = Auth.getUser();
+            if (user.role !== 'admin') {
+                showToast('无权访问管理后台', 'error');
+                setTimeout(() => window.location.href = '/index.html', 2000);
+                return;
+            }
+            
+            // 加载数据
+            await loadDashboardData();
+            await loadUsers();
+            
+            // 初始化图表
+            initCharts();
+        }
+        
+        // 切换标签页
+        function switchTab(tab) {
+            // 更新导航状态
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+            
+            // 切换页面内容
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(tab + '-page').style.display = 'block';
+            
+            // 更新URL hash
+            window.location.hash = tab;
+        }
+        
+        // 加载Dashboard数据
+        async function loadDashboardData() {
+            try {
+                const token = Auth.getToken();
+                const response = await fetch(`${window.API_BASE_URL}/auth/admin/users`, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    const users = data.users;
+                    const pending = users.filter(u => u.status === 'pending');
+                    const approved = users.filter(u => u.status === 'approved');
+                    const rejected = users.filter(u => u.status === 'rejected');
+                    
+                    // 更新统计卡片
+                    document.getElementById('totalUsers').textContent = users.length;
+                    document.getElementById('approvedUsers').textContent = approved.length;
+                    document.getElementById('pendingUsers').textContent = pending.length;
+                    document.getElementById('rejectedUsers').textContent = rejected.length;
+                    
+                    // 更新图表数据
+                    updateCharts(users);
+                }
+            } catch (e) {
+                console.error('加载数据失败:', e);
+            }
+        }
+        
+        // 加载用户列表
+        async function loadUsers() {
+            try {
+                const token = Auth.getToken();
+                const response = await fetch(`${window.API_BASE_URL}/auth/admin/users`, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    allUsers = data.users;
+                    filteredUsers = [...allUsers];
+                    renderUsers();
+                }
+            } catch (e) {
+                document.getElementById('userTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <div class="empty-icon">❌</div>
+                            <p>加载失败: ${e.message}</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        // 渲染用户列表
+        function renderUsers() {
+            const tbody = document.getElementById('userTableBody');
+            
+            if (filteredUsers.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <div class="empty-icon">🔍</div>
+                            <p>没有找到匹配的用户</p>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            
+            // 分页
+            const totalPages = Math.ceil(filteredUsers.length / pageSize);
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageUsers = filteredUsers.slice(start, end);
+            
+            tbody.innerHTML = pageUsers.map(user => `
+                <tr>
+                    <td data-label="用户">
+                        <div class="user-info">
+                            <div class="user-avatar">${user.username.charAt(0).toUpperCase()}</div>
+                            <div class="user-details">
+                                <div class="user-name">${user.username}</div>
+                                <div class="user-email">${user.email}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td data-label="状态">
+                        <span class="status-badge status-${user.status}">
+                            ${getStatusIcon(user.status)} ${getStatusText(user.status)}
+                        </span>
+                    </td>
+                    <td data-label="角色">
+                        <span class="role-badge ${user.role === 'admin' ? 'role-admin' : ''}">
+                            ${user.role === 'admin' ? '👑 管理员' : '👤 学生'}
+                        </span>
+                    </td>
+                    <td data-label="注册时间">${formatDate(user.created_at)}</td>
+                    <td data-label="操作">
+                        <div class="action-btns">
+                            <button class="action-btn view" onclick="viewUser(${user.id})">详情</button>
+                            ${user.status === 'pending' ? `
+                                <button class="action-btn approve" onclick="approveUser(${user.id})">批准</button>
+                                <button class="action-btn reject" onclick="rejectUser(${user.id})">拒绝</button>
+                            ` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // 渲染分页
+            renderPagination(totalPages);
+        }
+        
+        // 渲染分页
+        function renderPagination(totalPages) {
+            let html = `
+                <button class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    ←
+                </button>
+            `;
+            
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    html += `
+                        <button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">
+                            ${i}
+                        </button>
+                    `;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    html += `<span>...</span>`;
+                }
+            }
+            
+            html += `
+                <button class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    →
+                </button>
+            `;
+            
+            document.getElementById('pagination').innerHTML = html;
+        }
+        
+        // 翻页
+        function goToPage(page) {
+            currentPage = page;
+            renderUsers();
+        }
+        
+        // 筛选用户
+        function filterUsers() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value;
+            const role = document.getElementById('roleFilter').value;
+            
+            filteredUsers = allUsers.filter(user => {
+                const matchSearch = !search || 
+                    user.username.toLowerCase().includes(search) ||
+                    user.email.toLowerCase().includes(search);
+                const matchStatus = !status || user.status === status;
+                const matchRole = !role || user.role === role;
+                
+                return matchSearch && matchStatus && matchRole;
+            });
+            
+            currentPage = 1;
+            renderUsers();
+        }
+        
+        // 查看用户详情
+        function viewUser(id) {
+            const user = allUsers.find(u => u.id === id);
+            if (!user) return;
+            
+            currentUserId = id;
+            document.getElementById('modalAvatar').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('modalName').textContent = user.username;
+            document.getElementById('modalEmail').textContent = user.email;
+            document.getElementById('modalId').textContent = '#' + user.id;
+            document.getElementById('modalStatus').innerHTML = `
+                <span class="status-badge status-${user.status}">
+                    ${getStatusIcon(user.status)} ${getStatusText(user.status)}
+                </span>
+            `;
+            document.getElementById('modalRole').innerHTML = `
+                <span class="role-badge ${user.role === 'admin' ? 'role-admin' : ''}">
+                    ${user.role === 'admin' ? '👑 管理员' : '👤 学生'}
+                </span>
+            `;
+            document.getElementById('modalCreated').textContent = formatDateTime(user.created_at);
+            document.getElementById('modalLogin').textContent = user.last_login ? formatDateTime(user.last_login) : '未登录';
+            
+            // 显示/隐藏操作按钮
+            document.getElementById('modalApproveBtn').style.display = user.status === 'pending' ? 'block' : 'none';
+            document.getElementById('modalRejectBtn').style.display = user.status === 'pending' ? 'block' : 'none';
+            
+            document.getElementById('userModal').classList.add('active');
+        }
+        
+        // 关闭弹窗
+        function closeModal() {
+            document.getElementById('userModal').classList.remove('active');
+            currentUserId = null;
+        }
+        
+        // 批准用户
+        async function approveUser(id) {
+            await updateUserStatus(id, 'approve', '用户已批准');
+        }
+        
+        // 拒绝用户
+        async function rejectUser(id) {
+            if (!confirm('确定要拒绝该用户吗？')) return;
+            await updateUserStatus(id, 'reject', '用户已拒绝');
+        }
+        
+        // 弹窗中批准
+        function approveCurrentUser() {
+            if (currentUserId) approveUser(currentUserId);
+            closeModal();
+        }
+        
+        // 弹窗中拒绝
+        function rejectCurrentUser() {
+            if (currentUserId) rejectUser(currentUserId);
+            closeModal();
+        }
+        
+        // 更新用户状态
+        async function updateUserStatus(id, action, successMsg) {
+            try {
+                const token = Auth.getToken();
+                const response = await fetch(`${window.API_BASE_URL}/auth/admin/${action}/${id}`, {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                
+                if (response.ok) {
+                    showToast(successMsg, 'success');
+                    await loadUsers();
+                    await loadDashboardData();
+                } else {
+                    showToast('操作失败', 'error');
+                }
+            } catch (e) {
+                showToast('网络错误: ' + e.message, 'error');
+            }
+        }
+        
+        // 刷新用户列表
+        async function refreshUsers() {
+            showToast('正在刷新...', 'warning');
+            await loadUsers();
+            showToast('刷新完成', 'success');
+        }
+        
+        // 导出用户
+        function exportUsers() {
+            const csv = [
+                ['ID', '用户名', '邮箱', '状态', '角色', '注册时间', '最后登录'].join(','),
+                ...filteredUsers.map(u => [
+                    u.id,
+                    u.username,
+                    u.email,
+                    u.status,
+                    u.role,
+                    u.created_at,
+                    u.last_login || ''
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `users_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            
+            showToast('导出成功', 'success');
+        }
+        
+        // 初始化图表
+        function initCharts() {
+            // 用户增长趋势图
+            const growthCtx = document.getElementById('growthChart').getContext('2d');
+            growthChart = new Chart(growthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                    datasets: [{
+                        label: '新增用户',
+                        data: [12, 19, 15, 25, 22, 30],
+                        borderColor: '#0891b2',
+                        backgroundColor: 'rgba(8, 145, 178, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+            
+            // 状态分布饼图
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['已审核', '待审核', '已拒绝'],
+                    datasets: [{
+                        data: [1, 0, 0],
+                        backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { padding: 20, usePointStyle: true }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 更新图表数据
+        function updateCharts(users) {
+            if (!statusChart) return;
+            
+            const approved = users.filter(u => u.status === 'approved').length;
+            const pending = users.filter(u => u.status === 'pending').length;
+            const rejected = users.filter(u => u.status === 'rejected').length;
+            
+            statusChart.data.datasets[0].data = [approved, pending, rejected];
+            statusChart.update();
+        }
+        
+        // 显示Toast通知
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️'}</span>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
+        // 辅助函数
+        function getStatusIcon(status) {
+            const icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            return icons[status] || '❓';
+        }
+        
+        function getStatusText(status) {
+            const texts = { pending: '待审核', approved: '已审核', rejected: '已拒绝' };
+            return texts[status] || status;
+        }
+        
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            return new Date(dateStr).toLocaleDateString('zh-CN');
+        }
+        
+        function formatDateTime(dateStr) {
+            if (!dateStr) return '-';
+            return new Date(dateStr).toLocaleString('zh-CN');
+        }
+        
+        // 页面加载完成后初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
+

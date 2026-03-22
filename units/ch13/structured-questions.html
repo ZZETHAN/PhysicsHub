@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 13: Structured Questions | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; line-height: 1.6; }
+        
+        .header {
+            background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0;
+            position: sticky; top: 0; z-index: 100;
+        }
+        
+        .unit-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+            color: white; padding: 40px 0;
+        }
+        
+        .container {
+            max-width: 900px; margin: 0 auto; padding: 0 24px;
+        }
+        
+        .back-link {
+            color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px;
+        }
+        
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        
+        .content {
+            max-width: 900px; margin: 0 auto; padding: 32px 24px;
+        }
+        
+        .question-card {
+            background: white; border-radius: 12px; padding: 28px;
+            margin-bottom: 24px; border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px; padding-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .question-meta {
+            display: flex; gap: 12px; align-items: center;
+        }
+        
+        .exam-badge {
+            background: #1e293b; color: white;
+            padding: 6px 12px; border-radius: 6px;
+            font-size: 13px; font-weight: 600;
+        }
+        
+        .topic-tag {
+            background: #f3e8ff; color: #7c3aed;
+            padding: 4px 12px; border-radius: 4px;
+            font-size: 12px; font-weight: 500;
+        }
+        
+        .marks {
+            font-size: 14px; color: #64748b; font-weight: 600;
+        }
+        
+        .question-content {
+            color: #1e293b; font-size: 15px; line-height: 1.7;
+        }
+        
+        .question-content p {
+            margin: 12px 0;
+        }
+        
+        .mark-scheme {
+            margin-top: 24px; padding-top: 20px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        
+        .mark-scheme-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .mark-scheme-title {
+            font-weight: 600; color: #1e293b; font-size: 16px;
+        }
+        
+        .toggle-btn {
+            background: #eff6ff; color: #1d4ed8;
+            border: 1px solid #3b82f6; padding: 8px 16px;
+            border-radius: 6px; font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        
+        .toggle-btn:hover {
+            background: #3b82f6; color: white;
+        }
+        
+        .mark-scheme-content {
+            display: none;
+            background: #f8fafc; padding: 20px;
+            border-radius: 8px; border-left: 4px solid #22c55e;
+        }
+        
+        .mark-scheme-content.show {
+            display: block;
+        }
+        
+        .mark-point {
+            display: flex; gap: 12px; margin: 10px 0;
+            padding: 10px; background: white;
+            border-radius: 6px;
+        }
+        
+        .mark-badge {
+            background: #22c55e;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            height: fit-content;
+            font-family: monospace;
+            text-transform: uppercase;
+            min-width: 28px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .mark-badge.b { background: #3b82f6; }
+        .mark-badge.m { background: #f59e0b; }
+        .mark-badge.a { background: #22c55e; }
+        .mark-badge.c { background: #8b5cf6; }
+        .mark-badge.e { background: #ec4899; }
+        
+        .mark-type-legend {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #166534;
+        }
+        
+        .tip-box {
+            background: #eff6ff; border-left: 4px solid #3b82f6;
+            padding: 16px 20px; margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-box strong {
+            color: #1d4ed8;
+        }
+        
+        @media (max-width: 640px) {
+            .question-card { padding: 20px; }
+            .question-header { flex-direction: column; gap: 12px; }
+            h1 { font-size: 26px; }
+        }
+        
+        mjx-container { font-size: 105% !important; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="../../index.html" style="text-decoration: none; font-size: 18px; font-weight: 700; color: #1d4ed8;">PhysicsHub<span style="font-weight: 400; color: #64748b; font-size: 13px; margin-left: 6px;">by Ethan</span></a>
+            <div style="font-size: 11px; font-weight: 600; color: #7c3aed; background: #f3e8ff; padding: 4px 10px; border-radius: 4px; margin-right: 12px;">A2 LEVEL</div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    <div class="unit-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to Unit 13</a>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Gravitational Field - Past Exam Questions with Mark Schemes</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        <!-- Question 1 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">CIE 9702/42/M/J/2022</span>
+                    <span class="topic-tag">Orbital Motion</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p>A satellite of mass \(m\) orbits a planet of mass \(M\) in a circular orbit of radius \(r\).</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(a)</span> Show that the orbital speed \(v\) of the satellite is given by: [4]</p>
+                
+                \[v = \sqrt{\frac{GM}{r}}\]
+                
+                <p style="margin-left: 24px;"><span class="part-label">(b)</span> The satellite moves to a new orbit with a different radius. Explain why the speed of the satellite changes. [2]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleMarkScheme(this)">Show</button>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Equates gravitational force to centripetal force: \(F = \frac{GMm}{r^2} = \frac{mv^2}{r}\)</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Cancels \(m\) and one \(r\) to give: \(\frac{GM}{r} = v^2\)</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Rearranges to show: \(v = \sqrt{\frac{GM}{r}}\)</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge m">M1</span>
+                        <div>Explanation: Gravitational force changes (decreases as \(r\) increases / increases as \(r\) decreases) [1]</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>This requires a different speed for circular orbit (or gravitational force provides different centripetal force)</div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Common error - forgetting that gravitational force depends on \(1/r^2\) while centripetal force depends on \(1/r\). Always start with \(F_g = F_c\).
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 2 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">CIE 9702/42/O/N/2021</span>
+                    <span class="topic-tag">Escape Velocity</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p style="margin-left: 24px;"><span class="part-label">(a)</span> Define gravitational potential at a point. [1]</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(b)</span> By considering energy, derive an expression for the escape velocity \(v_0\) from the surface of a planet of mass \(M\) and radius \(R\). [3]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleMarkScheme(this)">Show</button>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Work done per unit mass bringing (small test) mass from infinity to the point [Accept: work done per unit mass / energy per unit mass]</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Kinetic energy at surface = \(0 - (-\frac{GMm}{R})\) or \(\frac{1}{2}mv_0^2 = \frac{GMm}{R}\)</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Cancels \(m\): \(\frac{1}{2}v_0^2 = \frac{GM}{R}\)</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Rearranges to: \(v_0 = \sqrt{\frac{2GM}{R}}\) [Accept \(\sqrt{2gR}\)]</div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Remember the negative sign in gravitational potential! At surface: \(\phi = -\frac{GM}{R}\). At infinity: \(\phi = 0\). The change is \(\frac{GM}{R}\).
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 3 -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">CIE 9702/42/M/J/2023</span>
+                    <span class="topic-tag">Gravitational Field Strength</span>
+                </div>
+                <span class="marks">[3 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p>The gravitational field strength \(g\) at the surface of a planet is \(8.6\,\text{N kg}^{-1}\). The radius of the planet is \(3.4 \times 10^6\,\text{m}\).</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(a)</span> Calculate the mass of the planet. [3]</p>            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleMarkScheme(this)">Show</button>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    <div class="mark-point"
+>
+                        <span class="mark-badge b">B1</span>
+                        <div>Uses: \(g = \frac{GM}{R^2}\) or \((3.4 \times 10^6)^2 \times 8.6 = 6.67 \times 10^{-11} \times M\)</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Rearrangement: \(M = \frac{gR^2}{G}\)</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div>Answer: \(M = 1.5 \times 10^{24}\,\text{kg}\) [Accept 1.48-1.52 \times 10^{24}]</div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Always check your powers of 10! Common error: forgetting to square the radius. Also remember that \(R\) is the distance from the center, not the height above surface.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 4: Satellite Orbit (with diagram) -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">CIE 9702/42/O/N/2022</span>
+                    <span class="topic-tag">Satellite Motion</span>
+                </div>
+                <span class="marks">[5 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <div style="background: #f0f9ff; border: 2px dashed #3b82f6; border-radius: 8px; padding: 30px; margin: 16px 0; text-align: center;">
+                    <p style="color: #3b82f6; margin: 0; font-size: 14px; font-weight: 500;">[官方图像位置 - 卫星轨道图]</p>
+                    <p style="color: #64748b; margin: 8px 0 0 0; font-size: 12px;">请从CIE 9702/42/O/N/2022真题截取卫星轨道图示</p>
+                </div>
+                
+                <p>A satellite of mass \(m\) orbits the Earth in a circular orbit of radius \(r\), as shown in the diagram. The Earth has mass \(M\) and radius \(R\).</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(a)</span> Show that the kinetic energy \(E_k\) of the satellite is given by: [2]</p>
+                
+                \[E_k = \frac{GMm}{2r}\]
+                
+                <p style="margin-left: 24px;"><span class="part-label">(b)</span> The total energy \(E_T\) of the satellite is the sum of its kinetic energy and gravitational potential energy. Show that: [2]</p>
+                
+                \[E_T = -\frac{GMm}{2r}\]
+                
+                <p style="margin-left: 24px;"><span class="part-label">(c)</span> Explain why the total energy is negative. [1]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleMarkScheme(this)">Show</button>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    <div class="mark-point">
+                        <span class="mark-badge m">M1</span>
+                        <div><strong>Part (a):</strong> Equates \(\frac{GMm}{r^2} = \frac{mv^2}{r}\) [1], uses \(E_k = \frac{1}{2}mv^2\) to derive \(E_k = \frac{GMm}{2r}\) [1]</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge m">M1</span>
+                        <div><strong>Part (b):</strong> States \(E_T = E_k + \phi\) or \(\frac{GMm}{2r} + (-\frac{GMm}{r})\) [1], simplifies to \(-\frac{GMm}{2r}\) [1]</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge b">B1</span>
+                        <div><strong>Part (c):</strong> Bound system / work must be done to separate masses / satellite cannot escape to infinity with current energy [any valid point]</div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> The negative total energy indicates a bound orbit. Notice that \(E_k = -E_T\) and \(E_k = \frac{1}{2}|E_p|\) - this is the virial theorem for circular orbits.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 5: Geostationary Orbit -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">CIE 9702/42/M/J/2021</span>
+                    <span class="topic-tag">Kepler's Third Law</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p>A geostationary satellite orbits the Earth with a period of 24 hours, remaining above the same point on the Earth's equator.</p>
+                
+                <p>Data for Earth:</p>
+                <ul>
+                    <li>Mass \(M_E = 6.0 \times 10^{24}\,\text{kg}\)</li>
+                    <li>Radius \(R_E = 6.4 \times 10^6\,\text{m}\)</li>
+                </ul>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(a)</span> Show that the radius \(r\) of the geostationary orbit is given by: [2]</p>
+                
+                \[r^3 = \frac{GMT^2}{4\pi^2}\]
+                
+                <p style="margin-left: 24px;"><span class="part-label">(b)</span> Calculate the radius \(r\) of the geostationary orbit. [2]</p>
+                
+                <p style="margin-left: 24px;"><span class="part-label">(c)</span> Calculate the speed of the geostationary satellite. [2]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleMarkScheme(this)">Show</button>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    <div class="mark-point">
+                        <span class="mark-badge m">M1</span>
+                        <div><strong>Part (a):</strong> Equates gravitational and centripetal forces [1], substitutes \(v = \frac{2\pi r}{T}\) and rearranges to give \(r^3 = \frac{GMT^2}{4\pi^2}\) [1]</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge m">M1</span>
+                        <div><strong>Part (b):</strong> Correct substitution: \(r^3 = \frac{6.67 \times 10^{-11} \times 6.0 \times 10^{24} \times (24 \times 3600)^2}{4\pi^2}\) [1], answer: \(r \approx 4.2 \times 10^7\,\text{m}\) (about 6.6 Earth radii) [1]</div>
+                    </div>
+                    
+                    <div class="mark-point">
+                        <span class="mark-badge m">M1</span>
+                        <div><strong>Part (c):</strong> Uses \(v = \frac{2\pi r}{T}\) or \(v = \sqrt{\frac{GM}{r}}\) [1], answer: \(v \approx 3.1\,\text{km s}^{-1}\) [1]</div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Remember to convert 24 hours to seconds (86400 s)! Geostationary satellites orbit at about 36000 km above Earth's surface, much higher than low-Earth orbit satellites (400-800 km).
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        function toggleMarkScheme(btn) {
+            const content = btn.parentElement.nextElementSibling;
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                btn.textContent = 'Show';
+            } else {
+                content.classList.add('show');
+                btn.textContent = 'Hide';
+            }
+        }
+    </script>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.05,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+{
+  "project": "PhysicsHub",
+  "version": "1.0.0",
+  "syllabus": "CIE 9702 2025-2027",
+  "units": [
+    {
+      "id": "ch12",
+      "number": 12,
+      "title": "Motion in a Circle",
+      "title_cn": "圆周运动",
+      "level": "AS",
+      "status": "completed",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["angular velocity", "centripetal acceleration", "centripetal force", "uniform circular motion"],
+      "last_updated": "2026-03-17"
+    },
+    {
+      "id": "ch13",
+      "number": 13,
+      "title": "Gravitational Field",
+      "title_cn": "引力场",
+      "level": "AS",
+      "status": "in_progress",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["Newton's law of gravitation", "gravitational field strength", "gravitational potential", "orbital motion"],
+      "last_updated": "2026-03-17"
+    },
+    {
+      "id": "ch17",
+      "number": 17,
+      "title": "Oscillations",
+      "title_cn": "振荡",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["simple harmonic motion", "damped oscillation", "forced oscillation", "resonance"],
+      "last_updated": null
+    },
+    {
+      "id": "ch18",
+      "number": 18,
+      "title": "Electric Fields",
+      "title_cn": "电场",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["Coulomb's law", "electric field strength", "electric potential", "capacitance"],
+      "last_updated": null
+    },
+    {
+      "id": "ch19",
+      "number": 19,
+      "title": "Capacitance",
+      "title_cn": "电容",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["capacitor", "RC circuit", "time constant", "energy storage"],
+      "last_updated": null
+    },
+    {
+      "id": "ch20",
+      "number": 20,
+      "title": "Magnetic Fields",
+      "title_cn": "磁场",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["magnetic flux density", "Lorentz force", "electromagnetic induction", "Faraday's law"],
+      "last_updated": null
+    },
+    {
+      "id": "ch21",
+      "number": 21,
+      "title": "Alternating Currents",
+      "title_cn": "交流电",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["AC circuit", "rectification", "transformer", "rms value"],
+      "last_updated": null
+    },
+    {
+      "id": "ch22",
+      "number": 22,
+      "title": "Quantum Physics",
+      "title_cn": "量子物理",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["photoelectric effect", "energy levels", "wave-particle duality", "de Broglie wavelength"],
+      "last_updated": null
+    },
+    {
+      "id": "ch23",
+      "number": 23,
+      "title": "Nuclear Physics",
+      "title_cn": "核物理",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["radioactivity", "binding energy", "nuclear reaction", "mass defect"],
+      "last_updated": null
+    },
+    {
+      "id": "ch24",
+      "number": 24,
+      "title": "Medical Physics",
+      "title_cn": "医学物理",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["X-ray", "ultrasound", "PET", "medical imaging"],
+      "last_updated": null
+    },
+    {
+      "id": "ch25",
+      "number": 25,
+      "title": "Astronomy and Cosmology",
+      "title_cn": "天文学",
+      "level": "A2",
+      "status": "pending",
+      "pages": ["index", "theory", "formulas", "examples", "mistakes", "quiz"],
+      "keywords": ["Stefan-Boltzmann law", "Wien's law", "Doppler effect", "Hubble's law"],
+      "last_updated": null
+    }
+  ],
+  "team": {
+    "content_writers": ["待分配"],
+    "practice_managers": ["待分配"],
+    "frontend_developers": ["待分配"],
+    "reviewers": ["待分配"]
+  },
+  "milestones": [
+    {
+      "phase": 1,
+      "target": "完成Ch12-Ch13",
+      "status": "in_progress",
+      "deadline": "2026-03-20"
+    },
+    {
+      "phase": 2,
+      "target": "完成Ch17-Ch20 (核心A2单元)",
+      "status": "pending",
+      "deadline": "2026-03-27"
+    },
+    {
+      "phase": 3,
+      "target": "完成所有单元",
+      "status": "pending",
+      "deadline": "2026-04-10"
+    },
+    {
+      "phase": 4,
+      "target": "练习题系统完善",
+      "status": "pending",
+      "deadline": "2026-04-17"
+    }
+  ]
+}

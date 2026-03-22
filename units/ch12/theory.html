@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>理论讲解 - Ch 12: Motion in a Circle | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        .formula-box {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: var(--space-4) var(--space-6);
+            margin: var(--space-4) 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        mjx-container {
+            font-size: 115% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../../index.html" style="text-decoration: none;"><div class="logo">PhysicsHub</div></a>
+                <div class="logo-sub">Ch 12 · Circular Motion</div>
+            </div>
+            
+            <nav class="nav-section">
+                <div class="nav-title">本单元导航</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><span class="nav-icon">📋</span>单元概览</a></li>
+                    <li class="nav-item"><a href="theory.html" class="nav-link active"><span class="nav-icon">📖</span>理论讲解</a></li>
+                    <li class="nav-item"><a href="formulas.html" class="nav-link"><span class="nav-icon">📝</span>公式汇总</a></li>
+                    <li class="nav-item"><a href="examples.html" class="nav-link"><span class="nav-icon">💡</span>典型例题</a></li>
+                    <li class="nav-item"><a href="mistakes.html" class="nav-link"><span class="nav-icon">⚠️</span>常见错误</a></li>
+                    <li class="nav-item"><a href="quiz.html" class="nav-link"><span class="nav-icon">✏️</span>单元测试</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main">
+            <div class="content-card">
+                <h1>圆周运动理论讲解</h1>
+                
+                <h2>12.1 基本物理量</h2>
+                
+                <h3>角速度 \(\omega\) (Angular Velocity)</h3>
+                <p>角速度描述物体转动的快慢，定义为角度随时间的变化率。</p>
+                
+                <div class="formula-box">
+                    \[
+                    \omega = \frac{\Delta\theta}{\Delta t} = \frac{2\pi}{T} = 2\pi f
+                    \]
+                </div>
+                
+                <ul>
+                    <li>\(T\): 周期，完成一次完整转动所需时间（秒）</li>
+                    <li>\(f\): 频率，每秒转动的圈数（Hz）</li>
+                    <li>\(\omega\): 角速度，单位 rad/s</li>
+                </ul>
+                
+                <h3>线速度 \(v\) (Linear Velocity)</h3>
+                <p>线速度是物体沿圆周运动的瞬时速度，方向始终沿切线方向。</p>
+                
+                <div class="formula-box">
+                    \[
+                    v = \omega r = \frac{2\pi r}{T}
+                    \]
+                </div>
+                
+                <div class="box box-info">
+                    <div class="box-title">💡 重要理解</div>
+                    <p>在匀速圆周运动中，线速度的大小不变，但<strong>方向时刻改变</strong>。这种方向的变化正是产生加速度的原因。</p>
+                </div>
+                
+                <h2>12.2 向心加速度</h2>
+                
+                <p>由于速度方向不断改变，即使速率不变，物体也具有加速度，称为<span style="color: var(--primary); font-weight: 600;">向心加速度</span>。</p>
+                
+                <div class="formula-box">
+                    \[
+                    a = \frac{v^2}{r} = \omega^2 r
+                    \]
+                </div>
+                
+                <div class="box box-warning">
+                    <div class="box-title">⚠️ 关键点</div>
+                    <ul>
+                        <li>向心加速度的方向<strong>始终指向圆心</strong></li>
+                        <li>与速度方向垂直（沿半径指向圆心）</li>
+                        <li>只改变速度的方向，不改变速度的大小</li>
+                    </ul>
+                </div>
+                
+                <h2>12.3 向心力</h2>
+                
+                <p>根据牛顿第二定律，产生向心加速度的力称为向心力。</p>
+                
+                <div class="formula-box">
+                    \[
+                    F = ma = \frac{mv^2}{r} = m\omega^2 r
+                    \]
+                </div>
+                
+                <div class="box box-danger">
+                    <div class="box-title">❌ 常见误解</div>
+                    <p><strong>向心力不是一种独立的力！</strong></p>
+                    <p>向心力是由其他真实力提供的，常见的来源包括：</p>
+                    
+                    <ul>
+                        <li>绳子的<strong>张力</strong></li>
+                        <li>接触面的<strong>摩擦力</strong></li>
+                        <li>支持力的<strong>水平分量</strong></li>
+                        <li><strong>万有引力</strong></li>
+                    </ul>
+                </div>
+                
+                <h2>12.4 典型情景分析</h2>
+                
+                <h3>情景1：水平面内的圆锥摆</h3>
+                <p>一个质量为 \(m\) 的小球用长度为 \(L\) 的绳子悬挂，在水平面内做匀速圆周运动，绳子与竖直方向夹角为 \(\theta\)。</p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <strong>受力分析</strong><br>
+                        竖直方向：\(T\cos\theta = mg\)<br>
+                        水平方向（指向圆心）：\(T\sin\theta = m\omega^2 r\)
+                    </div>
+                    
+                    <div class="step">
+                        <strong>几何关系</strong><br>
+                        圆周半径 \(r = L\sin\theta\)
+                    </div>
+                    
+                    <div class="step">
+                        <strong>求解</strong><br>
+                        由前两式得：\(\tan\theta = \dfrac{\omega^2 L\sin\theta}{g}\)<br>
+                        解得：\(\cos\theta = \dfrac{g}{\omega^2 L}\)
+                    </div>
+                </div>
+                
+                <h3>情景2：竖直圆环运动</h3>
+                
+                <p>物体在竖直平面内做圆周运动，最高点和最低点的受力情况不同。</p>
+                
+                <h4>最高点</h4>
+                
+                <div class="formula-box">
+                    \[
+                    mg + T = \frac{mv^2}{r} \quad \text{（取向下为正）}
+                    \]
+                </div>
+                
+                <div class="box box-success">
+                    <div class="box-title">✅ 临界条件</div>
+                    
+                    <p>当 \(T = 0\) 时，仅由重力提供向心力，此时速度为最小值：</p>
+                    
+                    <div class="formula-box">
+                        \[
+                        v_{\min} = \sqrt{gr}
+                        \]
+                    </div>
+                </div>
+                
+                <h4>最低点</h4>
+                
+                <div class="formula-box">
+                    \[
+                    T - mg = \frac{mv^2}{r} \quad \text{（取向上为正）}
+                    \]
+                </div>
+                
+                <h3>情景3：车辆转弯</h3>
+                
+                <h4>水平路面</h4>
+                
+                <p>摩擦力提供向心力：</p>
+                
+                <div class="formula-box">
+                    \[
+                    f = \mu N = \mu mg \geq \frac{mv^2}{r}
+                    \]
+                </div>
+                
+                <p>最大安全速度：</p>
+                
+                <div class="formula-box">
+                    \[
+                    v_{\max} = \sqrt{\mu gr}
+                    \]
+                </div>
+                
+                <h4>倾斜弯道（倾角 \(\theta\)）</h4>
+                
+                <p>设计速度 \(v\) 时，重力和支持力的合力提供向心力，无需摩擦力：</p>
+                
+                <div class="formula-box">
+                    \[
+                    \tan\theta = \frac{v^2}{rg}
+                    \]
+                </div>
+                
+                <h2>12.5 解题通用步骤</h2>
+                
+                <div class="steps">
+                    <div class="step">
+                        <strong>确定圆心位置</strong><br>
+                        明确物体绕哪个点做圆周运动
+                    </div>
+                    
+                    <div class="step">
+                        <strong>画出受力分析图</strong><br>
+                        只画真实力（重力、弹力、摩擦力等），不画"向心力"
+                    </div>
+                    
+                    <div class="step">
+                        <strong>建立坐标系</strong><br>
+                        指向圆心的方向为 \(x\) 轴正方向
+                    </div>
+                    
+                    <div class="step">
+                        <strong>列方程</strong><br>
+                        沿半径方向：\(F_{\text{net}} = \dfrac{mv^2}{r} = m\omega^2 r\)<br>
+                        垂直于半径方向：\(\sum F = 0\)
+                    </div>
+                    
+                    <div class="step">
+                        <strong>求解并检验</strong><br>
+                        检查单位、数值合理性
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- MathJax 本地配置 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.1,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+</body>
+</html>

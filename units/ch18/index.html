@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 18: Electric Fields | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    <style>
+        :root {
+            --fields-primary: #059669;
+            --fields-dark: #047857;
+            --fields-light: #d1fae5;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #047857 0%, #059669 100%); color: white; padding: 48px 0; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        h1 { margin: 12px 0 0 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; }
+        .subtitle { margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; }
+        
+        .content-grid { display: grid; grid-template-columns: 220px 1fr; gap: 24px; max-width: 1100px; margin: 32px auto; padding: 0 16px; }
+        
+        .sidebar-nav { position: sticky; top: 80px; height: fit-content; max-height: calc(100vh - 120px); overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--fields-light); border-radius: 4px; }
+        .nav-section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 12px; }
+        
+        .nav-section-header {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            padding: 10px 12px;
+            margin-top: 8px;
+            margin-bottom: 2px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        
+        .nav-section-header:hover {
+            background: #ecfdf5;
+            color: #059669;
+        }
+        
+        .nav-section-header.active {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .nav-list { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .nav-item { margin-bottom: 4px; }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        a.nav-link {
+            display: block;
+        }
+        
+        .nav-link::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #a7f3d0;
+            margin-right: 10px;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        
+        .nav-link:hover { 
+            background: #ecfdf5; 
+            color: #059669;
+        }
+        
+        .nav-link:hover::before {
+            background: #10b981;
+        }
+        
+        .nav-link.active { 
+            background: #d1fae5; 
+            color: #059669;
+            font-weight: 500;
+        }
+        
+        .nav-link.active::before {
+            background: #10b981;
+        }
+        
+        .main-content { max-width: 100%; min-width: 0; }
+        .section-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; border: 1px solid #e2e8f0; scroll-margin-top: 140px; }
+        .section-card h2 { margin-top: 0; color: #1e293b; font-size: 22px; font-weight: 700; }
+        .section-card h3 { color: #1e293b; font-size: 18px; font-weight: 600; margin-top: 24px; }
+        .section-card h4 { color: #334155; font-size: 16px; font-weight: 600; margin-top: 20px; }
+        
+        .concept-box { background: var(--fields-light); border-left: 4px solid var(--fields-primary); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .concept-box strong { color: var(--fields-primary); }
+        .definition-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .definition-box .def-title { font-weight: 600; color: #92400e; margin-bottom: 8px; }
+        .formula-box { background: #f0fdf4; border: 1px solid #86efac; padding: 16px; margin: 16px 0; border-radius: 8px; text-align: center; }
+        .formula-box strong { color: #166534; }
+        .exam-alert { background: var(--fields-light); border: 1px solid var(--fields-primary); padding: 14px 18px; margin: 16px 0; border-radius: 8px; }
+        .exam-alert strong { color: var(--fields-primary); }
+        .tip-box { background: #ecfdf5; border-left: 4px solid #10b981; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
+        .tip-box strong { color: #1d4ed8; }
+        .key-points { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+        .key-points li { margin-bottom: 8px; }
+        
+        .checklist-box {
+            background: var(--fields-light);
+            border: 1px solid var(--fields-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--fields-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--fields-dark); }
+        .figure { margin: 20px 0; text-align: center; }
+        .figure img { max-width: 100%; width: auto; height: auto; max-height: 400px; object-fit: contain; border-radius: 8px; display: block; margin: 0 auto; }
+        .figure-caption { font-size: 14px; color: #64748b; margin-top: 10px; font-style: italic; text-align: center; }
+        .graph-placeholder { background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 16px 0; text-align: center; }
+        .graph-placeholder-placeholder { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; color: #64748b; margin: 16px 0; background: #f8fafc; }
+        
+        .mobile-menu-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: var(--fields-primary); color: white; border: none; font-size: 20px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .mobile-nav { display: none; position: fixed; bottom: 80px; right: 20px; width: 260px; max-height: 70vh; overflow-y: auto; background: white; border-radius: 12px; padding: 16px; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.2); z-index: 999; }
+        .mobile-nav.show { display: block; }
+        .reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #059669, #34d399); z-index: 1001; transition: width 0.1s ease; }
+        .back-to-top { position: fixed; bottom: 90px; right: 24px; width: 40px; height: 40px; border-radius: 50%; background: var(--fields-primary); border: none; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 101; text-decoration: none; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--fields-dark); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+        
+        .progress-btn.active {
+            background: #059669 !important;
+            color: white;
+            border-color: #059669 !important;
+        }
+        
+        .progress-btn:hover:not(.active) {
+            background: #f1f5f9;
+        }
+        
+        @media (max-width: 968px) { .content-grid { grid-template-columns: 1fr; } .sidebar-nav { display: none; } .mobile-menu-btn { display: flex; align-items: center; justify-content: center; } }
+        mjx-container { font-size: 105% !important; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">&#8592;</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #d1fae5 0%, white 100%); border: 1px solid #059669; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #059669; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px; transition: transform 0.2s;">&#9660;</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+                        <a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+                        <a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ffedd5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span></a>
+                        <a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+                        <a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+                        <a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#cffafe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+                        <a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; background: #d1fae5; font-weight: 500; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #059669;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span><span style="width: 8px; height: 8px; background: #059669; border-radius: 50%;"></span></a>
+                        <a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ede9fe'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+                        <a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'"><span style="font-weight: 600; min-width: 52px;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#d1fae5'" onmouseout="this.style.background='transparent'">
+                            <span style="font-weight: 600; min-width: 52px;">Unit 21</span>
+                            <span style="color: #64748b; flex: 1;">Alternating Currents</span>
+                        </a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;" onmouseover="this.style.background='#ffe4e6'" onmouseout="this.style.background='transparent'">
+                            <span style="font-weight: 600; min-width: 52px;">Unit 22</span>
+                            <span style="color: #64748b; flex: 1;">Quantum Physics</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">A2 Level > Unit 18</div>
+            <h1>Electric Fields</h1>
+            <p class="subtitle">From Coulomb's law to electric potential energy - the invisible forces between charges</p>
+        </div>
+    </div>
+
+    <div class="reading-progress" id="readingProgress"></div>
+    <a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">&#9776;</button>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+            <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 4px;"><a href="#h2-intro" onclick="scrollTo('h2-intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">1. Coulomb's Law</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-coulomb" onclick="scrollTo('h2-coulomb')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1-1.3 Coulomb's Law</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">2. Electric Field Strength</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-field-strength" onclick="scrollTo('h2-field-strength')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1-2.3 Field Strength</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">3. Electric Field Patterns</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-field-patterns" onclick="scrollTo('h2-field-patterns')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1-3.2 Field Patterns</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">4. Electric Potential</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-potential" onclick="scrollTo('h2-potential')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.1-4.2 Potential</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;">5. Uniform Electric Field</li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h2-uniform-field" onclick="scrollTo('h2-uniform-field')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">5.1-5.2 Uniform Field</a></li>
+            <li style="margin-bottom: 4px;"><a href="#h2-checklist" onclick="scrollTo('h2-checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">P4 Checklist</a></li>
+        </ul>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch18', 'not_started')" id="progress-btn-not_started-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch18', 'in_progress')" id="progress-btn-in_progress-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch18', 'completed')" id="progress-btn-completed-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#h2-intro" class="nav-link" data-section="h2-intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-coulomb" class="nav-section-header" data-section="h2-coulomb">1. Coulomb's Law</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-coulomb-1-1" class="nav-link" data-section="h3-coulomb-1-1">1.1 Key Properties</a></li>
+                    <li class="nav-item"><a href="#h3-coulomb-1-2" class="nav-link" data-section="h3-coulomb-1-2">1.2 Vector Nature</a></li>
+                    <li class="nav-item"><a href="#h3-coulomb-1-3" class="nav-link" data-section="h3-coulomb-1-3">1.3 Comparison with Gravitation</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-field-strength" class="nav-section-header" data-section="h2-field-strength">2. Electric Field Strength</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-field-strength-2-1" class="nav-link" data-section="h3-field-strength-2-1">2.1 Direction of Electric Field</a></li>
+                    <li class="nav-item"><a href="#h3-field-strength-2-2" class="nav-link" data-section="h3-field-strength-2-2">2.2 Point Charge Formula</a></li>
+                    <li class="nav-item"><a href="#h3-field-strength-2-3" class="nav-link" data-section="h3-field-strength-2-3">2.3 Formula Selection Guide</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-field-patterns" class="nav-section-header" data-section="h2-field-patterns">3. Electric Field Patterns</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-field-patterns-3-1" class="nav-link" data-section="h3-field-patterns-3-1">3.1 Types of Field Patterns</a></li>
+                    <li class="nav-item"><a href="#h3-field-patterns-3-2" class="nav-link" data-section="h3-field-patterns-3-2">3.2 Equipotential Lines</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-potential" class="nav-section-header" data-section="h2-potential">4. Electric Potential</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-potential-4-1" class="nav-link" data-section="h3-potential-4-1">4.1 Key Points</a></li>
+                    <li class="nav-item"><a href="#h3-potential-4-2" class="nav-link" data-section="h3-potential-4-2">4.2 Potential Gradient</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-uniform-field" class="nav-section-header" data-section="h2-uniform-field">5. Uniform Electric Field</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-uniform-field-5-1" class="nav-link" data-section="h3-uniform-field-5-1">5.1 Force on Charged Particle</a></li>
+                    <li class="nav-item"><a href="#h3-uniform-field-5-2" class="nav-link" data-section="h3-uniform-field-5-2">5.2 Particle Deflection</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-checklist" class="nav-link" data-section="h2-checklist" style="margin-top:8px;">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top:16px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="structured-questions.html" class="nav-link">Practice Questions</a></li>
+                <li class="nav-item"><a href="../../homework/ch18/" class="nav-link" style="color: #16a34a;">Homework PDFs</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch18', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch18', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch18', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            
+            <!-- Introduction -->
+            <div id="intro" class="section-card">
+                <h2 id="h2-intro" style="scroll-margin-top: 120px;">Introduction: What is Magnetic Field?</h2>
+                <div class="concept-box">
+                    <strong>Think about these questions:</strong>
+                    <ul style="margin-top: 10px; margin-bottom: 0;">
+                        <li>Why does static electricity make your hair stand up?</li>
+                        <li>Why does lightning strike during storms?</li>
+                        <li>How does a capacitor store charge in an electronic circuit?</li>
+                    </ul>
+                </div>
+                <p>Electric fields explain how charged objects interact without touching - analogous to how gravitational fields explain mass interactions. Every charged object creates an <strong>electric field</strong> in the space around it. When another charge enters this field, it experiences a force.</p>
+                <div class="exam-alert">
+                    <strong>Paper 4 Examination Focus:</strong> Electric fields questions frequently combine with capacitor topics (Unit 19). Be prepared to calculate forces, field strengths, and potentials using the formulas.
+                </div>
+                <p>This unit develops the beautiful parallel between <strong>electric fields</strong> and <strong>gravitational fields</strong> (Unit 13). The mathematical structures are identical - same inverse-square law, same concept of potential - but the source is charge instead of mass.</p>
+            </div>
+
+            <!-- Section 1: Coulomb's Law -->
+            <div id="coulomb" class="section-card">
+                <h2 id="h2-coulomb" style="scroll-margin-top: 120px;">1. Coulomb's Law of Electrostatics</h2>
+                <div class="definition-box">
+                    <div class="def-title">Definition: Coulomb's Law</div>
+                    The electrostatic force between two point charges is directly proportional to the product of their charges and inversely proportional to the square of their separation.
+                </div>
+                <div class="formula-box">
+                    <strong>Coulomb's Law:</strong><br>
+                    \[ F = \frac{1}{4\pi\varepsilon_0} \cdot \frac{Q_1 Q_2}{r^2} = k\frac{Q_1 Q_2}{r^2} \]
+                    <br><span style="font-size: 13px; color: #64748b;">where \( k = 8.99 \times 10^9 \, \text{N m}^2 \, \text{C}^{-2} \) and \( \varepsilon_0 = 8.85 \times 10^{-12} \, \text{F m}^{-1} \)</span>
+                </div>
+                <h3 id="h3-coulomb-1-1">1.1 Key Properties</h3>
+                <ul class="key-points">
+                    <li><strong>Attractive</strong> if \( Q_1 Q_2 < 0 \) (opposite charges)</li>
+                    <li><strong>Repulsive</strong> if \( Q_1 Q_2 > 0 \) (same charges)</li>
+                    <li>Acts along the line joining the two charges</li>
+                    <li>Inverse square law: \( F \propto \dfrac{1}{r^2} \)</li>
+                    <li>Same mathematical form as Newton's Law of Gravitation</li>
+                </ul>
+                <h3 id="h3-coulomb-1-2">1.2 Vector Nature</h3>
+                <p>Electrostatic force is a <strong>vector</strong> quantity. When finding the net force on a charge due to multiple other charges, you must consider direction - use <strong>parallelogram law</strong> or <strong>vector component method</strong>.</p>
+                <div class="tip-box">
+                    <strong>Common Mistake:</strong> Students often simply add the magnitudes of forces when there are multiple charges. This is wrong - you must consider whether each force is attractive or repulsive, find the vector sum, and give a direction.
+                </div>
+                <h3 id="h3-coulomb-1-3">1.3 Comparison with Gravitation</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px;">
+                    <tr style="background: #f8fafc;">
+                        <th style="border: 1px solid #e2e8f0; padding: 10px 14px; text-align: left; font-weight: 600; color: #475569;">Feature</th>
+                        <th style="border: 1px solid #e2e8f0; padding: 10px 14px; text-align: left; font-weight: 600; color: #475569;">Gravitation</th>
+                        <th style="border: 1px solid #e2e8f0; padding: 10px 14px; text-align: left; font-weight: 600; color: #475569;">Electrostatics</th>
+                    </tr>
+                    <tr><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">Formula</td><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">\( F = G\dfrac{M_1 M_2}{r^2} \)</td><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">\( F = k\dfrac{Q_1 Q_2}{r^2} \)</td></tr>
+                    <tr style="background: #fafafa;"><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">Constant</td><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">\( G = 6.67 \times 10^{-11} \)</td><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">\( k = 8.99 \times 10^9 \)</td></tr>
+                    <tr><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">Force type</td><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">Always attractive</td><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">Attractive or repulsive</td></tr>
+                    <tr style="background: #fafafa;"><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">Source</td><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">Mass</td><td style="border: 1px solid #e2e8f0; padding: 10px 14px;">Charge</td></tr>
+                </table>
+                <div class="figure">
+                    <img src="../../assets/images/ch18/fig18_1_point_charges.png" alt="Two point charges showing attractive and repulsive forces" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:0 auto;">
+                    <p class="figure-caption">Fig 18.1 — Two point charges showing attractive and repulsive forces</p>
+                </div>
+            </div>
+
+            <!-- Section 2: Electric Field Strength -->
+            <div id="field-strength" class="section-card">
+                <h2 id="h2-field-strength" style="scroll-margin-top: 120px;">2. Electric Field Strength (E)</h2>
+                <div class="definition-box">
+                    <div class="def-title">Definition: Electric Field Strength</div>
+                    Electric field strength at a point is defined as the electrostatic force per unit positive charge placed at that point.
+                </div>
+                <div class="formula-box">
+                    <strong>Electric Field Strength:</strong><br>
+                    \[ E = \frac{F}{q} = \frac{kQ}{r^2} \]
+                    <br><span style="font-size: 13px; color: #64748b;">Unit: N C<sup>-1</sup> or V m<sup>-1</sup> (equivalent)</span>
+                </div>
+                <h3 id="h3-field-strength-2-1">2.1 Direction of Electric Field</h3>
+                <ul class="key-points">
+                    <li>Electric field strength is a <strong>vector</strong></li>
+                    <li>Direction: <strong>the same direction as the force on a positive test charge</strong></li>
+                    <li>Away from positive source charge</li>
+                    <li>Toward negative source charge</li>
+                </ul>
+                <h3 id="h3-field-strength-2-2">2.2 Point Charge Formula</h3>
+                <p>For a point charge Q at distance r:</p>
+                <div class="formula-box">
+                    \[ E = \frac{kQ}{r^2} \]
+                    <br><span style="font-size: 13px; color: #64748b;">Field radiates outward for positive Q, inward for negative Q</span>
+                </div>
+                <div class="tip-box">
+                    <strong>Test Charge Convention:</strong> In E = F/q, the charge q is a small positive <strong>test charge</strong> placed to probe the field. In E = kQ/r<sup>2</sup>, the charge Q is the <strong>source charge</strong> creating the field.
+                </div>
+                <h3 id="h3-field-strength-2-3">2.3 Formula Selection Guide</h3>
+                <ul class="key-points">
+                    <li><strong>Point charge field:</strong> \( E = \dfrac{kQ}{r^2} \)</li>
+                    <li><strong>Uniform field (parallel plates):</strong> \( E = \dfrac{V}{d} \)</li>
+                    <li><strong>From force and charge:</strong> \( E = \dfrac{F}{q} \)</li>
+                </ul>
+                <div class="figure">
+                    <img src="../../assets/images/ch18/fig18_2_radial_field.png" alt="Electric field around a point charge showing radial field lines">
+                    <p class="figure-caption">Fig 18.2 — Electric field around a point charge</p>
+                </div>
+            </div>
+
+            <!-- Section 3: Electric Field Patterns -->
+            <div id="field-patterns" class="section-card">
+                <h2 id="h2-field-patterns" style="scroll-margin-top: 120px;">3. Electric Field Patterns</h2>
+                <p>Electric field lines provide a visual representation of electric fields. Key rules:</p>
+                <ul class="key-points">
+                    <li>Arrows point in the direction of force on a <strong>positive test charge</strong></li>
+                    <li>Lines <strong>start</strong> on <strong>positive charges</strong>, <strong>end</strong> on <strong>negative charges</strong></li>
+                    <li>Line density is proportional to field strength (denser lines = stronger field)</li>
+                    <li>Lines <strong>never cross</strong> (field has only one direction at any point)</li>
+                </ul>
+                <h3 id="h3-field-patterns-3-1">3.1 Types of Field Patterns</h3>
+                <h4>Radial Field (Point Charge)</h4>
+                <div class="figure">
+                    <img src="../../assets/images/ch18/fig18_3_field_pattern.png" alt="Radial field pattern of isolated point charge">
+                    <p class="figure-caption">Fig 18.3 — Radial field pattern of isolated point charge</p>
+                </div>
+                <h4>Uniform Field (Parallel Plates)</h4>
+                <div class="figure">
+                    <img src="../../assets/images/ch18/fig18_4_parallel_plates.png" alt="Uniform field between parallel plates">
+                    <p class="figure-caption">Fig 18.4 — Uniform field between parallel plates</p>
+                </div>
+                <h4>Dipole (Two Opposite Charges)</h4>
+                <div class="figure">
+                    <img src="../../assets/images/ch18/fig18_5_dipole.png" alt="Electric dipole field pattern">
+                    <p class="figure-caption">Fig 18.5 — Electric dipole field pattern</p>
+                </div>
+                <h3 id="h3-field-patterns-3-2">3.2 Equipotential Lines</h3>
+                <div class="definition-box">
+                    <div class="def-title">Definition: Equipotential</div>
+                    An equipotential is a line or surface joining points of equal electric potential.
+                </div>
+                <div class="concept-box">
+                    <strong>Key Property:</strong> Equipotential lines are <strong>always perpendicular</strong> to electric field lines.
+                </div>
+                <p>In a <strong>uniform field</strong>, equipotentials are <strong>parallel lines</strong> perpendicular to field lines.</p>
+                <p>In a <strong>radial field</strong>, equipotentials are concentric circles (2D) or spheres (3D).</p>
+            </div>
+
+            <!-- Section 4: Electric Potential -->
+            <div id="potential" class="section-card">
+                <h2 id="h2-potential" style="scroll-margin-top: 120px;">4. Electric Potential (V) and Potential Energy</h2>
+                <div class="definition-box">
+                    <div class="def-title">Definition: Electric Potential</div>
+                    Electric potential at a point is defined as the work done per unit positive charge in bringing a small positive test charge from infinity to that point.
+                </div>
+                <div class="formula-box">
+                    <strong>Electric Potential:</strong><br>
+                    \[ V = \frac{W}{q} = \frac{kQ}{r} \]
+                    <br><span style="font-size: 13px; color: #64748b;">Unit: volt (V) = JC<sup>-1</sup></span>
+                </div>
+                <div class="definition-box">
+                    <div class="def-title">Definition: Electric Potential Energy</div>
+                    The electric potential energy of a charge at a point is the work done in bringing that charge from infinity to that point.
+                </div>
+                <div class="formula-box">
+                    <strong>Electric Potential Energy:</strong><br>
+                    \[ E_p = qV = \frac{kQq}{r} \]
+                    <br><span style="font-size: 13px; color: #64748b;">For point charge: potential V = 0 at r = infinity</span>
+                </div>
+                <h3 id="h3-potential-4-1">4.1 Key Points</h3>
+                <ul class="key-points">
+                    <li>Electric potential is a <strong>scalar</strong> quantity (add algebraically)</li>
+                    <li>For multiple charges: \( V_{total} = V_1 + V_2 + V_3 \)</li>
+                    <li>Positive charge: potential positive, decreases toward zero at infinity</li>
+                    <li>Negative charge: potential negative, increases toward zero at infinity</li>
+                </ul>
+                <div class="tip-box">
+                    <strong>Scalar Addition:</strong> Unlike forces (vectors), electric potentials add like ordinary numbers. Just add the values, keeping the sign.
+                </div>
+                <h3 id="h3-potential-4-2">4.2 Potential Gradient</h3>
+                <p>The relationship between electric field strength and potential gradient:</p>
+                <div class="formula-box">
+                    \[ E = -\frac{\Delta V}{\Delta d} \]
+                    <br><span style="font-size: 13px; color: #64748b;">The negative sign indicates E points toward decreasing potential</span>
+                </div>
+<div class="figure">
+                    <img src="../../assets/images/ch18/fig18_6_equipotential.png" alt="Equipotential lines and electric field lines">
+                    <p class="figure-caption">Fig 18.6 — Equipotential lines and electric field lines</p>
+                </div><!-- Section 5: Uniform Electric Field -->
+            <div id="uniform-field" class="section-card">
+                <h2 id="h2-uniform-field" style="scroll-margin-top: 120px;">5. Uniform Electric Field (Parallel Plates)</h2>
+                <p>Between two <strong>parallel conducting plates</strong> with a potential difference V and separation d, the field is uniform (same magnitude and direction everywhere).</p>
+                <div class="formula-box">
+                    <strong>Uniform Field Strength:</strong><br>
+                    \[ E = \frac{V}{d} \]
+                    <br><span style="font-size: 13px; color: #64748b;">Verify: N C<sup>-1</sup> = V m<sup>-1</sup></span>
+                </div>
+                <h3 id="h3-uniform-field-5-1">5.1 Force on Charged Particle</h3>
+                <div class="formula-box">
+                    \[ F = qE = q\frac{V}{d} \]
+                    <br><span style="font-size: 13px; color: #64748b;">Direction: toward plate of opposite sign</span>
+                </div>
+                <h3 id="h3-uniform-field-5-2">5.2 Particle Deflection</h3>
+                <ul class="key-points">
+                    <li>Force is constant (uniform field)</li>
+                    <li>Trajectory is <strong>parabolic</strong> (like projectile motion)</li>
+                    <li>Gravity is usually <strong>negligible</strong> (electric force >> gravitational force for electrons)</li>
+                    <li>Acceleration: \( a = \dfrac{F}{m} = \dfrac{qV}{md} \)</li>
+                </ul>
+                <div class="exam-alert">
+                    <strong>Applications:</strong> CRO oscilloscopes (electron beam deflection), inkjet printers, electrostatic precipitators, particle accelerators.
+                </div>
+                <div class="figure">
+                    <img src="../../assets/images/ch18/fig18_7_electron_deflection.png" alt="Electron beam deflection in uniform electric field">
+                    <p class="figure-caption">Fig 18.7 — Electron beam deflection in uniform electric field</p>
+                </div>
+            </div>
+
+            <!-- P4 Checklist -->
+            <div id="checklist" class="section-card">
+                <h2 id="h2-checklist" style="scroll-margin-top: 120px;">P4 Checklist: Key Definitions and Formulas</h2>
+
+                <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--fields-primary); margin-bottom: 12px;">Essential Definitions</div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d1">
+                        <label for="d1"><strong>Coulomb's Law:</strong> \(F = \dfrac{kQ_1 Q_2}{r^2}\) - vector nature, attractive/repulsive</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d2">
+                        <label for="d2"><strong>Electric Field Strength:</strong> \(E = \dfrac{F}{q}\) - force per unit positive charge</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d3">
+                        <label for="d3"><strong>Electric Potential:</strong> \(V = \dfrac{W}{q} = \dfrac{kQ}{r}\) - scalar quantity</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d4">
+                        <label for="d4"><strong>Uniform Electric Field:</strong> \(E = \dfrac{V}{d}\) between parallel plates</label>
+                    </div>
+                </div>
+
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--fields-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e1">
+                        <label for="e1">Point charge field: \(E = \dfrac{kQ}{r^2}\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e2">
+                        <label for="e2">Potential gradient: \(E = -\dfrac{\Delta V}{\Delta d}\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e3">
+                        <label for="e3">Force on charge: \(F = qE\)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e4">
+                        <label for="e4">Potential energy: \(E_p = qV = \dfrac{kQq}{r}\)</label>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>Analogy with Gravitational Field (Unit 13):</strong>
+                    <ul style="margin-top: 8px;">
+                        <li>Mass (M) -> Charge (Q)</li>
+                        <li>g = GM/r<sup>2</sup> -> E = kQ/r<sup>2</sup></li>
+                        <li>Gravitational potential -> Electric potential</li>
+                        <li>Key difference: electric can be attractive OR repulsive</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function closeUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            dropdown.style.display = 'none';
+            btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+        }
+
+        function toggleMobileNav() {
+            const nav = document.getElementById('mobileNav');
+            nav.classList.toggle('show');
+        }
+
+        function closeMobileNav() {
+            document.getElementById('mobileNav').classList.remove('show');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateReadingProgress() {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / docHeight) * 100;
+            document.getElementById('readingProgress').style.width = progress + '%';
+            
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 400) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        }
+
+        window.addEventListener('scroll', updateReadingProgress);
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('unitNavDropdown');
+
+        function scrollTo(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offset = 100;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+            closeMobileNav();
+        }
+            const btn = document.getElementById('unitNavBtn');
+            if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                closeUnitNav();
+            }
+        });
+
+        function updateActiveNav() {
+            const headings = document.querySelectorAll('h2[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            let activeId = null;
+            
+            headings.forEach(heading => {
+                const rect = heading.getBoundingClientRect();
+                if (rect.top < 150) {
+                    activeId = heading.id;
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === activeId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+    
+    function loadProgress(unitId) {
+        if (!Auth.isLoggedIn()) return;
+        fetch(`${API_BASE_URL}/progress/${unitId}`, {
+            headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.unit) {
+                updateProgressButtons(data.unit.status);
+            }
+        })
+        .catch(err => console.error('Load progress error:', err));
+    }
+    
+    function updateProgress(unitId, status) {
+        if (!Auth.isLoggedIn()) {
+            AuthModal.open();
+            return;
+        }
+        fetch(`${API_BASE_URL}/progress/${unitId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Auth.getToken()}`
+            },
+            body: JSON.stringify({ status })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                updateProgressButtons(status);
+            }
+        })
+        .catch(err => console.error('Update progress error:', err));
+    }
+    
+    function updateProgressButtons(status) {
+        ['not_started', 'in_progress', 'completed'].forEach(s => {
+            const btn = document.getElementById(`progress-btn-${s}`);
+            if (btn) btn.classList.toggle('active', s === status);
+            const mobileBtn = document.getElementById(`progress-btn-${s}-mobile`);
+            if (mobileBtn) mobileBtn.classList.toggle('active', s === status);
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        loadProgress('ch18');
+    });
+    </script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

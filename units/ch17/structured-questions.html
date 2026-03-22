@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 17: Structured Questions | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; line-height: 1.6; }
+        
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #0e7490 0%, #0891b2 100%); color: white; padding: 40px 0; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        .content { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+        
+        .question-card {
+            background: white; border-radius: 12px; padding: 28px;
+            margin-bottom: 24px; border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .question-meta { display: flex; gap: 12px; align-items: center; }
+        .exam-badge { background: #1e293b; color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+        .topic-tag { background: #cffafe; color: #0891b2; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .marks { font-size: 14px; color: #64748b; font-weight: 600; }
+        
+        .question-content { color: #1e293b; font-size: 15px; line-height: 1.7; }
+        .question-content p { margin: 12px 0; }
+        .part-label { font-weight: 600; color: #1e293b; }
+        
+        .mark-scheme {
+            margin-top: 24px; padding-top: 20px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        
+        .mark-scheme-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .mark-scheme-title { font-weight: 600; color: #1e293b; font-size: 16px; }
+        
+        .toggle-btn {
+            background: #cffafe; color: #0891b2;
+            border: 1px solid #0891b2; padding: 8px 16px;
+            border-radius: 6px; font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        
+        .toggle-btn:hover { background: #0891b2; color: white; }
+        
+        .mark-scheme-content {
+            display: none;
+            background: #f8fafc; padding: 20px;
+            border-radius: 8px; border-left: 4px solid #22c55e;
+        }
+        
+        .mark-scheme-content.show { display: block; }
+        
+        .mark-type-legend {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #166534;
+        }
+        
+        .mark-subsection {
+            margin: 16px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #22c55e;
+        }
+        
+        .mark-subsection-title {
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .mark-point {
+            display: flex; gap: 12px; margin: 8px 0;
+            padding: 8px;
+            background: #fafafa;
+            border-radius: 6px;
+        }
+        
+        .mark-badge {
+            background: #22c55e;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            height: fit-content;
+            font-family: monospace;
+            text-transform: uppercase;
+            min-width: 28px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .mark-badge.b { background: #3b82f6; }
+        .mark-badge.m { background: #f59e0b; }
+        .mark-badge.a { background: #22c55e; }
+        
+        .tip-box {
+            background: #cffafe; border-left: 4px solid #0891b2;
+            padding: 16px 20px; margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-box strong { color: #0e7490; }
+        
+        @media (max-width: 640px) {
+            .question-card { padding: 20px; }
+            .question-header { flex-direction: column; gap: 12px; }
+            h1 { font-size: 26px; }
+        }
+        
+        mjx-container { font-size: 105% !important; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="../../index.html" style="text-decoration: none; font-size: 18px; font-weight: 700; color: #1d4ed8;">PhysicsHub<span style="font-weight: 400; color: #64748b; font-size: 13px; margin-left: 6px;">by Ethan</span></a>
+            <div style="font-size: 11px; font-weight: 600; color: #0891b2; background: #cffafe; padding: 4px 10px; border-radius: 4px; margin-right: 12px;">A2 LEVEL</div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    <div class="unit-header">
+        <div class="container">
+            <a href="index.html" class="back-link">← Back to Unit 17</a>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Oscillations - Past Exam Questions with Mark Schemes</p>
+        </div>
+    </div>
+    
+    <div class="content">
+        
+        <!-- Question 1: SHM Definition and Analysis -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">SHM Definition</span>
+                </div>
+                <span class="marks">[8 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> State the two conditions that must be satisfied for a body to execute simple harmonic motion. [2]</p>
+                
+                <p><span class="part-label">(b)</span> A small ball moves from rest down an inclined plane RA and then rises up plane LA. The two planes have the same gradient and meet at their lower edges. The ball then moves down plane LA and rises up plane RA to its original height. The motion repeats itself.</p>
+                
+                <p style="margin-left: 24px;">State and explain whether the motion of the ball is simple harmonic. [3]</p>
+                
+                <p><span class="part-label">(c)</span> A trolley of mass 0.80 kg is attached to two identical springs, each with spring constant \(k = 25\) N m⁻¹, arranged horizontally. The trolley is displaced 5.0 cm from equilibrium and released.</p>
+                
+                <p style="margin-left: 24px;">Calculate:</p>
+                
+                <ul>
+                    <li>the period of oscillation, [2]</li>
+                    <li>the maximum speed of the trolley. [1]</li>
+                </ul>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - SHM Conditions [2 marks]</div>
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Acceleration is directly proportional to displacement from equilibrium</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Acceleration is directed towards equilibrium position / opposite to displacement</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b) - Motion Analysis [3 marks]</div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Motion is NOT simple harmonic</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Acceleration is constant (not proportional to displacement)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Acceleration does not change direction continuously towards equilibrium</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c) - Calculations [3 marks]</div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Effective spring constant = \(2k = 50\) N m⁻¹</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(T = 2\pi\sqrt{m/k_{\text{eff}}} = 2\pi\sqrt{0.80/50}\)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>Period = 0.79 s (accept 0.795 s)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(v_{\text{max}} = A\omega = 0.05 \times \sqrt{50/0.80}\)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>Maximum speed = 0.40 m s⁻¹</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> For two springs in parallel, the effective spring constant is the sum of individual constants. Always check whether the question describes series or parallel arrangement.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 2: Energy in SHM -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">Energy in SHM</span>
+                </div>
+                <span class="marks">[10 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> A mass of 0.20 kg is vibrating with simple harmonic motion of amplitude 4.0 cm and period 0.50 s.</p>
+                
+                <p style="margin-left: 24px;">Calculate:</p>
+                
+                <ul>
+                    <li>the total energy of the oscillation, [2]</li>
+                    <li>the potential energy when the displacement is 2.0 cm, [2]</li>
+                    <li>the kinetic energy at the same displacement. [1]</li>
+                </ul>
+                
+                <p><span class="part-label">(b)</span> The amplitude of the oscillation is now increased to 6.0 cm without changing the period.</p>
+                
+                <p style="margin-left: 24px;">State, with a reason, what happens to:</p>
+                
+                
+                <ul>
+                    <li>the total energy of the system, [2]</li>
+                    <li>the maximum speed of the mass. [3]</li>
+                </ul>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Energy Calculations [5 marks]</div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(\omega = 2\pi/T = 2\pi/0.50 = 12.6\) rad s⁻¹</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(E = \frac{1}{2}m\omega^2 A^2 = 0.5 \times 0.20 \times (12.6)^2 \times (0.04)^2\)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>Total energy = 2.53 × 10⁻² J (accept 2.5 × 10⁻² J)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(E_p = \frac{1}{2}m\omega^2 x^2\) with \(x = 0.02\) m</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>PE = 6.3 × 10⁻³ J (accept 6.4 × 10⁻³ J)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(E_k = E_{\text{total}} - E_p\)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>KE = 1.9 × 10⁻² J (accept 1.89 × 10⁻² J)</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b) - Amplitude Change Analysis [5 marks]</div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Total energy increases (by factor of 9/4 or 2.25)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Reason: \(E \propto A^2\), so if amplitude increases by factor of 1.5, energy increases by 2.25</div>
+                        </div>
+                        
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Maximum speed increases (by factor of 1.5)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(v_{\text{max}} = A\omega\) and \(\omega\) is constant</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Therefore \(v_{\text{max}} \propto A\), so speed increases by same factor as amplitude</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="tip-box">
+                        <strong>Examiner Tip:</strong> Remember the key relationships: \(E \propto A^2\) but \(v_{\text{max}} \propto A\). Total energy depends on amplitude squared, while maximum velocity depends linearly on amplitude.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Question 3: Pendulum and Resonance -->
+        <div class="question-card">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">P4 Style</span>
+                    <span class="topic-tag">Pendulum & Resonance</span>
+                </div>
+                <span class="marks">[12 marks]</span>
+            </div>
+            
+            <div class="question-content">
+                <p><span class="part-label">(a)</span> A simple pendulum has a period of 2.0 s on Earth where \(g = 9.81\) m s⁻².</p>
+                
+                <p style="margin-left: 24px;">Calculate:</p>
+                
+                
+                <ul>
+                    <li>the length of the pendulum, [2]</li>
+                    <li>the period of the same pendulum on the Moon where \(g = 1.62\) m s⁻². [2]</li>
+                </ul>
+                
+                <p><span class="part-label">(b)</span> Explain why the period of a simple pendulum is independent of the mass of the bob. [2]</p>
+                
+                <p><span class="part-label">(c)</span> A child on a swing is an example of a pendulum system. Describe and explain how the child can increase the amplitude of the swing by pumping their legs. [3]</p>
+                
+                <p><span class="part-label">(d)</span> State one everyday example of resonance and explain how it can be useful or dangerous. [3]</p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="toggleScheme(this)">Show</button>
+                </div>
+                
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Types:</strong> B = Bookwork | M = Method | A = Answer
+                    </div>
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(a) - Pendulum Calculations [4 marks]</div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>Rearranging \(T = 2\pi\sqrt{L/g}\) to give \(L = gT^2/4\pi^2\)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>\(L = 9.81 \times (2.0)^2 / 4\pi^2 = 0.99\) m (accept 1.0 m)</div>
+                        </div>
+                        
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge m">M1</span>
+                            <div>\(T_{\text{moon}} = T_{\text{earth}} \times \sqrt{g_{\text{earth}}/g_{\text{moon}}}\)</div>
+                        </div>
+                        
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge a">A1</span>
+                            <div>\(T_{\text{moon}} = 2.0 \times \sqrt{9.81/1.62} = 4.9\) s (accept 5.0 s)</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(b) - Mass Independence [2 marks]</div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Restoring force \(F = mg\sin\theta \propto m\)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Acceleration \(a = F/m = g\sin\theta\) is independent of mass</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(c) - Pumping Action [3 marks]>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Child pumps legs at natural frequency of swing</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Energy is transferred to the system</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Resonance occurs, amplitude increases</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="mark-subsection">
+                        <div class="mark-subsection-title">(d) - Resonance Example [3 marks]>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Valid example given (e.g., microwave oven, bridge collapse, radio tuning)</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Explanation of driving frequency matching natural frequency</div>
+                        </div>
+                        
+                        <div class="mark-point">
+                            <span class="mark-badge b">B1</span>
+                            <div>Explanation of usefulness/danger</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="tip-box"
+                        <strong>Examiner Tip:</strong> When explaining why pendulum period is independent of mass, focus on the fact that while the restoring force depends on mass, the acceleration does not (since F = ma). This is similar to why all objects fall at the same rate in a vacuum.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="tip-box">
+            <strong>💡 Exam Tips for Oscillations:</strong>
+            <ul style="margin-top: 8px; margin-bottom: 0;">
+                <li>Always draw a clear distinction between displacement, amplitude, and distance traveled</li>
+                <li>Remember that acceleration is always directed towards equilibrium, opposite to displacement</li>
+                <li>For pendulum calculations, ensure angles are small (< 10°) for SHM approximation</li>
+                <li>Energy questions: total energy ∝ A², maximum speed ∝ A, maximum acceleration ∝ A</li>
+                <li>Resonance: maximum amplitude occurs when driving frequency equals natural frequency</li>
+            </ul>
+        </div>
+        
+    </div>
+    
+    <script>
+        function toggleScheme(btn) {
+            const content = btn.parentElement.nextElementSibling;
+            content.classList.toggle('show');
+            btn.textContent = content.classList.contains('show') ? 'Hide' : 'Show';
+        }
+    </script>
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

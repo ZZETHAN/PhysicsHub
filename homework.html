@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhysicsHub - 作业下载</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .back-link:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .chapter {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .chapter h2 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .file-list {
+            list-style: none;
+        }
+        
+        .file-list li {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: #fee2e2;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .file-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .download-btn {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📚 作业下载中心</h1>
+        <p>A-Level Physics 9702 练习题 PDF 下载</p>
+        <a href="index.html" class="back-link">← 返回主页</a>
+    </header>
+    
+    <main>
+        <div class="note">
+            <strong>💡 提示：</strong>点击"下载"按钮即可获取 PDF 文件。建议先完成对应章节的学习内容后再做练习。
+        </div>
+        
+        <div class="chapter">
+            <h2>📖 Chapter 12: Motion in a Circle</h2>
+            <ul class="file-list">
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_12.1.pdf</div>
+                        <div class="file-meta">12.1 基础练习</div>
+                    </div>
+                    <a href="homework/ch12/Ex_12.1.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_12.2.pdf</div>
+                        <div class="file-meta">12.2 进阶练习</div>
+                    </div>
+                    <a href="homework/ch12/Ex_12.2.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_12.2.1.pdf</div>
+                        <div class="file-meta">12.2.1 补充练习</div>
+                    </div>
+                    <a href="homework/ch12/Ex_12.2.1.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_12.2.2.pdf</div>
+                        <div class="file-meta">12.2.2 综合练习</div>
+                    </div>
+                    <a href="homework/ch12/Ex_12.2.2.pdf" class="download-btn" download>下载</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="chapter">
+            <h2>📖 Chapter 13: Gravitational Field</h2>
+            <ul class="file-list">
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_13.1.1.pdf</div>
+                        <div class="file-meta">13.1.1 牛顿万有引力定律基础</div>
+                    </div>
+                    <a href="homework/ch13/Ex_13.1.1.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_13.1.2.pdf</div>
+                        <div class="file-meta">13.1.2 引力场强度</div>
+                    </div>
+                    <a href="homework/ch13/Ex_13.1.2.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_13.2.1.pdf</div>
+                        <div class="file-meta">13.2.1 引力势</div>
+                    </div>
+                    <a href="homework/ch13/Ex_13.2.1.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_13.2.2.pdf</div>
+                        <div class="file-meta">13.2.2 轨道力学</div>
+                    </div>
+                    <a href="homework/ch13/Ex_13.2.2.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_chapter 13 Revision.pdf</div>
+                        <div class="file-meta">第13章复习综合题</div>
+                    </div>
+                    <a href="homework/ch13/Ex_chapter%2013%20Revision.pdf" class="download-btn" download>下载</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="chapter">
+            <h2>📖 Chapter 14: Temperature</h2>
+            <ul class="file-list">
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_14.1 Temperature.pdf</div>
+                        <div class="file-meta">14.1 温度和温标</div>
+                    </div>
+                    <a href="homework/ch14/Ex_14.1%20Temperature.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_14.2 Specific heat capacity and specific latent heat.pdf</div>
+                        <div class="file-meta">14.2 比热容与比潜热</div>
+                    </div>
+                    <a href="homework/ch14/Ex_14.2%20Specific%20heat%20capacity%20and%20specific%20latent%20heat.pdf" class="download-btn" download>下载</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="chapter">
+            <h2>📖 Chapter 15: Ideal Gases</h2>
+            <ul class="file-list">
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_15.1 ideal gases.pdf</div>
+                        <div class="file-meta">15.1 理想气体</div>
+                    </div>
+                    <a href="homework/ch15/Ex_15.1%20ideal%20gases.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_15.2.1 Molecular kinetic energy.pdf</div>
+                        <div class="file-meta">15.2.1 分子动能</div>
+                    </div>
+                    <a href="homework/ch15/Ex_15.2.1%20Molecular%20kinetic%20energy.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_15.2.2 Molecular kinetic energy.pdf</div>
+                        <div class="file-meta">15.2.2 分子动能进阶</div>
+                    </div>
+                    <a href="homework/ch15/Ex_15.2.2%20Molecular%20kinetic%20energy.pdf" class="download-btn" download>下载</a>
+                </li>
+                <li>
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Ex_15.2.3 Molecular kinetic energy.pdf</div>
+                        <div class="file-meta">15.2.3 分子动能综合</div>
+                    </div>
+                    <a href="homework/ch15/Ex_15.2.3%20Molecular%20kinetic%20energy.pdf" class="download-btn" download>下载</a>
+                </li>
+            </ul>
+        </div>
+    </main>
+    
+    <footer>
+        <p>PhysicsHub - A-Level Physics 9702 Learning Platform</p>
+    </footer>
+</body>
+</html>

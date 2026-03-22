@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unit 24 SQ | PhysicsHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../auth/auth.css">
+<style>
+:root{--p:#be185d;--pl:#fce7f3;--pd:#9d174d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6;font-size:16px}
+.unit-nav-btn{background:linear-gradient(135deg,#be185d22 0%,#fff 100%);border:1px solid #be185d;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;color:#be185d;display:flex;align-items:center;gap:6px}
+.unit-nav-btn:hover{background:#be185d22}
+.unit-dropdown{display:none;position:absolute;top:calc(100%+8px);right:50%;transform:translateX(50%);background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:8px;min-width:220px;max-width:90vw;box-shadow:0 10px 40px rgba(0,0,0,.15);z-index:1001}
+.unit-dropdown.show{display:block}
+.unit-dropdown-header{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid #f1f5f9;margin-bottom:4px}
+.unit-nav-link{display:flex;align-items:center;padding:10px 12px;border-radius:8px;text-decoration:none;font-size:13px;color:#475569;margin-bottom:2px;transition:background .15s}
+.unit-nav-link:hover{background:#f1f5f9}
+.unit-nav-link.active{background:#be185d22;color:#be185d}
+.unit-nav-link .unit-num{font-weight:600;min-width:52px}
+.unit-nav-link .unit-title{color:#64748b;flex:1}
+.unit-nav-link.active .unit-title{color:#be185d}
+.hh{background:white;border-bottom:1px solid #e2e8f0;padding:12px 0}
+.c{max-width:900px;margin:0 auto;padding:0 16px}
+.hh a{color:#1e40af;text-decoration:none;font-weight:500}
+.uh{background:linear-gradient(135deg,#9d174d,#be185d);color:white;padding:40px 0}
+.uh h1{font-size:28px;font-weight:700}
+.pr{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#9d174d,#be185d);transition:width .1s;z-index:1001}
+.cc{max-width:900px;margin:32px auto;padding:0 16px}
+.q{background:white;border-radius:12px;padding:24px;margin:16px 0;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.qh{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding-bottom:16px;border-bottom:2px solid #f1f5f9}
+.qn{background:#be185d;color:white;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.sq{margin:12px 0;padding:12px 16px;background:#f8fafc;border-radius:8px;border-left:3px solid #be185d}
+.sqL{font-weight:600;color:#be185d;font-size:14px;margin-bottom:6px}
+.ms{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;margin-top:16px;overflow:hidden}
+.msh{background:#dcfce7;padding:12px 16px;cursor:pointer;font-weight:600;color:#166534;font-size:12px;text-transform:uppercase;letter-spacing:1px;display:flex;justify-content:space-between}
+.msc{padding:16px;font-size:14px}
+.mi{display:flex;gap:10px;margin:8px 0}
+.mb{background:#22c55e;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="pr" id="pr"></div>
+<header class="hh"><div class="c" style="display:flex;align-items:center;justify-content:space-between;"><a href="../../index.html">&#8592; PhysicsHub</a><div style="display:flex;align-items:center;gap:8px;"><div style="position:relative;"><button class="unit-nav-btn" onclick="toggleUnitNav()">Units <span style="font-size:10px;">&#9660;</span></button><div id="unitNavDropdown" class="unit-dropdown"><div class="unit-dropdown-header">A2 Physics Units</div><a href="../ch12/index.html" class="unit-nav-link"><span class="unit-num">Unit 12</span><span class="unit-title">Motion in a Circle</span></a><a href="../ch13/index.html" class="unit-nav-link"><span class="unit-num">Unit 13</span><span class="unit-title">Gravitational Field</span></a><a href="../ch14/index.html" class="unit-nav-link"><span class="unit-num">Unit 14</span><span class="unit-title">Temperature</span></a><a href="../ch15/index.html" class="unit-nav-link"><span class="unit-num">Unit 15</span><span class="unit-title">Ideal Gases</span></a><a href="../ch16/index.html" class="unit-nav-link"><span class="unit-num">Unit 16</span><span class="unit-title">Thermodynamics</span></a><a href="../ch17/index.html" class="unit-nav-link"><span class="unit-num">Unit 17</span><span class="unit-title">Oscillations</span></a><a href="../ch18/index.html" class="unit-nav-link"><span class="unit-num">Unit 18</span><span class="unit-title">Electric Fields</span></a><a href="../ch19/index.html" class="unit-nav-link"><span class="unit-num">Unit 19</span><span class="unit-title">Capacitance</span></a><a href="../ch20/index.html" class="unit-nav-link"><span class="unit-num">Unit 20</span><span class="unit-title">Magnetic Fields</span></a><a href="../ch21/index.html" class="unit-nav-link"><span class="unit-num">Unit 21</span><span class="unit-title">Alternating Currents</span></a><a href="../ch22/index.html" class="unit-nav-link"><span class="unit-num">Unit 22</span><span class="unit-title">Quantum Physics</span></a><a href="../ch23/index.html" class="unit-nav-link"><span class="unit-num">Unit 23</span><span class="unit-title">Nuclear Physics</span></a><a href="index.html" class="unit-nav-link active"><span class="unit-num">Unit 24</span><span class="unit-title">Medical Physics</span></a><a href="../ch25/index.html" class="unit-nav-link"><span class="unit-num">Unit 25</span><span class="unit-title">Astronomy &amp; Cosmology</span></a></div></div><div id="authBtn"></div></div></div></header>
+<div class="uh"><div class="c"><h1>Unit 24 Medical Physics &mdash; Structured Questions (57 marks)</h1></div></div>
+<div class="cc">
+<div class="q"><div class="qh"><div class="qn">1</div><strong>Piezoelectric Effect [4 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) State what is meant by the piezoelectric effect. <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) Explain why optimum size of a piezoelectric crystal is &lambda;/2. <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Materials generate electric potential when mechanically stressed (and vice versa) [2]<br>(b) Crystal resonates at &lambda;/2 &rarr; maximum vibration amplitude [2]</div>
+</div></div></div>
+
+<div class="q"><div class="qh"><div class="qn">2</div><strong>Ultrasound Production [4 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) Describe how a piezoelectric transducer produces ultrasound pulses. <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) Why must the natural frequency match the target ultrasound frequency? <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Alternating voltage &rarr; crystal contracts/expands &rarr; ultrasound / echo &rarr; electrical signal [2]<br>(b) Efficient generation/detection requires frequency matching [2]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">3</div><strong>Acoustic Impedance [5 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) Define acoustic impedance Z. <span style="color:#be185d"> [1]</span></div></div>
+<div class="sq"><div class="sqL">(b) Z of soft tissue: &rho;=1060 kg/m&sup3;, c=1540 m/s. Calculate Z. <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(c) What happens when impedance mismatch is large? <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Z = &rho;v [1]<br>(b) Z = 1060&times;1540 = 1.63&times;10&sup;6; Rayls [2]<br>(c) Large mismatch &rarr; strong reflection / most ultrasound reflected [2]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">4</div><strong>Coupling Gel [4 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) Why is coupling gel essential in ultrasound imaging? <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) What would happen without gel? Explain using acoustic impedance. <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Eliminates air gap / matches impedance / allows ultrasound into body [2]<br>(b) Tissue vs air: very large impedance mismatch &rarr; 99% reflected at skin surface [2]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">5</div><strong>A-scan [6 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) How does A-scan determine depth of a boundary? <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) Pulse takes 0.15 ms to return. c=1540 m/s. Find depth. <span style="color:#be185d"> [3]</span></div></div>
+<div class="sq"><div class="sqL">(c) Why pulsed rather than continuous? <span style="color:#be185d"> [1]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Pulse sent &amp; reflected; time delay measured; depth = c&Delta;t/2 [2]<br>(b) Depth = 1540 &times; 0.15&times;10&sup;&minus;3;/2 = 0.115 m = 11.5 cm [3]<br>(c) Transducer cannot emit and detect simultaneously [1]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">6</div><strong>B-scan [4 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) Distinguish A-scan and B-scan. <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) One advantage and one limitation of B-scan. <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) A-scan: amplitude vs time (1D); B-scan: brightness 2D cross-section from many A-scans [2]<br>(b) Advantage: anatomical structure / Limitation: blurred by organ movement [2]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">7</div><strong>Ultrasound Frequency [4 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) Higher frequency gives better resolution. Explain why. <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) Why does higher frequency have shallower penetration? <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Shorter &lambda; &rarr; better resolution / smaller structures resolved [2]<br>(b) Higher frequency &rarr; faster attenuation / energy absorbed more quickly [2]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">8</div><strong>X-ray Production [4 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) Labeled diagram of X-ray tube + explain production. <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) Distinguish bremsstrahlung and characteristic X-rays. <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Cathode &rarr; electrons; high V accelerates; anode (W) &rarr; X-rays [2]<br>(b) Bremsstrahlung: e<sup>&minus;</sup> decelerates &rarr; continuous spectrum; Characteristic: inner shell e<sup>&minus;</sup> displaced &rarr; discrete energies [2]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">9</div><strong>X-ray Attenuation [6 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) State Beer-Lambert law. <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) I=100 mW/cm&sup;2;; &mu;=0.35 cm&sup;&minus;1;; x=3.0 cm. Find I. <span style="color:#be185d"> [3]</span></div></div>
+<div class="sq"><div class="sqL">(c) Why does bone appear white on X-ray? <span style="color:#be185d"> [1]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) I = I<sub>0</sub>e<sup>&minus;&mu;x</sup> [2]<br>(b) I = 100 &times; e<sup>&minus;0.35&times;3.0</sup> = 35 mW/cm&sup;2; [3]<br>(c) Bone contains Ca (high Z) &rarr; greater photoelectric absorption [1]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">10</div><strong>CT Scanning [5 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) How does CT produce cross-sectional images? <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(b) One advantage of CT over plain X-ray. <span style="color:#be185d"> [1]</span></div></div>
+<div class="sq"><div class="sqL">(c) Why does CT need fast computers with large memories? <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) X-ray source rotates; multiple projections; computer reconstructs cross-sectional slices [2]<br>(b) Shows cross-section / no overlapping structures [1]<br>(c) Very large number of calculations [2]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">11</div><strong>PET Process [6 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) Describe positron emission in PET. <span style="color:#be185d"> [3]</span></div></div>
+<div class="sq"><div class="sqL">(b) Energy and direction of emitted radiation. <span style="color:#be185d"> [2]</span></div></div>
+<div class="sq"><div class="sqL">(c) Why must PET tracers have short half-lives? <span style="color:#be185d"> [1]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Unstable nucleus emits &beta;<sup>+</sup> ; travels ~1 mm; annihilates with e<sup>&minus;</sup> &rarr; two 511 keV &gamma;s at 180&deg; [3]<br>(b) 511 keV each, 180&deg; apart [2]<br>(c) Minimizes dose while allowing synthesis&rarr;injection&rarr;imaging [1]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">12</div><strong>PET Detection [5 marks]</strong></div>
+<div class="sq"><div class="sqL">(a) How does coincidence detection locate the source in PET? <span style="color:#be185d"> [3]</span></div></div>
+<div class="sq"><div class="sqL">(b) What is a line of response (LOR)? <span style="color:#be185d"> [2]</span></div></div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>(a) Two detectors activated simultaneously &rarr; LOR identified; multiple LORs intersect &rarr; locate source; computer reconstruction [3]<br>(b) Line connecting two detectors that fire simultaneously [2]</div>
+</div>
+</div></div>
+
+<div class="q"><div class="qh"><div class="qn">13</div><strong>Medical Imaging Comparison [4 marks]</strong></div>
+<div class="sq">
+<p>Complete the table:</p>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:14px">
+<tr style="background:#fce7f3"><th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;font-weight:600;color:#9d174d;border-bottom:1px solid #e5e7eb">Technique</tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Ultrasound</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Ultrasound</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Both</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Good</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">X-ray</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Ionizing radiation</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Anatomy</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Poor</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">PET</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Radioactive tracer</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Function</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">Good</td></tr>
+<tr><td style="padding:8px 12px;">MRI</td><td style="padding:8px 12px;">None</td><td style="padding:8px 12px;">Anatomy</td><td style="padding:8px 12px;">Excellent</td></tr>
+</table>
+</div>
+<div class="ms" onclick="var c=this.querySelector('.msc');c.style.display=c.style.display=='none'?'block':'none'">
+<div class="msh"><span>Mark Scheme</span><span style="font-size:11px">&#9660;</span></div>
+<div class="msc" style="display:none">
+<div class="mi"><span class="mb">MS</span><span>All four rows correct [4]</span></div>
+</div>
+</div>
+</div>
+
+</div>
+<script>
+function toggleUnitNav(){var d=document.getElementById('unitNavDropdown');d.classList.toggle('show');}
+document.addEventListener('click',function(e){var btn=document.querySelector('.unit-nav-btn'),dropdown=document.getElementById('unitNavDropdown');if(btn&&!btn.contains(e.target)&&!dropdown.contains(e.target)){dropdown.classList.remove('show');}});
+window.addEventListener('scroll',function(){var s=document.documentElement.scrollTop||0,sh=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('pr').style.width=(s/sh*100)+'%';});
+</script>
+<script src="../../auth/auth.js"></script>
+</body>
+</html>

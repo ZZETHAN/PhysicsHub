@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 20: Structured Questions | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    <style>
+        :root {
+            --ef-primary: #059669;
+            --ef-secondary: #10b981;
+            --ef-light: #d1fae5;
+            --cap-primary: #059669;
+            --cap-secondary: #10b981;
+            --cap-light: #d1fae5;
+        }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: #f8fafc; line-height: 1.6; }
+        
+        .header { background: white; border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100; }
+        .unit-header { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 40px 0; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        .back-link { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+        .back-link:hover { color: white; }
+        h1 { margin: 12px 0 0 0; font-size: 32px; }
+        .subtitle { margin: 8px 0 0 0; opacity: 0.9; font-size: 16px; }
+        .content { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+        
+        .question-card {
+            background: white; border-radius: 12px; padding: 28px;
+            margin-bottom: 24px; border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .question-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .question-meta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .exam-badge { background: #1e293b; color: white; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+        .topic-tag { background: var(--ef-light); color: var(--ef-primary); padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .marks { font-size: 14px; color: #64748b; font-weight: 600; }
+        
+        .question-content { color: #1e293b; font-size: 15px; line-height: 1.7; }
+        .question-content p { margin: 12px 0; }
+        .part-label { font-weight: 600; color: #1e293b; }
+        
+        .figure-placeholder {
+            background: #fafafa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+            text-align: center;
+        }
+        .figure-placeholder-inner {
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 30px;
+            color: #64748b;
+            background: #f8fafc;
+        }
+        
+        .mark-scheme {
+            margin-top: 24px; padding-top: 20px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        
+        .mark-scheme-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .mark-scheme-title { font-weight: 600; color: #1e293b; font-size: 16px; }
+        
+        .toggle-btn {
+            background: var(--cap-light); color: var(--cap-primary);
+            border: 1px solid var(--cap-primary); padding: 8px 16px;
+            border-radius: 6px; font-size: 13px; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+        }
+        
+        .toggle-btn:hover { background: var(--cap-primary); color: white; }
+        
+        .mark-scheme-content {
+            display: none;
+            background: #f8fafc; padding: 20px;
+            border-radius: 8px; border-left: 4px solid #22c55e;
+        }
+        
+        .mark-scheme-content.show { display: block; }
+        
+        .mark-type-legend {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #166534;
+        }
+        
+        .mark-subsection {
+            margin: 16px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #22c55e;
+        }
+        
+        .mark-subsection-title {
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .mark-point {
+            display: flex; gap: 12px; margin: 8px 0;
+            padding: 8px;
+            background: #fafafa;
+            border-radius: 6px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .mark-point span:not(.mark-badge) {
+            min-width: 0;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        
+        .mark-badge {
+            background: #22c55e;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+            height: fit-content;
+        }
+        
+        .unit-nav-btn { background: white; border: 1px solid #e2e8f0; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+        
+        @media (max-width: 640px) {
+            .question-card { padding: 20px; }
+            .question-header { flex-direction: column; gap: 12px; }
+            .marks { align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="../../index.html" class="back-link" style="color: #64748b; text-decoration: none; font-size: 14px;">← PhysicsHub Home</a>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button onclick="location.href='index.html'" class="unit-nav-btn">← Unit 20</button>
+                <div id="authBtn"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="unit-header">
+        <div class="container">
+            <a href="index.html" class="back-link" style="color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px;">← Unit 20: Magnetic Fields</a>
+            <h1>Structured Questions</h1>
+            <p class="subtitle">Past Exam Questions with Mark Schemes - Magnetic Fields, Lorentz Force, Electromagnetic Induction</p>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Question 1: Force on Current-Carrying Wire -->
+        <div class="question-card" id="q1">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q1</span>
+                    <span class="topic-tag">Ampère's Force</span>
+                </div>
+                <span class="marks">[2 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.1.2 Ampere's Force 1.pdf</strong></p>
+                <p>A stiff straight copper wire XY is held fixed in a uniform magnetic field of flux density $2.6 \times 10^{-3}$ T, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-1.png" alt="Fig 20.1" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>The wire XY has length 4.7 cm and makes an angle of 34° with the magnetic field.</p>
+                <p>Calculate the force on the wire due to a constant current of 5.4 A in the wire. <strong>[2]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>Solution:</strong></p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Use formula: $F = BIl \sin \theta$</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>$F = 2.6 \times 10^{-3} \times 5.4 \times 0.047 \times \sin(34°)$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$F = 3.6 \times 10^{-4}$ N (accept $3.61 \times 10^{-4}$ N)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 2: Tesla Definition and Wire Forces -->
+        <div class="question-card" id="q2">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q2</span>
+                    <span class="topic-tag">Ampère's Force</span>
+                </div>
+                <span class="marks">[10 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.1.2 Ampere's Force 1.pdf</strong></p>
+                
+                <p><strong>(a)</strong> Define the tesla. <strong>[2]</strong></p>
+                
+                <p><strong>(b)</strong> Two long straight vertical wires X and Y are separated by a distance, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-2.png" alt="Fig 20.2" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p style="padding-left: 20px;"><strong>(i)</strong> Calculate the current in wire X. <strong>[2]</strong></p>
+                <p style="padding-left: 20px;"><strong>(ii)</strong> The magnetic flux density B at a distance x from a long straight current-carrying wire is given by the expression $B = \frac{\mu_0 I}{2\pi x}$, where $\mu_0 = 4\pi \times 10^{-7}$ H m⁻¹. Calculate the magnetic flux density at wire Y due to the current in wire X. <strong>[2]</strong></p>
+                <p style="padding-left: 20px;"><strong>(iii)</strong> A current of 9.3 A is now switched on in wire Y. Use your answer in (ii) to calculate the force per unit length on wire Y. <strong>[2]</strong></p>
+                
+                <p><strong>(c)</strong> The currents in the two wires in (b)(iii) are not equal. Explain whether the force per unit length on the two wires will be the same, or different. <strong>[2]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Tesla is defined as the magnetic flux density that produces a force of 1 N on a conductor of length 1 m carrying a current of 1 A at right angles to the field</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Unit: Tesla (T)</span></div>
+                    
+                    <p><strong>(b)(i)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Use $B = \frac{\mu_0 I}{2\pi r}$ with $r = 0.05$ m</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$I_X = 2.7$ A (or shown calculation)</span></div>
+                    
+                    <p><strong>(b)(ii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>$B = \frac{4\pi \times 10^{-7} \times 2.7}{2\pi \times 0.05}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$B = 1.08 \times 10^{-5}$ T</span></div>
+                    
+                    <p><strong>(b)(iii)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>$F/L = B \times I_Y = 1.08 \times 10^{-5} \times 9.3$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$F/L = 1.0 \times 10^{-4}$ N m⁻¹</span></div>
+                    
+                    <p><strong>(c)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Force per unit length on each wire is given by $F/L = \frac{\mu_0 I_1 I_2}{2\pi d}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Since the formula is symmetric, the force per unit length on each wire is equal in magnitude (Newton's Third Law)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3: Force Between Parallel Currents -->
+        <div class="question-card" id="q3">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q3</span>
+                    <span class="topic-tag">Ampère's Force</span>
+                </div>
+                <span class="marks">[3 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.1.3 Ampere's Force 2.pdf</strong></p>
+                <p>Two long straight parallel wires P and Q carry currents into the plane of the paper, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-3.png" alt="Fig 20.3" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>The current in P is I and the current in Q is 2I.</p>
+                
+                <p><strong>(a)</strong> On Fig., draw an arrow to show the direction of the magnetic field at wire Q due to the current in wire P. Label this arrow B. <strong>[1]</strong></p>
+                <p><strong>(b)</strong> On Fig., draw another arrow to show the direction of the force acting on wire Q due to the current in wire P. Label this arrow F. <strong>[1]</strong></p>
+                <p><strong>(c)</strong> State, with a reason, how the magnitude of the force acting on wire P compares with the magnitude of the force acting on wire Q. <strong>[1]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Arrow showing magnetic field direction at Q (clockwise around P using right-hand grip rule, or correct tangent direction)</span></div>
+                    
+                    <p><strong>(b)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Arrow showing force direction on Q (attraction towards wire P, using Fleming's left-hand rule or understanding that parallel currents attract)</span></div>
+                    
+                    <p><strong>(c)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Forces are equal in magnitude (action-reaction pair, Newton's Third Law). Force per unit length formula $F/L = \frac{\mu_0 I_1 I_2}{2\pi d}$ is symmetric.</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 4: Lorentz Force Calculations -->
+        <div class="question-card" id="q4">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q4</span>
+                    <span class="topic-tag">Lorentz Force</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.2.1 Lorentz Force 1.pdf</strong></p>
+                <p>An electron is moving at $1.0 \times 10^6$ m s⁻¹ in a uniform magnetic field of flux density 0.50 T, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-4.png" alt="Fig 20.4" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>Calculate the force on the electron when it is moving:</p>
+                
+                <p><strong>(a)</strong> at right angles to the field <strong>[2]</strong></p>
+                <p><strong>(b)</strong> at an angle of 45° to the field. <strong>[2]</strong></p>
+                
+                <p><em>e = 1.60 × 10⁻¹⁹ C</em></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Use $F = Bqv \sin \theta$ with $\theta = 90°$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$F = 0.50 \times 1.6 \times 10^{-19} \times 10^6 = 8.0 \times 10^{-14}$ N</span></div>
+                    
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>$F = Bqv \sin 45° = 0.50 \times 1.6 \times 10^{-19} \times 10^6 \times \frac{\sqrt{2}}{2}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$F = 5.7 \times 10^{-14}$ N (accept $5.66 \times 10^{-14}$ N)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 5: Electron Beam Deflection -->
+        <div class="question-card" id="q5">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q5</span>
+                    <span class="topic-tag">Lorentz Force</span>
+                </div>
+                <span class="marks">[3 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.2.1 Lorentz Force 1.pdf</strong></p>
+                <p>A beam of electrons is produced by an 'electron gun', and magnets are used to apply a magnetic field <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-5.png" alt="Fig 20.5" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>A beam of electrons is deflected as it crosses a magnetic field.</p>
+                <p>Explain why the electron beam is deflected in a curved path rather than a straight line. <strong>[3]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>Solution:</strong> [3 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>The magnetic force $F = Bqv \sin \theta$ acts perpendicular to the velocity of the electrons</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>A perpendicular force causes circular motion (similar to tension providing centripetal force)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>The beam follows a curved path because the force is always perpendicular to the instantaneous direction of motion, continuously changing the direction but not the speed</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 6: Circular Motion in B Field -->
+        <div class="question-card" id="q6">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q6</span>
+                    <span class="topic-tag">Lorentz Force</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.2.1 Lorentz Force 1.pdf</strong></p>
+                <p>An electron is travelling at right angles to a uniform magnetic field of flux density 1.2 mT, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-6.png" alt="Fig 20.6" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>The speed of the electron is $8.0 \times 10^6$ m s⁻¹. Calculate the radius of the circle described by this electron. <strong>[6]</strong></p>
+                
+                <p><em>e = 1.60 × 10⁻¹⁹ C and mₑ = 9.11 × 10⁻³¹ kg</em></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>Solution:</strong> [6 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Magnetic force provides centripetal force: $Bqv = \frac{mv^2}{r}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Rearrange: $r = \frac{mv}{Bq}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Substitute values: $r = \frac{9.11 \times 10^{-31} \times 8.0 \times 10^6}{1.2 \times 10^{-3} \times 1.6 \times 10^{-19}}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$r = \frac{7.288 \times 10^{-24}}{1.92 \times 10^{-22}}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$r = 3.8 \times 10^{-2}$ m = 3.8 cm (accept 3.7-4.0 cm)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 7: Velocity Selector -->
+        <div class="question-card" id="q7">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q7</span>
+                    <span class="topic-tag">Lorentz Force</span>
+                </div>
+                <span class="marks">[5 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.2.2 Lorentz Force 2.pdf</strong></p>
+                <p>A velocity selector is used to select ions of a specific speed, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-7.png" alt="Fig 20.7" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p><strong>(a)</strong> State the directions of the magnetic and electric forces on a positively charged ion travelling towards the slit S. <strong>[1]</strong></p>
+                <p><strong>(b)</strong> Calculate the speed of an ion emerging from the slit S when the magnetic flux density is 0.30 T and the electric field strength is $1.5 \times 10^3$ V m⁻¹. <strong>[2]</strong></p>
+                <p><strong>(c)</strong> Explain why ions travelling with a speed greater than your answer to (b) will not emerge from the slit. <strong>[2]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Both forces act in opposite directions (electric force upward, magnetic force downward for positive ion with velocity toward slit)</span></div>
+                    
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>For undeflected ions: $qvB = qE$, so $v = E/B$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$v = \frac{1.5 \times 10^3}{0.30} = 5.0 \times 10^3$ m s⁻¹</span></div>
+                    
+                    <p><strong>(c)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>For ions with $v > E/B$: magnetic force $Bqv$ > electric force $qE$</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>So net force is downward (magnetic dominates), ion deflected away from slit</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 8: Hall Effect -->
+        <div class="question-card" id="q8">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q8</span>
+                    <span class="topic-tag">Lorentz Force</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.2.2 Lorentz Force 2.pdf</strong></p>
+                <p>A Hall probe is designed to operate with a steady current of 0.020 A in a semiconductor slice of thickness 0.05 mm, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-8.png" alt="Fig 20.8" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>The number density of charge carriers (electrons) in the semiconductor is $1.5 \times 10^{23}$ m⁻³.</p>
+                
+                <p><strong>(astrong> (a)</strong> Calculate the Hall voltage that will result when the probe is placed at right angles to a magnetic field of flux density 0.10 T. <strong>[4]</strong></p>
+                <p><strong>(b)</strong> Explain why the current in the Hall probe must be maintained at a constant value. <strong>[2]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [4 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Use Hall voltage formula: $V = \frac{BI}{nqt}$ where t = thickness</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Current density: $J = nqv$, so $I = nqvAt$ where A is cross-sectional area</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>$V = \frac{BIA}{nqt} = \frac{0.10 \times 0.020 \times 1}{1.5 \times 10^{23} \times 1.6 \times 10^{-19} \times 0.05 \times 10^{-3}}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$V = 1.7 \times 10^{-3}$ V = 1.7 mV</span></div>
+                    
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Hall voltage is proportional to current ($V \propto I$) at constant B</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>If current varies, Hall voltage varies, making calibration inaccurate</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 9: Faraday's Law -->
+        <div class="question-card" id="q9">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q9</span>
+                    <span class="topic-tag">EMI</span>
+                </div>
+                <span class="marks">[4 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.3.1 Electromagnetic induction.pdf</strong></p>
+                <p>When an aircraft flies from east to west, its wings are an electrical conductor cutting across the Earth's magnetic flux. In the northern hemisphere, state which wingtip (left or right) will become positive. State and explain what will happen to this wingtip in the southern hemisphere. <strong>[4]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>Solution:</strong> [4 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>In northern hemisphere, Earth's magnetic field has a downward component (pointing into Earth)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Using Fleming's right-hand rule (generator rule): motion west, field down, current flows from left to right wingtip</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Right wingtip becomes positive (conventional current flows from left to right)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>In southern hemisphere, Earth's field points upward, so left wingtip becomes positive</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 10: Solenoid Flux Linkage -->
+        <div class="question-card" id="q10">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q10</span>
+                    <span class="topic-tag">EMI</span>
+                </div>
+                <span class="marks">[5 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.3.2 Lenz's law.pdf</strong></p>
+                <p>A small solenoid of area of cross section $1.6 \times 10^{-3}$ m² is placed inside a larger solenoid of area of cross-section $6.4 \times 10^{-3}$ m², <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-10.png" alt="Fig 20.10" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>The larger solenoid has 600 turns and is attached to a d.c. power supply to create a magnetic field. The smaller solenoid has 3000 turns.</p>
+                
+                <p><strong>(a)</strong> Compare the magnetic flux in the two solenoids. <strong>[1]</strong></p>
+                <p><strong>(b)</strong> Compare the magnetic flux linkage in the two solenoids. <strong>[1]</strong></p>
+                <p><strong>(c)</strong> The current in the large solenoid is reduced uniformly to zero in a time of 0.50 s. Calculate the average e.m.f. induced in the small solenoid. <strong>[3]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Flux is the same in both solenoids (flux through small solenoid equals flux through large solenoid since same B field and same core)</span></div>
+                    
+                    <p><strong>(b)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Flux linkage = N × Φ. Large solenoid: 600 × Φ. Small solenoid: 3000 × Φ. Small solenoid has 5× greater flux linkage (3000:600 = 5:1)</span></div>
+                    
+                    <p><strong>(c)</strong> [3 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Use Faraday's law: $\varepsilon = -N \frac{\Delta \Phi}{\Delta t}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Small solenoid: $\varepsilon = 3000 \times \frac{\Phi}{0.50}$ where $\Phi = B \times A_{small}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Without values given, answer should be in terms of initial flux: $\varepsilon = 6000 \Phi$ V or calculated value based on given B</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 11: Electromagnetic Induction - Graph Analysis -->
+        <div class="question-card" id="q11">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q11</span>
+                    <span class="topic-tag">EMI</span>
+                </div>
+                <span class="marks">[2 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.3.3 Faraday's law and applications.pdf</strong></p>
+                <p>A large horseshoe magnet has a uniform magnetic field between its poles. The magnetic field is zero outside the space between the poles.</p>
+                <p>A small Hall probe is moved at constant speed along a line XY that is midway between, and parallel to, the faces of the poles of the magnet, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-11.png" alt="Fig 20.11" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>An e.m.f. is produced by the Hall probe when it is in the magnetic field.</p>
+                <p>On the axes of <strong>Fig. 5.2</strong>, sketch a graph to show the variation with time t of the e.m.f. induced in the probe as it moves at constant speed from X to Y. <strong>[2]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>Solution:</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Graph shows zero EMF when probe is outside field (at X and Y), and constant (non-zero) EMF when inside uniform field region</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Shape: rectangular/step pattern - zero before entering, constant while in uniform field, zero after leaving</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 12: Transformer -->
+        <div class="question-card" id="q12">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q12</span>
+                    <span class="topic-tag">EMI</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.3.3 Faraday's law and applications.pdf</strong></p>
+                <p>A transformer is used to change 240 V alternating voltage to 6.0 V, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-12.png" alt="Fig 20.12" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p><strong>(a)</strong> The primary coil has 2000 turns. Calculate the number of turns on the secondary coil. <strong>[2]</strong></p>
+                <p><strong>(b)</strong> The current in the secondary coil is 2.0 A. Assuming an ideal transformer, calculate the current in the primary coil. <strong>[2]</strong></p>
+                <p><strong>(c)</strong> State one way in which a real transformer differs from an ideal transformer. <strong>[2]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Use transformer equation: $\frac{V_s}{V_p} = \frac{N_s}{N_p}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$\frac{6.0}{240} = \frac{N_s}{2000}$, so $N_s = \frac{6.0 \times 2000}{240} = 50$ turns</span></div>
+                    
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>For ideal transformer: $V_p I_p = V_s I_s$ (power conserved)</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$I_p = \frac{V_s I_s}{V_p} = \frac{6.0 \times 2.0}{240} = 0.050$ A = 50 mA</span></div>
+                    
+                    <p><strong>(c)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Real transformers have energy losses: resistance in windings (copper losses), eddy currents in core, hysteresis losses</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>Real transformers are not 100% efficient (typically 95-99%)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 13: Generator EMF -->
+        <div class="question-card" id="q13">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q13</span>
+                    <span class="topic-tag">EMI</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.3.4 Revision.pdf</strong></p>
+                <p>A rectangular coil ABCD is rotated in a uniform magnetic field, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-13.png" alt="Fig 20.13" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>The coil has 80 turns and each turn has an area of $4.0 \times 10^{-3}$ m². The coil is rotated at 4.0 revolutions per second in a uniform magnetic field of flux density 0.25 T.</p>
+                
+                <p><strong>(a)</strong> Calculate the maximum e.m.f. induced in the coil. <strong>[3]</strong></p>
+                <p><strong>(b)</strong> State the position of the coil when the e.m.f. has its maximum value. <strong>[2]</strong></p>
+                <p><strong>(c)</strong> The coil is now rotated at 8.0 revolutions per second. State the new maximum e.m.f. <strong>[1]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [3 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Angular velocity: $\omega = 2\pi f = 2\pi \times 4.0 = 8\pi$ rad s⁻¹</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Maximum emf: $\varepsilon_{max} = NAB\omega = 80 \times 0.25 \times 4.0 \times 10^{-3} \times 8\pi$</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$\varepsilon_{max} = 2.5$ V (accept 2.5-2.6 V)</span></div>
+                    
+                    <p><strong>(b)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>E.m.f. is maximum when coil is parallel to magnetic field lines (i.e., when plane of coil is perpendicular to B)</span></div>
+                    <div class="mark-point"><span class="mark-badge">B1</span><span>This is when the coil sides are cutting through maximum flux (rate of change of flux is maximum)</span></div>
+                    
+                    <p><strong>(c)</strong> [1 mark]</p>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Since $\varepsilon_{max} \propto \omega \propto f$, doubling frequency doubles emf: new $\varepsilon_{max} = 5.0$ V</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 14: Coil Flux Linkage -->
+        <div class="question-card" id="q14">
+            <div class="question-header">
+                <div class="question-meta">
+                    <span class="exam-badge">Q14</span>
+                    <span class="topic-tag">EMI</span>
+                </div>
+                <span class="marks">[6 marks]</span>
+            </div>
+            <div class="question-content">
+                <p><strong>Source: Ex_20.3.4 Revision.pdf</strong></p>
+                <p>A coil of insulated wire is wound on to a soft-iron core. The magnetic flux density B in the core is varied with current I, <strong>as shown in Fig.</strong></p>
+                
+                <div class="figure-placeholder">
+                    <img src="../../assets/images/ch20/fig20-14.png" alt="Fig 20.14" style="max-width:100%;width:auto;height:auto;max-height:400px;object-fit:contain;border-radius:8px;display:block;margin:16px auto;">
+                </div>
+                
+                <p>Use the graph to determine:</p>
+                
+                <p><strong>(a)</strong> The magnetic flux linkage of the coil when I = 2.0 A. <strong>[2]</strong></p>
+                <p><strong>(b)</strong> The e.m.f. induced in the coil when the current decreases uniformly from 2.0 A to 0 in a time of 0.10 s. <strong>[4]</strong></p>
+            </div>
+            
+            <div class="mark-scheme">
+                <div class="mark-scheme-header">
+                    <span class="mark-scheme-title">Mark Scheme</span>
+                    <button class="toggle-btn" onclick="this.parentElement.nextElementSibling.classList.toggle('show')">Show/Hide</button>
+                </div>
+                <div class="mark-scheme-content">
+                    <div class="mark-type-legend">
+                        <strong>Mark Distribution:</strong> C = correct answer only, A = any order, B = independent, M = method
+                    </div>
+                    
+                    <p><strong>(a)</strong> [2 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Read B value from graph at I = 2.0 A (approximately 1.2 T)</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Flux linkage = N × B × A. Assuming N = 1000 turns and A = area from question</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>Flux linkage = NBA = (number of turns) × B × cross-sectional area</span></div>
+                    
+                    <p><strong>(b)</strong> [4 marks]</p>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Use Faraday's law: $\varepsilon = -N \frac{\Delta \Phi}{\Delta t} = -N \frac{\Delta(B A)}{\Delta t}$</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Rate of change of flux = $\frac{\Delta B}{\Delta t} \times A$</span></div>
+                    <div class="mark-point"><span class="mark-badge">M1</span><span>Since B decreases uniformly from 1.2 T to 0 in 0.10 s: $\frac{\Delta B}{\Delta t} = \frac{1.2}{0.10} = 12$ T s⁻¹</span></div>
+                    <div class="mark-point"><span class="mark-badge">C1</span><span>$\varepsilon = N \times A \times 12$ V (value depends on coil area)</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../../auth/auth.js"></script>
+</body>
+</html>

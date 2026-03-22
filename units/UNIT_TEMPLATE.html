@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit XX: [UNIT TITLE] | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <!-- MathJax (if needed) -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+    
+    <style>
+        /* ==================== CSS VARIABLES (主题色) ==================== */
+        /* 
+         * 更换主题时，只需修改这里的颜色值
+         * 示例配色：
+         * - Mechanics:      #1e3a8a (蓝色系)
+         * - Waves:          #7c3aed (紫色系)
+         * - Thermo/Gases:    #c2410c (橙红色系)
+         * - Modern Physics:  #be185d (粉紫色系)
+         * - Foundation:      #475569 (灰蓝色系)
+         */
+        :root {
+            --theme-primary: #XXXXXX;
+            --theme-secondary: #XXXXXX;
+            --theme-light: #XXXXXX;
+        }
+        
+        /* ==================== BASE STYLES ==================== */
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: #f8fafc; 
+            color: #1e293b; 
+            line-height: 1.6; 
+        }
+        
+        /* ==================== HEADER ==================== */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        /* ==================== UNIT HEADER (大标题栏) ==================== */
+        .unit-header {
+            background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-secondary) 100%);
+            color: white;
+            padding: 48px 0;
+            margin-bottom: 32px;
+        }
+        
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 24px; 
+        }
+        
+        .back-link { 
+            color: rgba(255,255,255,0.8); 
+            text-decoration: none; 
+            font-size: 14px; 
+        }
+        
+        .back-link:hover { color: white; }
+        
+        /* 大标题 - 必须指定字体和颜色 */
+        h1 { 
+            margin: 0; 
+            font-size: 42px; 
+            font-weight: 700; 
+            line-height: 1.2; 
+            color: white; 
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* 副标题/描述 - 必须指定字体和颜色 */
+        .subtitle { 
+            margin: 16px 0 0 0; 
+            opacity: 0.9; 
+            font-size: 18px; 
+            line-height: 1.6; 
+            color: white; 
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* ==================== CONTENT GRID ==================== */
+        .content-grid {
+            display: grid; 
+            grid-template-columns: 220px 1fr; 
+            gap: 24px;
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 24px;
+        }
+        
+        /* ==================== SIDEBAR NAV ==================== */
+        .sidebar-nav {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+        
+        .nav-list { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0 0 20px 0; 
+        }
+        
+        .nav-item { margin-bottom: 4px; }
+        
+        /* 侧边栏导航链接 - 必须指定字体 */
+        .nav-link {
+            display: block;
+            padding: 8px 12px;
+            color: #475569;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.2s;
+        }
+        
+        .nav-link:hover { 
+            background: #f1f5f9; 
+            color: var(--theme-primary); 
+        }
+        
+        .nav-link.active { 
+            background: var(--theme-light); 
+            color: var(--theme-primary); 
+            font-weight: 500; 
+        }
+        
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content { 
+            max-width: 100%; 
+            min-width: 0; 
+        }
+        
+        /* ==================== SECTION CARDS ==================== */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        /* 正文标题 h2 - 必须指定字体 */
+        .section-card h2 {
+            margin-top: 0;
+            color: #1e293b;
+            font-size: 24px;
+            font-weight: 700;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* 正文标题 h3 - 必须指定字体 */
+        .section-card h3 {
+            color: #1e293b;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 24px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* 正文标题 h4 - 必须指定字体 */
+        .section-card h4 {
+            color: #334155;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* ==================== DEFINITIONS ==================== */
+        .definition-box {
+            background: linear-gradient(135deg, var(--theme-light) 0%, #f8fafc 100%);
+            border-left: 4px solid var(--theme-primary);
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .definition-title {
+            font-weight: 600;
+            color: var(--theme-primary);
+            margin-bottom: 8px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* ==================== CHECKLIST ==================== */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .checklist li:last-child { border-bottom: none; }
+        
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--theme-primary);
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        /* ==================== MOBILE RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar-nav {
+                position: static;
+            }
+            
+            h1 { font-size: 32px; }
+            .subtitle { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="../../index.html" class="back-link">← Back to PhysicsHub</a>
+        </div>
+    </header>
+    
+    <!-- Unit Header -->
+    <div class="unit-header">
+        <div class="container">
+            <div style="font-size: 13px; opacity: 0.8; margin-bottom: 8px;">AS Level / A2 Level > Unit XX</div>
+            <h1>[UNIT TITLE]</h1>
+            <p class="subtitle">[Subtitle/Description]</p>
+        </div>
+    </div>
+    
+    <!-- Content -->
+    <div class="content-grid">
+        <!-- Sidebar -->
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#section1" class="nav-link active">1. Section Title</a></li>
+                <li class="nav-item"><a href="#section2" class="nav-link">2. Section Title</a></li>
+                <li class="nav-item"><a href="#checklist" class="nav-link">P4 Checklist</a></li>
+            </ul>
+            
+            <div class="nav-section-title">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="[video-link]" class="nav-link">🎬 Video Lessons</a></li>
+                <li class="nav-item"><a href="../homework/chXX/" class="nav-link">📚 Homework</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="section-card" id="section1">
+                <h2>1. Section Title</h2>
+                <p>Content here...</p>
+                
+                <h3>1.1 Subsection</h3>
+                <p>More content...</p>
+                
+                <div class="definition-box">
+                    <div class="definition-title">Definition: [Term]</div>
+                    <p>[Definition content]</p>
+                </div>
+            </section>
+            
+            <section class="section-card" id="checklist">
+                <h2>P4 Checklist: Key Definitions & Formulas</h2>
+                <ul class="checklist">
+                    <li><div class="check-box"></div><span>[Checklist item 1]</span></li>
+                    <li><div class="check-box"></div><span>[Checklist item 2]</span></li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // Scroll spy for sidebar navigation
+        const sections = document.querySelectorAll('.section-card[id]');
+        const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    const activeLink = document.querySelector(`.sidebar-nav .nav-link[href="#${entry.target.id}"]`);
+                    if (activeLink) activeLink.classList.add('active');
+                }
+            });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+        
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

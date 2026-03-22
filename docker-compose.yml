@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  physicshub-api:
+    build: ./api
+    container_name: physicshub-api
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./api/database.db:/app/database.db
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=your-secret-key-change-in-production

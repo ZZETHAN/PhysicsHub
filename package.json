@@ -1,0 +1,20 @@
+{
+  "name": "physicshub",
+  "version": "1.0.0",
+  "description": "A-Level Physics 9702 Learning Platform",
+  "scripts": {
+    "setup": "node config/setup-env.js",
+    "dev:backend": "cd api && node server.js",
+    "dev:frontend": "npx http-server -p 8080 -c-1",
+    "dev": "npm run setup && concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "deploy": "node scripts/deploy.js",
+    "backup": "tar -czf backup/physicshub_$(date +%Y%m%d_%H%M%S).tar.gz --exclude='node_modules' --exclude='.git' --exclude='backup' ."
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": >=18.0.0
+  }
+}

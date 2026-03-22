@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公式汇总 - Ch 12: Motion in a Circle | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        .formula-card {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-5) 0;
+        }
+        .formula-card h4 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: var(--space-3);
+        }
+        .formula-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            margin: var(--space-4) 0;
+            flex-wrap: wrap;
+        }
+        .formula-main {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: var(--space-4) var(--space-6);
+            font-size: 1.25rem;
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        .formula-desc {
+            color: var(--gray-600);
+            font-size: var(--text-sm);
+        }
+        .formula-derivation {
+            background: white;
+            border-left: 4px solid var(--success);
+            padding: var(--space-4);
+            margin-top: var(--space-4);
+            font-size: var(--text-sm);
+        }
+        .variable-table {
+            margin-top: var(--space-4);
+        }
+        .variable-table td:first-child {
+            font-weight: 600;
+            color: var(--primary);
+            width: 80px;
+        }
+        
+        /* 统一公式样式 */
+        .math-display {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--gray-900);
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .math-inline {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+        
+        /* MathJax样式统一 */
+        mjx-container {
+            font-size: 115% !important;
+        }
+        mjx-container[jax="CHTML"][display="true"] {
+            margin: 1em 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../../index.html" style="text-decoration: none;"><div class="logo">PhysicsHub</div></a>
+                <div class="logo-sub">Ch 12 · Circular Motion</div>
+            </div>
+            <nav class="nav-section">
+                <div class="nav-title">本单元导航</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><span class="nav-icon">📋</span>单元概览</a></li>
+                    <li class="nav-item"><a href="theory.html" class="nav-link"><span class="nav-icon">📖</span>理论讲解</a></li>
+                    <li class="nav-item"><a href="formulas.html" class="nav-link active"><span class="nav-icon">📝</span>公式汇总</a></li>
+                    <li class="nav-item"><a href="examples.html" class="nav-link"><span class="nav-icon">💡</span>典型例题</a></li>
+                    <li class="nav-item"><a href="mistakes.html" class="nav-link"><span class="nav-icon">⚠️</span>常见错误</a></li>
+                    <li class="nav-item"><a href="quiz.html" class="nav-link"><span class="nav-icon">✏️</span>单元测试</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main">
+            <div class="content-card">
+                <h1>圆周运动 · 公式汇总</h1>
+                
+                <div class="box box-info">
+                    <div class="box-title">📌 使用说明</div>
+                    <p>所有公式使用统一字体渲染，确保视觉一致性。</p>
+                </div>
+                
+                <h2>1. 运动学基本公式</h2>
+                
+                <div class="formula-card">
+                    <h4>角速度定义</h4>
+                    <div class="formula-main">
+                        \[
+                        \omega = \frac{2\pi}{T} = 2\pi f
+                        \]
+                    </div>
+                    <table class="variable-table">
+                        <tr><td>\(\omega\)</td><td>角速度 (angular velocity)</td><td>rad/s</td></tr>
+                        <tr><td>\(T\)</td><td>周期，完成一圈所需时间</td><td>s</td></tr>
+                        <tr><td>\(f\)</td><td>频率，每秒转动的圈数</td><td>Hz = s⁻¹</td></tr>
+                    </table>
+                </div>
+                
+                <div class="formula-card">
+                    <h4>线速度与角速度关系</h4>
+                    <div class="formula-main">
+                        \[
+                        v = \omega r = \frac{2\pi r}{T}
+                        \]
+                    </div>
+                    <table class="variable-table">
+                        <tr><td>\(v\)</td><td>线速度 (linear velocity)</td><td>m/s</td></tr>
+                        <tr><td>\(\omega\)</td><td>角速度</td><td>rad/s</td></tr>
+                        <tr><td>\(r\)</td><td>圆周运动的半径</td><td>m</td></tr>
+                    </table>
+                </div>
+                
+                <h2>2. 向心加速度</h2>
+                
+                <div class="formula-card">
+                    <h4>向心加速度公式</h4>
+                    <div class="formula-main">
+                        \[
+                        a = \frac{v^2}{r} = \omega^2 r
+                        \]
+                    </div>
+                    <table class="variable-table">
+                        <tr><td>\(a\)</td><td>向心加速度</td><td>m/s²</td></tr>
+                    </table>
+                    
+                    <div class="box box-warning" style="margin-top: var(--space-4);">
+                        <div class="box-title">⚠️ 重要说明</div>
+                        <ul style="margin-bottom: 0;">
+                            <li>方向：始终指向圆心</li>
+                            <li>与速度方向：垂直</li>
+                            <li>效果：只改变速度方向，不改变大小</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h2>3. 向心力</h2>
+                
+                <div class="formula-card">
+                    <h4>向心力公式</h4>
+                    <div class="formula-main">
+                        \[
+                        F = ma = \frac{mv^2}{r} = m\omega^2 r
+                        \]
+                    </div>
+                    <table class="variable-table">
+                        <tr><td>\(F\)</td><td>向心力</td><td>N</td></tr>
+                        <tr><td>\(m\)</td><td>物体质量</td><td>kg</td></tr>
+                    </table>
+                </div>
+                
+                <h2>4. 典型情景公式</h2>
+                
+                <div class="formula-card">
+                    <h4>圆锥摆</h4>
+                    <div class="formula-main">
+                        \[
+                        \tan\theta = \frac{\omega^2 L}{g}
+                        \]
+                    </div>
+                </div>
+                
+                <div class="formula-card">
+                    <h4>竖直圆环最高点临界速度</h4>
+                    <div class="formula-main">
+                        \[
+                        v_{\min} = \sqrt{gr}
+                        \]
+                    </div>
+                </div>
+                
+                <div class="formula-card">
+                    <h4>水平路面转弯最大速度</h4>
+                    <div class="formula-main">
+                        \[
+                        v_{\max} = \sqrt{\mu gr}
+                        \]
+                    </div>
+                </div>
+                
+                <h2>5. 公式速查表</h2>
+                
+                <table>
+                    <tr>
+                        <th>物理量</th>
+                        <th>公式</th>
+                        <th>适用情景</th>
+                    </tr>
+                    <tr>
+                        <td>角速度</td>
+                        <td>\(\omega = \frac{2\pi}{T} = 2\pi f\)</td>
+                        <td>匀速圆周运动</td>
+                    </tr>
+                    <tr>
+                        <td>线速度</td>
+                        <td>\(v = \omega r\)</td>
+                        <td>匀速圆周运动</td>
+                    </tr>
+                    <tr>
+                        <td>向心加速度</td>
+                        <td>\(a = \frac{v^2}{r}\)</td>
+                        <td>所有圆周运动</td>
+                    </tr>
+                    <tr>
+                        <td>向心力</td>
+                        <td>\(F = \frac{mv^2}{r}\)</td>
+                        <td>所有圆周运动</td>
+                    </tr>
+                </table>
+                
+            </div>
+        </main>
+    </div>
+    
+    <!-- MathJax 配置 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']]
+            },
+            chtml: {
+                scale: 1.1,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            },
+            loader: {
+                load: ['output/chtml']
+            }
+        };
+    </script>
+    <!-- MathJax 本地版本 -->
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+</body>
+</html>

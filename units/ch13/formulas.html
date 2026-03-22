@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公式汇总 - Ch 13: Gravitational Field | PhysicsHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    
+    <style>
+        .formula-card {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-5) 0;
+        }
+        .formula-card h4 {
+            margin-top: 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: var(--space-3);
+        }
+        .formula-main {
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            padding: var(--space-4) var(--space-6);
+            font-size: 1.25rem;
+            text-align: center;
+            margin: var(--space-4) 0;
+        }
+        .variable-table {
+            margin-top: var(--space-4);
+        }
+        .variable-table td:first-child {
+            font-weight: 600;
+            color: var(--primary);
+            width: 80px;
+        }
+        mjx-container {
+            font-size: 115% !important;
+        }
+        mjx-container[jax="CHTML"][display="true"] {
+            margin: 1em 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="../../index.html" style="text-decoration: none;"><div class="logo">PhysicsHub</div></a>
+                <div class="logo-sub">Ch 13 · Gravitational Field</div>
+            </div>
+            <nav class="nav-section">
+                <div class="nav-title">本单元导航</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link"><span class="nav-icon">📋</span>单元概览</a></li>
+                    <li class="nav-item"><a href="theory.html" class="nav-link"><span class="nav-icon">📖</span>理论讲解</a></li>
+                    <li class="nav-item"><a href="formulas.html" class="nav-link active"><span class="nav-icon">📝</span>公式汇总</a></li>
+                    <li class="nav-item"><a href="examples.html" class="nav-link"><span class="nav-icon">💡</span>典型例题</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main">
+            <div class="content-card">
+                <h1>引力场 · 公式汇总</h1>
+                
+                <div class="box box-info">
+                    <div class="box-title">📌 使用说明</div>
+                    <p>所有公式使用统一字体渲染，确保视觉一致性。</p>
+                </div>
+                
+                <h2>1. 牛顿万有引力定律</h2>
+                
+                <div class="formula-card">
+                    <h4>万有引力公式</h4>
+                    <div class="formula-main">
+                        \[
+                        F = \frac{Gm_1m_2}{r^2}
+                        \]
+                    </div>
+                    <table class="variable-table">
+                        <tr><td>\(F\)</td><td>万有引力</td><td>N</td></tr>
+                        <tr><td>\(G\)</td><td>万有引力常量 \(6.67 \times 10^{-11}\)</td><td>N·m²/kg²</td></tr>
+                        <tr><td>\(m_1, m_2\)</td><td>两物体质量</td><td>kg</td></tr>
+                        <tr><td>\(r\)</td><td>两质心距离</td><td>m</td></tr>
+                    </table>
+                </div>
+                
+                <h2>2. 引力场强度</h2>
+                
+                <div class="formula-card">
+                    <h4>引力场强度定义</h4>
+                    <div class="formula-main">
+                        \[
+                        g = \frac{F}{m} = \frac{GM}{r^2}
+                        \]
+                    </div>
+                    <div class="box box-success" style="margin-top: var(--space-4);">
+                        <strong>要点：</strong>引力场强度与测试质量无关，只取决于场源质量 \(M\) 和距离 \(r\)。
+                    </div>
+                </div>
+                
+                <h2>3. 引力势</h2>
+                
+                <div class="formula-card">
+                    <h4>引力势公式</h4>
+                    <div class="formula-main">
+                        \[
+                        \phi = -\frac{GM}{r}
+                        \]
+                    </div>
+                    <div class="box box-danger" style="margin-top: var(--space-4);">
+                        <strong>关键点：</strong><br>
+                        • 引力势为<strong>负值</strong>（规定无穷远处为零）<br>
+                        • 越靠近质量中心，引力势越小（越负）
+                    </div>
+                </div>
+                
+                <h2>4. 轨道运动</h2>
+                
+                <div class="formula-card">
+                    <h4>圆轨道速度</h4>
+                    <div class="formula-main">
+                        \[
+                        v = \sqrt{\frac{GM}{r}}
+                        \]
+                    </div>
+                    
+                    <h4>轨道周期</h4>
+                    <div class="formula-main">
+                        \[
+                        T = 2\pi\sqrt{\frac{r^3}{GM}}
+                        \]
+                    </div>
+                    <p>这就是<strong>开普勒第三定律</strong>：\(T^2 \propto r^3\)</p>
+                </div>
+                
+                <h2>5. 引力势能与总能量</h2>
+                
+                <div class="formula-card">
+                    <h4>引力势能</h4>
+                    <div class="formula-main">
+                        \[
+                        E_p = m\phi = -\frac{GMm}{r}
+                        \]
+                    </div>
+                    
+                    <h4>圆轨道总能量</h4>
+                    <div class="formula-main">
+                        \[
+                        E_{total} = -\frac{GMm}{2r}
+                        \]
+                    </div>
+                    <div class="box box-success" style="margin-top: var(--space-4);">
+                        <strong>重要结论：</strong>\(E_{total} = \frac{1}{2}E_p = -E_k\)，总能量为负表示束缚态。
+                    </div>
+                </div>
+                
+                <h2>6. 逃逸速度</h2>
+                
+                <div class="formula-card">
+                    <h4>逃逸速度公式</h4>
+                    <div class="formula-main">
+                        \[
+                        v_{esc} = \sqrt{\frac{2GM}{r}}
+                        \]
+                    </div>
+                    <p>逃逸速度是轨道速度的 \(\sqrt{2}\) 倍（约1.414倍）。</p>
+                </div>
+                
+                <h2>7. 公式速查表</h2>
+                
+                <table>
+                    <tr><th>物理量</th><th>公式</th><th>说明</th></tr>
+                    <tr><td>万有引力</td><td>\(F = \frac{Gm_1m_2}{r^2}\)</td><td>两质点间引力</td></tr>
+                    <tr><td>引力场强度</td><td>\(g = \frac{GM}{r^2}\)</td><td>单位质量的引力</td></tr>
+                    <tr><td>引力势</td><td>\(\phi = -\frac{GM}{r}\)</td><td>单位质量的势能</td></tr>
+                    <tr><td>轨道速度</td><td>\(v = \sqrt{\frac{GM}{r}}\)</td><td>圆轨道线速度</td></tr>
+                    <tr><td>轨道周期</td><td>\(T = 2\pi\sqrt{\frac{r^3}{GM}}\)</td><td>开普勒第三定律</td></tr>
+                    <tr><td>逃逸速度</td><td>\(v_{esc} = \sqrt{\frac{2GM}{r}}\)</td><td>脱离引力场</td></tr>
+                    <tr><td>总能量</td><td>\(E = -\frac{GMm}{2r}\)</td><td>圆轨道总能量</td></tr>
+                </table>
+                
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']]
+            },
+            chtml: {
+                scale: 1.1,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            },
+            loader: {
+                load: ['output/chtml']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+</body>
+</html>

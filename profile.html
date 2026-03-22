@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - PhysicsHub</title>
+    <link rel="stylesheet" href="auth/auth.css">
+    <style>
+        :root {
+            --primary: #0891b2;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary), #06b6d4);
+            color: white;
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .navbar-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .navbar-brand a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+        .navbar-brand a:hover { color: white; }
+        .navbar-brand span:last-child {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .avatar-section {
+            position: relative;
+        }
+        .avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #06b6d4);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 600;
+        }
+        .avatar-edit-btn {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .avatar-edit-btn:hover {
+            background: var(--bg);
+            transform: scale(1.1);
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .profile-email {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .profile-role {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--bg);
+            color: var(--text-secondary);
+        }
+        .profile-role.admin {
+            background: #fce7f3;
+            color: #be185d;
+        }
+
+        .avatar-picker {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+        }
+        .avatar-picker.show {
+            display: block;
+        }
+        .avatar-colors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .avatar-color-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .avatar-color-btn:hover {
+            transform: scale(1.1);
+        }
+        .avatar-color-btn.selected {
+            border-color: var(--text);
+        }
+        .avatar-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .avatar-icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            background: white;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .avatar-icon-btn:hover {
+            background: var(--bg);
+        }
+        .avatar-icon-btn.selected {
+            border-color: var(--primary);
+            background: #f0f9ff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+        }
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #0e7490;
+        }
+        .btn-primary:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .progress-stats {
+                grid-template-columns: 1fr;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+
+        .message {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+        .message.success {
+            background: #f0fdf4;
+            color: #166534;
+            border-left: 4px solid var(--success);
+        }
+        .message.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border-left: 4px solid var(--danger);
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-brand">
+                <a href="index.html">← Back to Home</a>
+                <span>Profile</span>
+            </div>
+            <div id="userNav"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Profile</h1>
+            <p class="page-subtitle">Manage your account and track your learning progress</p>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Basic Information</h2>
+            <div class="profile-header">
+                <div class="avatar-section">
+                    <div class="avatar-large" id="avatarDisplay">U</div>
+                    <button class="avatar-edit-btn" onclick="toggleAvatarPicker()" title="Edit avatar">✏️</button>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name" id="usernameDisplay">Loading...</div>
+                    <div class="profile-email" id="emailDisplay">-</div>
+                    <span class="profile-role" id="roleDisplay">Student</span>
+                </div>
+            </div>
+
+            <div class="avatar-picker" id="avatarPicker">
+                <div class="form-label">Avatar Color</div>
+                <div class="avatar-colors" id="avatarColors"></div>
+                <div class="form-label" style="margin-top: 16px;">Choose Icon</div>
+                <div class="avatar-icons" id="avatarIcons"></div>
+            </div>
+
+            <form id="profileForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="username" name="username" minlength="3" maxlength="20">
+                    <div class="form-hint">3-20 characters, letters, numbers, underscores</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="email" name="email">
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Change Password</h2>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" class="form-input" id="currentPassword" name="currentPassword" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <input type="password" class="form-input" id="newPassword" name="newPassword" required minlength="6">
+                    <div class="form-hint">At least 6 characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confirm New Password</label>
+                    <input type="password" class="form-input" id="confirmPassword" name="confirmPassword" required>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary" id="savePasswordBtn">Change Password</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Learning Progress</h2>
+            <div class="progress-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="completedUnits">0</div>
+                    <div class="stat-label">Completed Units</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="totalUnits">14</div>
+                    <div class="stat-label">Total Units</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="progressPercent">0%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Account Actions</h2>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">
+                If you no longer need to use PhysicsHub, you can delete your account. All data will be permanently removed.
+            </p>
+            <button class="btn btn-danger" onclick="logout()">Delete Account</button>
+        </div>
+    </div>
+
+    <script src="auth/auth.js"></script>
+    <script>
+        const AVATAR_COLORS = [
+            '#0891b2', '#06b6d4', '#10b981', '#22c55e',
+            '#f59e0b', '#ef4444', '#be185d', '#8b5cf6',
+            '#3b82f6', '#6366f1', '#ec4899', '#14b8a6'
+        ];
+
+        const AVATAR_ICONS = ['😊', '😎', '🤓', '🥳', '🤩', '😇', '🙂', '🤗', '😸', '🦊', '🐱', '🐶'];
+
+        let selectedColor = AVATAR_COLORS[0];
+        let selectedIcon = AVATAR_ICONS[0];
+        let currentUser = null;
+
+        function toggleAvatarPicker() {
+            const picker = document.getElementById('avatarPicker');
+            picker.classList.toggle('show');
+        }
+
+        function renderAvatarOptions() {
+            const colorsContainer = document.getElementById('avatarColors');
+            const iconsContainer = document.getElementById('avatarIcons');
+
+            colorsContainer.innerHTML = AVATAR_COLORS.map(color => `
+                <button type="button" class="avatar-color-btn ${color === selectedColor ? 'selected' : ''}"
+                        style="background: ${color};"
+                        onclick="selectColor('${color}')"></button>
+            `).join('');
+
+            iconsContainer.innerHTML = AVATAR_ICONS.map(icon => `
+                <button type="button" class="avatar-icon-btn ${icon === selectedIcon ? 'selected' : ''}"
+                        onclick="selectIcon('${icon}')">${icon}</button>
+            `).join('');
+        }
+
+        function selectColor(color) {
+            selectedColor = color;
+            renderAvatarOptions();
+            updateAvatarPreview();
+        }
+
+        function selectIcon(icon) {
+            selectedIcon = icon;
+            renderAvatarOptions();
+            updateAvatarPreview();
+        }
+
+        function updateAvatarPreview() {
+            const avatar = document.getElementById('avatarDisplay');
+            avatar.textContent = selectedIcon;
+            avatar.style.background = `linear-gradient(135deg, ${selectedColor}, ${selectedColor}dd)`;
+        }
+
+        function showMessage(text, type = 'success') {
+            const existing = document.querySelector('.message');
+            if (existing) existing.remove();
+
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            document.body.appendChild(msg);
+
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        async function loadProfile() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Session expired, please login again');
+                }
+                
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to load profile');
+                }
+
+                currentUser = data.user;
+
+                document.getElementById('username').value = currentUser.username || '';
+                document.getElementById('email').value = currentUser.email || '';
+                document.getElementById('usernameDisplay').textContent = currentUser.username || 'User';
+                document.getElementById('emailDisplay').textContent = currentUser.email || '';
+
+                const roleDisplay = document.getElementById('roleDisplay');
+                if (currentUser.role === 'admin') {
+                    roleDisplay.textContent = 'Admin';
+                    roleDisplay.classList.add('admin');
+                } else {
+                    roleDisplay.textContent = 'Student';
+                }
+
+                if (currentUser.avatar_color) {
+                    selectedColor = currentUser.avatar_color;
+                }
+                if (currentUser.avatar_icon) {
+                    selectedIcon = currentUser.avatar_icon;
+                }
+
+                const avatarIcon = currentUser.avatar_icon || currentUser.username.charAt(0).toUpperCase() || 'U';
+                document.getElementById('avatarDisplay').textContent = avatarIcon;
+                document.getElementById('avatarDisplay').style.background = `linear-gradient(135deg, ${selectedColor}, ${selectedColor}dd)`;
+
+                renderAvatarOptions();
+                loadProgressStats();
+            } catch (error) {
+                console.error('Load profile error:', error);
+                document.getElementById('usernameDisplay').textContent = 'Error';
+                document.getElementById('emailDisplay').textContent = '';
+                showMessage(error.message || 'Failed to load profile', 'error');
+                
+                if (error.message.includes('Session expired') || 
+                    error.message.includes('登录已过期')) {
+                    setTimeout(() => {
+                        Auth.logout();
+                        window.location.href = 'index.html';
+                    }, 2000);
+                }
+            }
+        }
+
+        async function loadProgressStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/progress/stats`, {
+                    headers: {
+                        'Authorization': `Bearer ${Auth.getToken()}`
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('completedUnits').textContent = data.completed || 0;
+                    document.getElementById('totalUnits').textContent = data.total || 14;
+                    const percent = data.total > 0 ? Math.round((data.completed / data.total) * 100) : 0;
+                    document.getElementById('progressPercent').textContent = percent + '%';
+                }
+            } catch (error) {
+                console.error('Load progress error:', error);
+            }
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('saveProfileBtn');
+            btn.disabled = true;
+            btn.textContent = 'Saving...';
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${Auth.getToken()}`
+                    },
+                    body: JSON.stringify({
+                        username,
+                        email,
+                        avatar_color: selectedColor,
+                        avatar_icon: selectedIcon
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.message || 'Update failed');
+
+                currentUser.username = username;
+                currentUser.email = email;
+                currentUser.avatar_color = selectedColor;
+                currentUser.avatar_icon = selectedIcon;
+
+                document.getElementById('usernameDisplay').textContent = username;
+                document.getElementById('emailDisplay').textContent = email;
+                document.getElementById('avatarDisplay').textContent = selectedIcon;
+                document.getElementById('avatarDisplay').style.background = `linear-gradient(135deg, ${selectedColor}, ${selectedColor}dd)`;
+
+                const user = Auth.getUser();
+                user.username = username;
+                user.email = email;
+                user.avatar_color = selectedColor;
+                user.avatar_icon = selectedIcon;
+                Auth.setUser(user);
+                updateAuthUI();
+
+                showMessage('Profile updated successfully');
+            } catch (error) {
+                showMessage(error.message || 'Update failed', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Save Changes';
+            }
+        });
+
+        document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('savePasswordBtn');
+            btn.disabled = true;
+            btn.textContent = 'Changing...';
+
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                showMessage('Passwords do not match', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Change Password';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/password`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${Auth.getToken()}`
+                    },
+                    body: JSON.stringify({ currentPassword, newPassword })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.message || 'Change failed');
+
+                showMessage('Password changed successfully');
+                document.getElementById('passwordForm').reset();
+            } catch (error) {
+                showMessage(error.message || 'Change failed', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Change Password';
+            }
+        });
+
+        function logout() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                Auth.logout();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!Auth.isLoggedIn()) {
+                window.location.href = 'index.html';
+                return;
+            }
+            loadProfile();
+            loadProgressStats();
+        });
+    </script>
+</body>
+</html>

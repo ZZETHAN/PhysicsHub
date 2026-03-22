@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 14: Temperature | PhysicsHub by Ethan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../auth/auth.css">
+
+    <link rel="stylesheet" href="../../assets/css/main.css">
+
+<style>
+        :root {
+            --thermo-primary: #dc2626;
+            --thermo-dark: #991b1b;
+            --thermo-light: #fee2e2;
+        }
+
+        * { box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        /* ==================== 页面结构 ==================== */
+        .unit-header {
+            background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+            color: white;
+            padding: 48px 0;
+            margin-bottom: 32px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .sidebar-nav {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 8px 0;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: var(--thermo-light); border-radius: 4px; }
+
+        /* ==================== 侧边栏导航 ==================== */
+        .nav-section-title {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ca3af;
+            padding: 16px 16px 6px;
+        }
+        
+        .nav-section { padding: 0 8px; }
+        
+        .nav-section-header {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            padding: 8px 12px;
+            margin-top: 4px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+        }
+        
+        .nav-section-header:hover {
+            background: var(--thermo-light);
+            color: var(--thermo-primary);
+        }
+        
+        .nav-section-header.active {
+            background: var(--thermo-light);
+            color: var(--thermo-dark);
+            font-weight: 600;
+        }
+        
+        .nav-list { list-style: none; padding: 0; margin: 0 0 8px 0; }
+        
+        .nav-link {
+            display: block;
+            padding: 6px 12px;
+            color: #6b7280;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover { 
+            background: var(--thermo-light); 
+            color: var(--thermo-primary);
+        }
+        
+        .nav-link.active { 
+            background: var(--thermo-light); 
+            color: var(--thermo-dark);
+            font-weight: 500;
+        }
+
+        .main-content { max-width: 100%; min-width: 0; }
+
+        /* ==================== 内容卡片 ==================== */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            scroll-margin-top: 140px;
+        }
+
+        /* ==================== 标题层级 ==================== */
+        .section-card h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #111827;
+            margin: 0 0 20px 0;
+            padding: 0 0 12px 0;
+            border: none;
+            border-bottom: 2px solid var(--thermo-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .section-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 32px 0 14px 0;
+        }
+
+        .section-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin: 20px 0 10px 0;
+        }
+
+        /* ==================== 段落 ==================== */
+        .section-card p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #374151;
+            margin: 0 0 14px 0;
+        }
+
+        /* ==================== 列表 ==================== */
+        .section-card ul, .section-card ol {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+
+        .section-card li {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .section-card li::marker { color: var(--thermo-primary); }
+        .section-card li strong { color: #1f2937; font-weight: 600; }
+
+        /* ==================== 内联 ==================== */
+        .section-card strong { font-weight: 600; color: #1f2937; }
+        .section-card em { font-style: italic; }
+
+        /* ==================== 提问框 ==================== */
+        .intro-box {
+            background: var(--thermo-light);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+        
+        .intro-box::before {
+            content: 'Think About It';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--thermo-dark);
+            margin-bottom: 10px;
+        }
+        
+        .intro-box strong { color: var(--thermo-dark); }
+        .intro-box li { color: #7f1d1d; font-size: 14px; }
+
+        /* ==================== 概念框 ==================== */
+        .concept-box {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin: 20px 0;
+        }
+        
+        .concept-box::before {
+            content: 'Concept';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        
+        .concept-box strong { color: #1f2937; }
+
+        /* ==================== 定义框 ==================== */
+        .definition-box {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 20px 0;
+        }
+
+        .definition-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        .definition-box p { color: #4b5563; font-size: 14px; margin: 0; }
+        .definition-box strong { color: #1f2937; }
+
+        /* ==================== 公式框 ==================== */
+        .formula-box {
+            background: var(--thermo-light);
+            border: 1px solid var(--thermo-primary);
+            border-radius: 8px;
+            padding: 24px 32px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .formula-box strong { color: var(--thermo-dark); font-size: 16px; }
+        .formula-box p { color: var(--thermo-dark); font-size: 14px; margin-top: 12px; }
+
+        /* ==================== 考试提示框 ==================== */
+        .exam-alert {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+        
+        .exam-alert::before {
+            content: 'Exam Tip';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b45309;
+            margin-bottom: 8px;
+        }
+        
+        .exam-alert strong { color: #b45309; }
+        .exam-alert p { color: #92400e; font-size: 14px; margin-top: 8px; }
+        .exam-alert li { color: #92400e; font-size: 14px; }
+
+        /* ==================== 清单框 ==================== */
+        .checklist-box {
+            background: var(--thermo-light);
+            border: 1px solid var(--thermo-primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .checklist-box::before {
+            content: 'Checklist';
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--thermo-primary);
+            margin-bottom: 12px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 10px 12px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--thermo-primary);
+        }
+        
+        .checklist-item label { font-size: 15px; color: #374151; }
+        .checklist-item strong { color: var(--thermo-dark); }
+
+        /* ==================== 图片占位符 ==================== */
+        .image-placeholder {
+            background: var(--thermo-light);
+            border: 2px dashed var(--thermo-primary);
+            border-radius: 8px;
+            padding: 40px 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .image-placeholder::before {
+            content: 'Figure';
+            display: block;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--thermo-primary);
+            margin-bottom: 8px;
+        }
+
+        .image-placeholder p { color: var(--thermo-dark); font-size: 13px; margin: 0; }
+
+        /* ==================== 表格 ==================== */
+        .case-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .case-table th, .case-table td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .case-table th {
+            background: var(--thermo-light);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--thermo-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .case-table td { color: #4b5563; }
+        .case-table td strong { color: #1f2937; }
+        .case-table tr:last-child td { border-bottom: none; }
+        .case-table tr:hover td { background: #f9fafb; }
+
+        /* ==================== 对比卡片 ==================== */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+
+        .comparison-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .comparison-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--thermo-dark);
+            margin: 0 0 10px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--thermo-light);
+        }
+
+        .comparison-card p { font-size: 13px; color: #6b7280; margin: 0; line-height: 1.5; }
+
+        /* ==================== 数学公式 ==================== */
+        mjx-container { font-size: 106% !important; }
+
+        /* ==================== 进度按钮 ==================== */
+        .progress-btn.active {
+            background: var(--thermo-primary) !important;
+            color: white !important;
+            border-color: var(--thermo-primary) !important;
+        }
+        
+        .progress-btn:hover:not(.active) { background: var(--thermo-light); }
+
+        /* ==================== 回到顶部按钮 ==================== */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--thermo-primary);
+            border: none;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            z-index: 101;
+            text-decoration: none;
+        }
+        
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--thermo-dark); }
+        .back-to-top svg { width: 18px; height: 18px; color: white; }
+
+        /* ==================== 移动端导航 ==================== */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--thermo-primary);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+            z-index: 1003;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 260px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 1002;
+        }
+        
+        .mobile-nav.show { display: block; }
+
+        .login-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            background: var(--thermo-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .login-link:hover { background: var(--thermo-dark); }
+
+        /* ==================== 响应式 ==================== */
+        @media (max-width: 968px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .sidebar-nav { display: none; }
+            .section-card { padding: 24px; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+            .back-to-top { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .section-card { padding: 16px; }
+            .section-card h2 { font-size: 20px; }
+            .section-card h3 { font-size: 17px; margin-top: 24px; }
+            .section-card p, .section-card li { font-size: 14px; }
+            mjx-container { overflow-x: auto; max-width: 100%; }
+        }
+    </style>
+
+<style>
+.unit-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1001;
+}
+.unit-dropdown.show { display: block; }
+.dropdown-header { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px; }
+.unit-nav-link { display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; transition: background 0.15s; }
+.unit-nav-link:hover { background: #fee2e2; }
+.unit-nav-link.active { background: #fee2e2; color: #dc2626; }
+.unit-nav-link .unit-num { font-weight: 600; min-width: 52px; }
+.unit-nav-link .unit-title { color: #64748b; flex: 1; }
+.unit-nav-link.active .unit-title { color: #dc2626; }
+</style>
+
+</head>
+<body>
+
+        <!-- Reading Progress Bar -->
+        <div id="reading-progress" style="position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #991b1b, #dc2626, #ef4444); z-index: 1001; transition: width 0.1s;"></div>
+
+        <!-- Back to top button -->
+        <a href="#" class="back-to-top" id="backToTop" onclick="event.preventDefault(); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+
+        <header style="background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; padding: 12px 0; position: sticky; top: 0; z-index: 100;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            
+            <a href="../../index.html" style="text-decoration: none; display: flex; align-items: center; color: #1d4ed8; font-weight: 500; flex-shrink: 0;">
+                <span style="font-size: 16px; margin-right: 4px;">←</span>
+                <span style="font-size: 15px; font-weight: 600;">PhysicsHub</span>
+            </a>
+            
+            
+            <div style="display: flex; align-items: center; flex: 1; justify-content: flex-end; padding-right: 8px;">
+                <div style="position: relative;">
+                    <button onclick="toggleUnitNav()" id="unitNavBtn" style="background: linear-gradient(135deg, #dc262622 0%, white 100%); border: 1px solid #dc2626; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 500; color: #dc2626; display: flex; align-items: center; gap: 6px;">
+                        <span>Units</span>
+                        <span style="font-size: 10px;">▼</span>
+                    </button>
+                    <div id="unitNavDropdown" style="display: none; position: absolute; top: calc(100% + 8px); right: 50%; transform: translateX(50%); background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px; min-width: 220px; max-width: 90vw; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1001;">
+                        <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid #f1f5f9; margin-bottom: 4px;">A2 Physics Units</div>
+                        <a href="../ch12/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 12</span><span style="color: #64748b; flex: 1;">Motion in a Circle</span></a>
+<a href="../ch13/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 13</span><span style="color: #64748b; flex: 1;">Gravitational Field</span></a>
+<a href="../ch14/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px; background: #fee2e2;"><span style="font-weight: 600; min-width: 52px; color: #dc2626;">Unit 14</span><span style="color: #64748b; flex: 1;">Temperature</span><span style="width: 8px; height: 8px; background: #dc2626; border-radius: 50%; margin-left: 8px;"></span></a>
+<a href="../ch15/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 15</span><span style="color: #64748b; flex: 1;">Ideal Gases</span></a>
+<a href="../ch16/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 16</span><span style="color: #64748b; flex: 1;">Thermodynamics</span></a>
+<a href="../ch17/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 17</span><span style="color: #64748b; flex: 1;">Oscillations</span></a>
+<a href="../ch18/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 18</span><span style="color: #64748b; flex: 1;">Electric Fields</span></a>
+<a href="../ch19/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 19</span><span style="color: #64748b; flex: 1;">Capacitance</span></a>
+<a href="../ch20/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 20</span><span style="color: #64748b; flex: 1;">Magnetic Fields</span></a>
+<a href="../ch21/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 21</span><span style="color: #64748b; flex: 1;">Alternating Currents</span></a>
+<a href="../ch22/index.html" style="display: flex; align-items: center; padding: 10px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; color: #475569; margin-bottom: 2px;"><span style="font-weight: 600; min-width: 52px; color: #475569;">Unit 22</span><span style="color: #64748b; flex: 1;">Quantum Physics</span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="authBtn"></div>
+        </div>
+    </header>
+    
+    
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">☰</button>
+    
+    
+    <div class="mobile-nav" id="mobileNav">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-size: 14px; font-weight: 600; color: #64748b;">Unit Contents</span>
+            <button onclick="closeMobileNav()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="margin-bottom: 4px;"><a href="#h2-intro" onclick="scrollTo('h2-intro')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">Introduction</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;"><a href="#h2-zeroth" onclick="scrollTo('h2-zeroth')" style="color: #475569; text-decoration: none;">1. The Zeroth Law</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-zeroth-law-1-1" onclick="scrollTo('h3-zeroth-law-1-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.1 Why is this Law Important?</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-zeroth-law-1-2" onclick="scrollTo('h3-zeroth-law-1-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">1.2 Practical Example</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;"><a href="#h2-temp" onclick="scrollTo('h2-temp')" style="color: #475569; text-decoration: none;">2. Temperature Scales</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-temp-2-1" onclick="scrollTo('h3-temp-2-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.1 The Celsius Scale</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-temp-2-2" onclick="scrollTo('h3-temp-2-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.2 The Absolute Scale</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-temp-2-3" onclick="scrollTo('h3-temp-2-3')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">2.3 Why Use Kelvin?</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;"><a href="#h2-thermometric" onclick="scrollTo('h2-thermometric')" style="color: #475569; text-decoration: none;">3. Thermometric Properties</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-thermometric-3-1" onclick="scrollTo('h3-thermometric-3-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.1 Common Properties</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-thermometric-3-2" onclick="scrollTo('h3-thermometric-3-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">3.2 Different Thermometers</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;"><a href="#h2-heat" onclick="scrollTo('h2-heat')" style="color: #475569; text-decoration: none;">4. Specific Heat Capacity</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-heat-4-1" onclick="scrollTo('h3-heat-4-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.1 Values of c</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-heat-4-2" onclick="scrollTo('h3-heat-4-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">4.2 Experimental Determination</a></li>
+            <li style="margin-bottom: 4px; font-size: 12px; font-weight: 600; color: #475569; padding: 8px 12px 4px;"><a href="#h2-latent" onclick="scrollTo('h2-latent')" style="color: #475569; text-decoration: none;">5. Specific Latent Heat</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-latent-5-1" onclick="scrollTo('h3-latent-5-1')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">5.1 Why is Lv > Lt?</a></li>
+            <li style="margin-bottom: 4px; padding-left: 16px;"><a href="#h3-latent-5-2" onclick="scrollTo('h3-latent-5-2')" style="display: block; padding: 6px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">5.2 Heating Curve Analysis</a></li>
+            <li style="margin-bottom: 4px;"><a href="#checklist" onclick="scrollTo('checklist')" style="display: block; padding: 8px 12px; color: #475569; text-decoration: none; border-radius: 6px; font-size: 13px;">P4 Checklist</a></li>
+        </ul>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button type="button" onclick="updateProgress('ch14', 'not_started')" id="progress-btn-not_started-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button type="button" onclick="updateProgress('ch14', 'in_progress')" id="progress-btn-in_progress-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button type="button" onclick="updateProgress('ch14', 'completed')" id="progress-btn-completed-mobile" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="unit-header">
+        <div style="max-width: 1100px; margin: 0 auto; padding: 0 16px;">
+            <div style="font-size: 13px; opacity: 0.9; margin-bottom: 8px; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">A2 Level > Unit 14</div>
+            <h1 style="margin: 0; font-size: 42px; font-weight: 700; line-height: 1.2; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">Temperature</h1>
+            <p style="margin: 16px 0 0 0; opacity: 0.9; font-size: 18px; line-height: 1.6; color: white; font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;">From thermal equilibrium to energy transfer</p>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Unit Contents</div>
+            
+            <div class="nav-section">
+                <a href="#h2-intro" class="nav-link" data-section="h2-intro" style="margin-bottom:8px;">Introduction</a>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-zeroth" class="nav-section-header" data-section="h2-zeroth">1. The Zeroth Law</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-zeroth-law-1-1" class="nav-link" data-section="h3-zeroth-law-1-1">1.1 Why is this Law Important?</a></li>
+                    <li class="nav-item"><a href="#h3-zeroth-law-1-2" class="nav-link" data-section="h3-zeroth-law-1-2">1.2 Practical Example</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-temp" class="nav-section-header" data-section="h2-temp">2. Temperature Scales</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-temp-2-1" class="nav-link" data-section="h3-temp-2-1">2.1 The Celsius Scale</a></li>
+                    <li class="nav-item"><a href="#h3-temp-2-2" class="nav-link" data-section="h3-temp-2-2">2.2 The Absolute Scale</a></li>
+                    <li class="nav-item"><a href="#h3-temp-2-3" class="nav-link" data-section="h3-temp-2-3">2.3 Why Use Kelvin?</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-thermometric" class="nav-section-header" data-section="h2-thermometric">3. Thermometric Properties</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-thermometric-3-1" class="nav-link" data-section="h3-thermometric-3-1">3.1 Common Properties</a></li>
+                    <li class="nav-item"><a href="#h3-thermometric-3-2" class="nav-link" data-section="h3-thermometric-3-2">3.2 Different Thermometers</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-heat" class="nav-section-header" data-section="h2-heat">4. Specific Heat Capacity</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-heat-4-1" class="nav-link" data-section="h3-heat-4-1">4.1 Values of c</a></li>
+                    <li class="nav-item"><a href="#h3-heat-4-2" class="nav-link" data-section="h3-heat-4-2">4.2 Experimental Determination</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#h2-latent" class="nav-section-header" data-section="h2-latent">5. Specific Latent Heat</a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#h3-latent-5-1" class="nav-link" data-section="h3-latent-5-1">5.1 Why is Lv > Lt?</a></li>
+                    <li class="nav-item"><a href="#h3-latent-5-2" class="nav-link" data-section="h3-latent-5-2">5.2 Heating Curve Analysis</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <a href="#checklist" class="nav-link" data-section="checklist" style="margin-top:8px;">P4 Checklist</a>
+            </div>
+            
+            <div class="nav-section-title" style="margin-top: 20px;">Resources</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="../../homework/ch14/" class="nav-link" style="color: #dc2626;">📚 Homework (Exercises)</a></li>
+            </ul>
+            
+            <div class="nav-section-title" style="margin-top: 12px;">My Progress</div>
+            <div style="display: flex; gap: 5px; padding: 0 2px; margin: 0 auto 16px auto; max-width: 200px;">
+                <button onclick="updateProgress('ch14', 'not_started')" id="progress-btn-not_started" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Start</button>
+                <button onclick="updateProgress('ch14', 'in_progress')" id="progress-btn-in_progress" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Active</button>
+                <button onclick="updateProgress('ch14', 'completed')" id="progress-btn-completed" class="progress-btn" style="flex:1; padding: 6px 0; border: 1px solid #e5e7eb; border-radius: 4px; background: white; cursor: pointer; font-size: 11px; color: #6b7280;">Done</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+
+            
+            <div id="intro" class="section-card">
+                <h2 id="h2-intro">Introduction: What is Temperature?</h2>
+
+                <div class="intro-box">
+                    <strong>Think about these experiences:</strong>
+                    <ul style="margin-top: 10px; margin-bottom: 0;">
+                        <li>Why does a metal spoon feel colder than a wooden spoon at room temperature?</li>
+                        <li>How do thermometers actually measure temperature?</li>
+                        <li>Why does ice take so long to melt even when the surrounding air is warm?</li>
+                        <li>Why does water in a swimming pool stay cooler than the surrounding air on a hot day?</li>
+                    </ul>
+                </div>
+
+                <p>Temperature is one of the most familiar concepts in physics, yet its precise definition requires careful understanding of thermal equilibrium and energy transfer.</p>
+
+                <div class="concept-box">
+                    <strong>Connection to Previous Units:</strong> In Unit 5 (Work, Energy and Power), we learned about energy transfer. In this unit, we explore how energy transfers as heat and how temperature changes relate to energy changes.
+                </div>
+
+                <div class="exam-alert">
+                    <strong>Paper 4 Examination Focus:</strong> Expect calculations involving specific heat capacity and specific latent heat. Understand the difference between temperature and internal energy. Be able to explain thermal equilibrium using the zeroth law.
+                </div>
+            </div>
+
+            
+            <div id="zeroth-law" class="section-card">
+                <h2 id="h2-zeroth" style="scroll-margin-top: 120px;">1. The Zeroth Law of Thermodynamics</h2>
+
+                <div class="concept-box">
+                    <strong>The Fundamental Question:</strong> How can we define temperature in a way that is independent of any particular thermometer?
+                </div>
+
+                <p>Before we can measure temperature, we need to understand when two objects have the same temperature. This leads us to the concept of <strong>thermal equilibrium</strong>.</p>
+
+                <div class="definition-box">
+                    <div class="definition-title">Definition: Thermal Equilibrium</div>
+                    <p>Two systems are in thermal equilibrium if there is no net flow of thermal energy between them when they are brought into thermal contact.</p>
+                </div>
+
+                <p>Now consider three systems: A, B, and C. The <strong>1. Zeroth Law of Thermodynamics</strong> states:</p>
+
+                <div class="definition-box">
+                    <div class="definition-title">1. Zeroth Law of Thermodynamics</div>
+                    <p>If two thermodynamic systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other.</p>
+                    <p style="margin-top: 12px; font-size: 14px; color: #64748b;">
+                        <em>Mathematically: If A ↔ C and B ↔ C, then A ↔ B</em>
+                    </p>
+                </div>
+
+                <div class="image-placeholder">
+                    <p>[插图占位符 - 热力学第零定律示意图：三个物体A、B、C的热平衡关系]</p>
+                </div>
+
+                <h3 id="h3-zeroth-law-1-1" style="scroll-margin-top: 120px;">1.1 Why is this Law Important?</h3>
+
+                <p>The Zeroth Law allows us to:</p>
+                <ul>
+                    <li><strong>Define temperature:</strong> Two objects have the same temperature if and only if they are in thermal equilibrium</li>
+                    <li><strong>Calibrate thermometers:</strong> A thermometer (system C) can be used to compare temperatures of systems A and B without direct contact between A and B</li>
+                    <li><strong>Establish temperature scales:</strong> We can create reproducible temperature measurements</li>
+                </ul>
+
+                <div class="exam-alert">
+                    <strong>Common Misconception:</strong> Being "cold" or "hot" is subjective. Temperature is an objective physical quantity defined by thermal equilibrium. Two objects at the same temperature don't exchange heat, regardless of their sizes or materials.
+                </div>
+
+                <h3 id="h3-zeroth-law-1-2" style="scroll-margin-top: 120px;">1.2 Practical Example: The Thermometer Principle</h3>
+
+                <p>When you use a thermometer to measure your body temperature:</p>
+                <ol>
+                    <li>The thermometer comes into thermal contact with your body</li>
+                    <li>Heat flows until thermal equilibrium is reached</li>
+                    <li>At equilibrium, the thermometer reading equals your body temperature</li>
+                    <li>The Zeroth Law guarantees that any other object in equilibrium with your body would give the same reading</li>
+                </ol>
+            </div>
+
+            
+            <div id="temperature-scales" class="section-card">
+                <h2 id="h2-temp" style="scroll-margin-top: 120px;">2. Temperature Scales</h2>
+
+                <div class="concept-box">
+                    <strong>The Challenge:</strong> How do we create a numerical scale for temperature? We need fixed points that are reproducible and universal.
+                </div>
+
+                <p>To establish a temperature scale, we need:</p>
+                <ul>
+                    <li>A thermometric property (a physical property that changes with temperature)</li>
+                    <li>Two fixed points (reference temperatures)</li>
+                    <li>An agreed rule for interpolation between the fixed points</li>
+                </ul>
+
+                <h3 id="h3-temp-2-1" style="scroll-margin-top: 120px;">2.1 The Celsius Scale</h3>
+
+                <p>Originally defined using the properties of water:</p>
+
+                <table class="case-table">
+                    <tr>
+                        <th>Fixed Point</th>
+                        <th>Temperature</th>
+                        <th>Definition</th>
+                    </tr>
+                    <tr>
+                        <td>Ice point (lower fixed point)</td>
+                        <td>0°C</td>
+                        <td>Temperature of pure melting ice at standard atmospheric pressure</td>
+                    </tr>
+                    <tr>
+                        <td>Steam point (upper fixed point)</td>
+                        <td>100°C</td>
+                        <td>Temperature of steam from boiling water at standard atmospheric pressure</td>
+                    </tr>
+                </table>
+
+                <div class="exam-alert">
+                    <strong>Important Note:</strong> The original Celsius definition had problems:
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li>The boiling point of water varies with pressure</li>
+                        <li>Different thermometers give slightly different readings between 0°C and 100°C</li>
+                    </ul>
+                </div>
+
+                <h3 id="h3-temp-2-2" style="scroll-margin-top: 120px;">2.2 The Absolute (Kelvin) Scale</h3>
+
+                <p>The Kelvin scale is based on thermodynamic principles and is independent of any particular substance:</p>
+
+                <div class="definition-box">
+                    <div class="definition-title">The Kelvin Scale</div>
+                    <ul>
+                        <li><strong>Zero point:</strong> Absolute zero (0 K) - the lowest possible temperature where particles have minimum kinetic energy</li>
+                        <li><strong>Unit size:</strong> Same as Celsius (1 K = 1°C)</li>
+                        <li><strong>Triple point of water:</strong> Exactly 273.16 K (where ice, water, and steam coexist in equilibrium)</li>
+                    </ul>
+                </div>
+
+                <div class="formula-box">
+                    <strong>Conversion between scales:</strong>
+                    \[T(\text{K}) = T(°\text{C}) + 273.15\]
+                    \[T(°\text{C}) = T(\text{K}) - 273.15\]
+                </div>
+
+                <div class="image-placeholder">
+                    <p>[插图占位符 - 温标对比图：Celsius、Kelvin、Fahrenheit 对比]</p>
+                </div>
+
+                <h3 id="h3-temp-2-3" style="scroll-margin-top: 120px;">2.3 Why Use Kelvin in Physics?</h3>
+
+                <ul>
+                    <li><strong>No negative values:</strong> Important for gas laws and thermodynamic calculations</li>
+                    <li><strong>Absolute zero is physically meaningful:</strong> It represents zero molecular motion</li>
+                    <li><strong>Ratios are meaningful:</strong> 200 K is twice as hot as 100 K (in terms of average kinetic energy)</li>
+                </ul>
+
+                <div class="exam-alert">
+                    <strong>Exam Tip:</strong> Always use Kelvin for gas law calculations (<em>PV = nRT</em>) and calculations involving absolute temperature. Use Celsius for temperature changes (ΔT) since 1°C = 1 K.
+                </div>
+            </div>
+
+            
+            <div id="thermometric" class="section-card">
+                <h2 id="h2-thermometric" style="scroll-margin-top: 120px;">3. Thermometric Properties</h2>
+
+                <div class="concept-box">
+                    <strong>The Key Question:</strong> What physical properties can we use to measure temperature? And why do different thermometers sometimes give different readings?
+                </div>
+
+                <div class="definition-box">
+                    <div class="definition-title">Definition: Thermometric Property</div>
+                    <p>A physical property that changes continuously and monotonically with temperature, used to measure temperature.</p>
+                </div>
+
+                <h3 id="h3-thermometric-3-1" style="scroll-margin-top: 120px;">3.1 Common Thermometric Properties</h3>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>Liquid-in-glass</h4>
+                        <p><strong>Property:</strong> Volume expansion of mercury or alcohol</p>
+                        <p style="margin-top: 8px;"><strong>Range:</strong> Limited by freezing/boiling points of liquid</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>Thermocouple</h4>
+                        <p><strong>Property:</strong> Electromotive force (emf) generated at junction of two dissimilar metals</p>
+                        <p style="margin-top: 8px;"><strong>Range:</strong> Very wide, fast response</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>Resistance Thermometer</h4>
+                        <p><strong>Property:</strong> Electrical resistance of a metal (usually platinum)</p>
+                        <p style="margin-top: 8px;"><strong>Range:</strong> Very accurate, wide range</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>Gas Thermometer</h4>
+                        <p><strong>Property:</strong> Pressure of a gas at constant volume (or volume at constant pressure)</p>
+                        <p style="margin-top: 8px;"><strong>Range:</strong> Most accurate, used to define Kelvin scale</p>
+                    </div>
+                </div>
+
+                <h3 id="h3-thermometric-3-2" style="scroll-margin-top: 120px;">3.2 The Problem: Different Thermometers, Different Scales</h3>
+
+                <p>If we calibrate two different thermometers at 0°C and 100°C, they will agree at those points. But they may give different readings at intermediate temperatures!</p>
+
+                <div class="image-placeholder">
+                    <p>[插图占位符 - 不同温度计读数差异示意图]</p>
+                </div>
+
+                <p>This happens because thermometric properties don't all vary linearly with temperature in the same way. For example:</p>
+
+                <ul>
+                    <li>The expansion of mercury is not perfectly linear with thermodynamic temperature</li>
+                    <li>The resistance of platinum changes differently than the emf of a thermocouple</li>
+                </ul>
+
+                <div class="exam-alert">
+                    <strong>Key Point:</strong> Only the <em>constant-volume gas thermometer</em> gives readings that correspond to thermodynamic temperature (Kelvin). All other thermometers are calibrated against it.
+                </div>
+            </div>
+
+            
+            <div id="heat-capacity" class="section-card">
+                <h2 id="h2-heat" style="scroll-margin-top: 120px;">4. Specific Heat Capacity</h2>
+
+                <div class="concept-box">
+                    <strong>The Question:</strong> Why does a swimming pool take longer to warm up in the sun than a bucket of water? Why does sand get hotter than water at the beach?
+                </div>
+
+                <p>Different substances require different amounts of energy to raise their temperature. This property is called <strong>specific heat capacity</strong>.</p>
+
+                <div class="definition-box">
+                    <div class="definition-title">Definition: Specific Heat Capacity (c)</div>
+                    <p>The amount of energy required to raise the temperature of 1 kg of a substance by 1 K (or 1°C).</p>
+
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[c = \frac{E}{m\Delta T}\]
+                    </div>
+
+                    <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
+                        <strong>Unit:</strong> J kg⁻¹ K⁻¹ (or J kg⁻¹ °C⁻¹)
+                    </p>
+                </div>
+
+                <div class="formula-box">
+                    <strong>Energy Transfer Equation:</strong>
+                    \[E = mc\Delta T\]
+                    <p style="margin-top: 12px; font-size: 14px;">
+                        where <em>E</em> = energy transferred, <em>m</em> = mass, <em>c</em> = specific heat capacity, <em>ΔT</em> = temperature change
+                    </p>
+                </div>
+
+                <h3 id="h3-heat-4-1" style="scroll-margin-top: 120px;">4.1 Values of Specific Heat Capacity</h3>
+
+                <table class="case-table">
+                    <tr>
+                        <th>Substance</th>
+                        <th>Specific Heat Capacity (J kg⁻¹ K⁻¹)</th>
+                        <th>Notes</th>
+                    </tr>
+                    <tr>
+                        <td>Water</td>
+                        <td>4200</td>
+                        <td>Very high - explains why water is used in heating/cooling systems</td>
+                    </tr>
+                    <tr>
+                        <td>Ice</td>
+                        <td>2100</td>
+                        <td>About half that of liquid water</td>
+                    </tr>
+                    <tr>
+                        <td>Aluminium</td>
+                        <td>900</td>
+                        <td>Good heat conductor, used in cookware</td>
+                    </tr>
+                    <tr>
+                        <td>Iron/Steel</td>
+                        <td>450</td>
+                        <td>Lower than aluminium</td>
+                    </tr>
+                    <tr>
+                        <td>Copper</td>
+                        <td>385</td>
+                        <td>Good conductor, heats up quickly</td>
+                    </tr>
+                    <tr>
+                        <td>Lead</td>
+                        <td>130</td>
+                        <td>Very low - easy to heat up</td>
+                    </tr>
+                </table>
+
+                <div class="exam-alert">
+                    <strong>Water's High Specific Heat Capacity:</strong> Water has one of the highest specific heat capacities of common substances. This explains:
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li>Why oceans moderate coastal climates (slow to heat up, slow to cool down)</li>
+                        <li>Why water is used in car radiators and central heating systems</li>
+                        <li>Why deserts have large day-night temperature variations (low moisture)</li>
+                    </ul>
+                </div>
+
+                <h3 id="h3-heat-4-2" style="scroll-margin-top: 120px;">4.2 Experimental Determination</h3>
+
+                <p><strong>Method of Mixtures:</strong> A heated solid is placed in cool water in an insulated container. By conservation of energy:</p>
+
+                <div class="formula-box">
+                    \[\text{Heat lost by solid} = \text{Heat gained by water} + \text{Heat gained by container}\]
+                    \[m_s c_s (T_s - T_f) = m_w c_w (T_f - T_w) + m_c c_c (T_f - T_w)\]
+                </div>
+
+                <p><strong>Electrical Method:</strong> An electric heater is used to heat a known mass of substance:</p>
+
+                <div class="formula-box">
+                    \[E = Pt = IVt = mc\Delta T\]
+                    \[c = \frac{IVt}{m\Delta T}\]
+                </div>
+
+                <div class="exam-alert">
+                    <strong>Common Error:</strong> When mixing hot and cold water, remember that the final temperature is the same for both. Use <em>ΔT = T_final - T_initial</em> for each substance, paying attention to signs.
+                </div>
+            </div>
+
+            
+            <div id="latent-heat" class="section-card">
+                <h2 id="h2-latent" style="scroll-margin-top: 120px;">5. Specific Latent Heat</h2>
+
+                <div class="concept-box">
+                    <strong>The Question:</strong> When you boil water, the temperature stays at 100°C even though you're adding heat. Where does this energy go?
+                </div>
+
+                <p>During phase changes (melting, boiling), energy is used to break intermolecular bonds rather than increase kinetic energy (temperature). This energy is called <strong>latent heat</strong>.</p>
+
+                <div class="definition-box">
+                    <div class="definition-title">Definition: Specific Latent Heat of Fusion (Lₜ)</div>
+                    <p>The energy required to change 1 kg of substance from solid to liquid (or vice versa) at constant temperature.</p>
+
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[E = mL_f\]
+                    </div>
+
+                    <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
+                        <strong>Unit:</strong> J kg⁻¹ | <strong>For water:</strong> Lₜ = 3.34 × 10⁵ J kg⁻¹
+                    </p>
+                </div>
+
+                <div class="definition-box">
+                    <div class="definition-title">Definition: Specific Latent Heat of Vaporization (Lᵥ)</div>
+                    <p>The energy required to change 1 kg of substance from liquid to gas (or vice versa) at constant temperature.</p>
+
+                    <div class="formula-box" style="margin: 12px 0;">
+                        \[E = mL_v\]
+                    </div>
+
+                    <p style="font-size: 13px; color: #64748b; margin: 8px 0 0 0;">
+                        <strong>Unit:</strong> J kg⁻¹ | <strong>For water:</strong> Lᵥ = 2.26 × 10⁶ J kg⁻¹
+                    </p>
+                </div>
+
+                <div class="image-placeholder">
+                    <p>[插图占位符 - 相变能量图：加热曲线，显示温度变化和潜热阶段]</p>
+                </div>
+
+                <h3 id="h3-latent-5-1" style="scroll-margin-top: 120px;">5.1 Why is Lᵥ > Lₜ for Water?</h3>
+
+                <p>Vaporization requires about 7 times more energy than fusion because:</p>
+
+                <ul>
+                    <li><strong>In melting:</strong> Only some intermolecular bonds are broken; molecules remain close together</li>
+                    <li><strong>In vaporization:</strong> All intermolecular bonds must be broken; molecules separate completely</li>
+                    <li><strong>Work against atmosphere:</strong> Vaporization also requires energy to expand against atmospheric pressure</li>
+                </ul>
+
+                <div class="exam-alert">
+                    <strong>Practical Applications:</strong>
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li><strong>Steam burns are worse than boiling water burns:</strong> Steam releases extra latent heat when it condenses on skin</li>
+                        <li><strong>Refrigeration:</strong> Uses latent heat of vaporization to absorb heat from inside the fridge</li>
+                        <li><strong>Cooling by evaporation:</strong> Sweating cools your body as water evaporates</li>
+                    </ul>
+                </div>
+
+                <h3 id="h3-latent-5-2" style="scroll-margin-top: 120px;">5.2 Complete Heating Curve Analysis</h3>
+
+                <p>When heating ice at -20°C to steam at 120°C, the process involves five stages:</p>
+
+                <ol>
+                    <li><strong>Ice warming (-20°C to 0°C):</strong> \(E = mc_i\Delta T\) where \(c_i = 2100 \text{ J kg}^{-1} \text{ K}^{-1}\)</li>
+                    <li><strong>Melting (0°C):</strong> \(E = mL_f\) (no temperature change)</li>
+                    <li><strong>Water warming (0°C to 100°C):</strong> \(E = mc_w\Delta T\) where \(c_w = 4200 \text{ J kg}^{-1} \text{ K}^{-1}\)</li>
+                    <li><strong>Boiling (100°C):</strong> \(E = mL_v\) (no temperature change)</li>
+                    <li><strong>Steam warming (100°C to 120°C):</strong> \(E = mc_s\Delta T\) where \(c_s \approx 2000 \text{ J kg}^{-1} \text{ K}^{-1}\)</li>
+                </ol>
+
+                <div class="exam-alert">
+                    <strong>Exam Tip:</strong> In calculations involving phase changes, always identify which stage(s) the process involves. Calculate each stage separately and sum the energies.
+                </div>
+            </div>
+
+            
+            <div class="section-card">
+                <h2 id="checklist" style="scroll-margin-top: 120px;">P4 Checklist: Key Definitions & Formulas</h2>
+
+                <p style="color: #64748b; margin-bottom: 16px;">Tick off when you can write these from memory:</p>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">Essential Definitions</div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d1">
+                        <label for="d1"><strong>Thermal equilibrium:</strong> No net heat transfer between systems in thermal contact</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d2">
+                        <label for="d2"><strong>Zeroth Law:</strong> If A ↔ C and B ↔ C, then A ↔ B (transitive property of thermal equilibrium)</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d3">
+                        <label for="d3"><strong>Temperature:</strong> Property determining direction of heat flow; equal when in thermal equilibrium</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d4">
+                        <label for="d4"><strong>Thermometric property:</strong> Physical property that changes continuously and monotonically with temperature</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d5">
+                        <label for="d5"><strong>Specific heat capacity:</strong> Energy to raise 1 kg of substance by 1 K; unit: J kg⁻¹ K⁻¹</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d6">
+                        <label for="d6"><strong>Specific latent heat of fusion:</strong> Energy to change 1 kg from solid to liquid at constant temperature</label>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="d7">
+                        <label for="d7"><strong>Specific latent heat of vaporization:</strong> Energy to change 1 kg from liquid to gas at constant temperature</label>
+                    </div>
+                </div>
+                
+                <div class="checklist-box">
+                    <div style="font-weight: 600; color: var(--thermo-primary); margin-bottom: 12px;">Key Formulas to Memorize</div>                    
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e1">
+                        <label for="e1">Temperature conversion: \(T(\text{K}) = T(°\text{C}) + 273.15\)</label>
+                    </div>                    
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e2">
+                        <label for="e2">Specific heat capacity: \(E = mc\Delta T\) or \(c = \frac{E}{m\Delta T}\)</label>
+                    </div>                    
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e3">
+                        <label for="e3">Specific latent heat: \(E = mL\) (during phase change, no temperature change)</label>
+                    </div>                    
+                    
+                    <div class="checklist-item">
+                        <input type="checkbox" id="e4">
+                        <label for="e4">Conservation of energy (mixing): Heat lost = Heat gained</label>
+                    </div>
+                </div>
+
+                <div class="exam-alert">
+                    <strong>Common Structured Question Patterns:</strong>
+                    <ul style="margin-top: 8px; margin-bottom: 0;">
+                        <li><strong>Method of mixtures:</strong> Calculate specific heat capacity using energy conservation</li>
+                        <li><strong>Electrical heating:</strong> Relate electrical energy (IVt) to thermal energy (mcΔT)</li>
+                        <li><strong>Complete heating curve:</strong> Calculate total energy for heating + phase change + heating</li>
+                        <li><strong>Thermal equilibrium:</strong> Apply Zeroth Law to explain thermometer calibration</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.05,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="../../assets/mathjax/tex-chtml.min.js"></script>
+
+    
+
+    <script>
+        function toggleMobileNav() {
+            document.getElementById('mobileNav').classList.toggle('show');
+        }
+        function closeMobileNav() {
+            document.getElementById('mobileNav').classList.remove('show');
+        }
+        
+        function sidebarScrollTo(sectionId) {
+            var element = document.getElementById(sectionId);
+            if (element) {
+                var offset = 100;
+                var top = element.offsetTop - offset;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+        }
+        
+        function sidebarScrollToSection(sectionId) {
+            var element = document.getElementById(sectionId);
+            if (element) {
+                var offset = 100;
+                var top = element.offsetTop - offset;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+            closeMobileNav();
+        }
+        
+        var scrollTo = sidebarScrollTo;
+        var scrollToSection = sidebarScrollToSection;
+        
+        function updateActiveNav() {
+            const headings = document.querySelectorAll('h2[id], h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar-nav [data-section]');
+            
+            if (headings.length === 0 || navLinks.length === 0) return;
+            
+            let activeId = null;
+            let bestTop = Infinity;
+            
+            const scrollTop = window.scrollY;
+            
+            headings.forEach(h => {
+                const rect = h.getBoundingClientRect();
+                const offsetTop = rect.top + scrollTop;
+                if (offsetTop <= scrollTop + 150 && offsetTop > scrollTop - 100) {
+                    if (offsetTop < bestTop) {
+                        bestTop = offsetTop;
+                        activeId = h.id;
+                    }
+                }
+            });
+            
+            if (!activeId) return;
+            
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.sidebar-nav [data-section="${activeId}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+        
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('resize', updateActiveNav, { passive: true });
+        document.addEventListener('DOMContentLoaded', updateActiveNav);
+    </script>
+    <script>
+        function toggleUnitNav() {
+            const dropdown = document.getElementById('unitNavDropdown');
+            const btn = document.getElementById('unitNavBtn');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+                btn.querySelector('span:last-child').style.transform = 'rotate(180deg)';
+            } else {
+                dropdown.style.display = 'none';
+                btn.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('[onclick="toggleUnitNav()"]');
+            const dropdown = document.getElementById('unitNavDropdown');
+            if (container && dropdown && !container.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+                container.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+            }
+});
+        </script>
+    <script>
+        function loadProgress(unitId) {
+            if (!Auth.isLoggedIn()) return;
+            fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                headers: { 'Authorization': `Bearer ${Auth.getToken()}` }
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success && data.unit) {
+                    updateProgressButtons(data.unit.status);
+                }
+            })
+            .catch(err => console.error('Load progress error:', err));
+        }
+        
+        function updateProgress(unitId, status) {
+            if (!Auth.isLoggedIn()) {
+                AuthModal.open();
+                return;
+            }
+            fetch(`${API_BASE_URL}/progress/${unitId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Auth.getToken()}`
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    updateProgressButtons(status);
+                }
+            })
+            .catch(err => console.error('Update progress error:', err));
+        }
+        
+        function updateProgressButtons(status) {
+            ['not_started', 'in_progress', 'completed'].forEach(s => {
+                const btn = document.getElementById(`progress-btn-${s}`);
+                const mobileBtn = document.getElementById(`progress-btn-${s}-mobile`);
+                if (btn) btn.classList.toggle('active', s === status);
+                if (mobileBtn) mobileBtn.classList.toggle('active', s === status);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgress('ch14');
+            
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            // Reading Progress Bar & Back to top visibility
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (scrollTop / docHeight) * 100;
+                document.getElementById('reading-progress').style.width = progress + '%';
+                
+                // Back to top button visibility
+                if (backToTopBtn) {
+                    if (scrollTop > 400) {
+                        backToTopBtn.classList.add('show');
+                    } else {
+                        backToTopBtn.classList.remove('show');
+                    }
+                }
+            }, { passive: true });
+        });
+    </script>
+
+
+<script src="../../auth/auth.js"></script>
+</body>
+</html>
