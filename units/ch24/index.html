@@ -11,8 +11,12 @@
     <script>
         window.MathJax = {
             tex: {
-                inlineMath: [['\(', '\)']],
-                displayMath: [['\[' , '\]']]
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            chtml: {
+                scale: 1.05,
+                fontURL: '../../assets/mathjax/output/chtml/fonts/woff-v2'
             }
         };
     </script>
